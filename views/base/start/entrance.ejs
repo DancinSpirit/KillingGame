@@ -1,0 +1,34 @@
+<div id="start-title-box">
+    <p class="start-title">Killing Game</p>
+    <div id="start-options-box">
+        <div id="despair-button">
+            <p>Side: Despair</p>
+        </div>
+        <div id="house-of-cards-button">
+            <p>Side: House of Cards</p>
+        </div>
+    </div>
+</div>
+<script>
+    buttons.despairButton = function(){
+        $("#despair-button").on("click", function(){
+            states = ["despair","main","home"]
+            databaseObjects = [false,false,false]
+            customData = [false,false,false]
+            loadStates();
+            window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, "Despair Game", "/despair/main/home");
+        })
+    }
+    buttons.despairButton();
+    buttons.houseOfCardsButton = function(){
+        $("#house-of-cards-button").on("click", function(){
+            states = ["house-of-cards","main","home"]
+            databaseObjects = [false,false,false]
+            customData = [false,false,false]
+            loadStates();
+            window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, "House of Cards", "/house-of-cards/main/home");
+        })
+    }
+    buttons.houseOfCardsButton();
+</script>
+<animation>up</animation>
