@@ -75,7 +75,7 @@ app.post("/logout", async function(req,res){
 
 /* Home Page Loading */
 app.get("/", function(req,res){
-    res.render('base',{states: ["start"], databaseObjects: [false], customData: [false]});
+    res.render('base',{states: ["start","entrance"], databaseObjects: [false], customData: [false]});
 })
 
 /* Database Loading By Property */
