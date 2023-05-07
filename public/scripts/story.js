@@ -307,7 +307,7 @@ const createText = function($appendBox, eventId,index,sentText){
 const loadClickSignifier = function($appendBox){
     if(index<text.length-1){ 
             $(`#boxtext-${index}`).css("height",`${$(`#height-check-${index}`).outerHeight(true)}px`)  
-            $appendBox.append("<div id='click-signifier'><i class='fas fa-scroll fa-blink'></i></div>")
+            $appendBox.append("<div id='click-signifier'><i class='fa-solid fa-yin-yang spin'></i></div>")
             $("#click-signifier").css("justify-content","left")
             $("#click-signifier").css("padding-left","25px");
             if(!user.settings.pageScroll)

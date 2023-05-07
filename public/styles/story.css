@@ -185,6 +185,12 @@ form {
 }
 
 .title{
+    text-align: center;
     font-family: "Rock Salt";
     font-size: 32px;
+}
+
+.event-box{
+    height: 100%;
+    width: 100%;
 }

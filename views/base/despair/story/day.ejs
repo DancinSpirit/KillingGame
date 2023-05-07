@@ -1,4 +1,4 @@
-<div id = "day-<%=day.number%>" class="event-box">
+<div id = "event-<%=day._id%>" class="event-box">
     <%if(user.settings.pageScroll){%>
     <section id="page-1" class="page">
     <%}%>
@@ -18,6 +18,7 @@
     $("#story-tab").text(`Day <%=day.number%>`)
     index = -1;
     pageNum = 1;
+    eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
     text = JSON.parse(`<%-JSON.stringify(day.text)%>`); 
     loadEvent();
 </script>
