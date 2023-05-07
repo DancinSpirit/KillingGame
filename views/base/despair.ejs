@@ -1,6 +1,84 @@
 <div id="despair">
     <div id="nav">
-
+        <section id="left">
+            <section id="topleft">
+                <p id="left-text">DESPAIR ACADEMY</p>
+            </section>
+            <section id="bottomleft">
+                <section id="nav-buttons">
+                    <button class = "nav-button" id = "main-menu">
+                        Menu
+                    </button>
+                    <button class = "nav-button" id = "Story">
+                        Story
+                    </button>
+                    <button class = "nav-button" id = "E-Handbook">
+                        Handbook
+                    </button>
+                    <button class = "nav-button" id = "exit">
+                        Exit
+                    </button>
+                    <button id="music">
+                        <i class="fas fa-music"></i> 
+                    </button>
+                </section>
+            </section>
+        </section> 
+        <section id="right">
+            <section id="topright">
+                <p id = "topright-text">MAIN MENU</p>
+            </section>
+            <section id="bottomright">
+                <p id = "bottomright-text"></p>
+            </section>
+        </section>
     </div>
     <subcontainer></subcontainer>
 </div>
+<script>
+    buttons.mainMenu = function(){
+        $("#main-menu").on("click", function(){
+            newStates = ["despair","home","main-screen"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/home/main-screen"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.mainMenu();
+    buttons.story = function(){
+        $("#Story").on("click", function(){
+            newStates = ["despair","story","day"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: "6456e446d1acbaced414a62f"}]]
+            newCustomData = [false,false,false]
+            pageTitle = "Story"
+            url = "/despair/story/day"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.story();
+    buttons.navHandbook = function(){
+        $("#E-Handbook").on("click", function(){
+            newStates = ["despair","e-handbook","main"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/main"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navHandbook();
+    buttons.navExit = function(){
+        $("#exit").on("click", function(){
+            newStates = ["despair","home","start-screen"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/home/start-screen"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navExit();
+</script>
+<animation>down</animation>

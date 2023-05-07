@@ -1,0 +1,77 @@
+<div class="menu player-menu" id="main-menu">
+    <section class="option" id="continue">
+        Continue
+    </section>
+    <section class="option" id="story">
+        Story
+    </section>
+    <section class="option" id="handbook">
+        E-Handbook
+    </section>
+    <section class="option" id="exit-game">
+        Exit Game
+    </section>
+</div>
+<script>
+    buttons.continue = function(){
+        $("#continue").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#continue").on("click", function(){
+            playSound("Selected");
+        })
+    }
+    buttons.continue();
+    buttons.story = function(){
+        $("#story").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#story").on("click", function(){
+            playSound("Selected");
+        })
+        $("#story").on("click", function(){
+            newStates = ["despair","story","day"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: "6456e446d1acbaced414a62f"}]]
+            newCustomData = [false,false,false]
+            pageTitle = "Story"
+            url = "/despair/story/day"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.story();
+    buttons.handbook = function(){
+        $("#handbook").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#handbook").on("click", function(){
+            playSound("Selected");
+        })
+        $("#handbook").on("click", function(){
+            newStates = ["despair","e-handbook","main"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "E-Handbook"
+            url = "/despair/e-handbook/main"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.handbook();
+    buttons.exit = function(){
+        $("#exit-game").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#exit-game").on("click", function(){
+            playSound("Selected");
+        })
+        $("#exit-game").on("click", function(){
+            newStates = ["despair","home","start-screen"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/home/start-screen"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.exit();
+</script>
+<animation>mainMenu</animation>

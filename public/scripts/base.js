@@ -1,4 +1,5 @@
 let buttons = {};
+let continueEvent = true;
 
 const deactivateButtons = function(x){
     return new Promise(async function(resolve){
@@ -148,7 +149,7 @@ const loadComponent = async function(path, databaseObjects, customData){
 }
 
 const loadState = async function(x, animation){
-    if(!user.name&&states[1]!="login"){
+    if(!user.username&&states[1]!="login"){
         states = ["start","login"]
         databaseObjects = [false,false,false]
         customData = [false,false,false]
@@ -181,7 +182,11 @@ const loadState = async function(x, animation){
             }else{
                 $("body").css("background-position","center");
             }
-            $("body").css("background-image",`url("${background.replace("[TOP]","")}"`);
+            $("body").css("background-image",`url("/visuals/${background.replace("[TOP]","")}"`);
+        }
+        if(component.includes("<bgm>")){
+            let bgm = component.split("<bgm>")[1].split("</bgm>")[0];
+            loadMusic(bgm);
         }
         let previousState;
         if(x==0){
@@ -214,10 +219,20 @@ const loadState = async function(x, animation){
 }
 
 const stateChange = async function(newStates, newDatabaseObjects, newCustomData, pageTitle, url){
+    let oldStates = states;
+    console.log(oldStates);
     states = newStates;
     databaseObjects = newDatabaseObjects;
     customData = newCustomData;
-    loadStates();
+    if(states[0]!=oldStates[0]){
+        loadStates();
+    }else{
+        for(let x=0; x<states.length; x++){
+            if(states[x]!=oldStates[x]){
+                await loadState(x);
+            }
+        }
+    }
     window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, pageTitle, url);
 }
 
@@ -249,6 +264,7 @@ window.addEventListener('popstate',async function(event){
         }
         x++;
     }
+    console.log(startingIndex);
     for(let x=startingIndex; x<event.state.states.length; x++){
         states = event.state.states;
         databaseObjects = event.state.databaseObjects;

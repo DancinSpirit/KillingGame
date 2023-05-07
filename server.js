@@ -35,9 +35,7 @@ app.use(session({
 
 /* Send User Information */
 app.use(async function(req,res,next){
-    req.session.currentUser = false;
     if(req.session.currentUser){
-        req.session.currentUser = await db.User.findById(req.session.currentUser._id).populate("playerCharacters")
         app.locals.user = req.session.currentUser;
     }else{
         app.locals.user = false;

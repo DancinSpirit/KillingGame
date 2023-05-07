@@ -1,9 +1,13 @@
+@font-face {
+    font-family: 'goodbyeDespair';
+    src: URL('../fonts/goodbyeDespair.ttf') format('truetype');
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     user-select: none;
-    border:white 1px solid;
 }
 html{
     height: 100%;
@@ -15,10 +19,11 @@ body{
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-    transition: 1000ms;
+    background-position: top;
+    transition: background-image 0.2s ease-in-out;
     background-color: black;
     color:white;
+
 }
 .sub-base-container-container{
     height: 100%;
@@ -37,6 +42,6 @@ body{
     justify-content: center;
     align-items: center;
 }
-animation, component, background{
+animation, component, background, bgm{
     display: none;
 }

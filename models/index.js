@@ -20,5 +20,6 @@ mongoose.connection.on("error", function(err){
 });
 
 module.exports = {
-
+    User: require("./User"),
+    Day: require("./Day")
 }

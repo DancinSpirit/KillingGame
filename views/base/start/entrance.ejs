@@ -12,23 +12,23 @@
 <script>
     buttons.despairButton = function(){
         $("#despair-button").on("click", function(){
-            states = ["despair","home"]
-            databaseObjects = [false,false,false]
-            customData = [false,false,false]
+            newStates = ["despair","home","start-screen"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
             pageTitle = "Despair Game"
-            url = "/despair/home"
-            stateChange(states,databaseObjects,customData,pageTitle,url)
+            url = "/despair/home/start-screen"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
         })
     }
     buttons.despairButton();
     buttons.houseOfCardsButton = function(){
         $("#house-of-cards-button").on("click", function(){
-            states = ["house-of-cards","home"]
-            databaseObjects = [false,false,false]
-            customData = [false,false,false]
+            newStates = ["house-of-cards","home"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
             pageTitle = "House of Cards"
             url = "/house-of-cards/home"
-            stateChange(states,databaseObjects,customData,pageTitle,url)
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
         })
     }
     buttons.houseOfCardsButton();

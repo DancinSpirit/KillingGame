@@ -1,0 +1,24 @@
+<div class="menu" id="start-menu">
+    <section class="option" id="start-game">
+        Start Game
+    </section>
+</div>
+<script>
+    buttons.startGame = function(){
+        $("#start-game").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#start-game").on("click", function(){
+            newStates = ["despair","home","main-screen"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Despair Game"
+            url = "/despair/home/main-screen"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+            playSound("Gun");
+            playSound("Selected");
+        })
+    }
+    buttons.startGame();
+</script>
+<animation>mainMenu</animation>

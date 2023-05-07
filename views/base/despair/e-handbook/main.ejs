@@ -1,0 +1,74 @@
+<div id="handbook-main">
+    <section id="top-row" class="row">
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="report-card-button">
+                <i class="handbook-img fa-solid fa-users"></i>
+                <p class="handbook-text">Student Report Cards</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="presents-button">
+                <i class="handbook-img fa-solid fa-gift"></i>
+                <p class="handbook-text">Presents</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="game-rules-button">
+                <i class="handbook-img fa-solid fa-folder-open"></i>
+                <p class="handbook-text">Mononeko Report</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="game-rules-button">
+                <i class="fa-solid fa-gun handbook-img"></i>
+                <p class="handbook-text">Truth Bullets</p>
+            </div>
+        </div>
+    </section>
+    <section id="bottom-row" class="row">
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="school-rules-button">
+                <i class="handbook-img fa-solid fa-book"></i>
+                <p class="handbook-text">School Rules</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="daily-mechanics-button">
+                <i class="handbook-img fa-solid fa-book"></i>
+                <p class="handbook-text">Daily Mechanics</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="game-rules-button">
+                <i class="handbook-img fa-solid fa-book"></i>
+                <p class="handbook-text">Investigation Rules</p>
+            </div>
+        </div>
+        <div class="handbook-button-container">
+            <div class="handbook-button" id="trial-rules-button">
+                <i class="handbook-img fa-solid fa-book"></i>
+                <p class="handbook-text">Trial Rules</p>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    buttons.reportCard = function(){
+        $("#report-card-button").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#report-card-button").on("click", function(){
+            playSound("Selected");
+        })
+        $("#report-card-button").on("click", function(){
+            newStates = ["despair","e-handbook","report-card"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/report-card"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.reportCard();
+</script>
+<animation>handbookMenu</animation>

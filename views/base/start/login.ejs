@@ -1,3 +1,39 @@
-<div>
-    TEST
+<div id="login">
+    <form class="form" id="login-form">
+        <p class="center-form form-title">Login</p>
+        <p class="right-form">Username: <input id="username-input" type="text" name="username" class="form-input"></p>
+        <p class="right-form">Password: <input id="password-input" type="password" name="password" class="form-input"></p>
+        <p class="center-form form-title" id="guest-login">Continue As Guest</p>
+        <p class="center-form"><input type="submit" value="Login" class="submit-button"></p>
+    </form>
 </div>
+<script>
+    $("#login-form").submit(async function(e){
+        e.preventDefault();
+        let attempt = await login($("#username-input").val(),$("#password-input").val())
+        if(attempt.loggedIn){
+            states = ["start","entrance"]
+            databaseObjects = [false,false];
+            customData = [false,false];
+            pageTitle = "Entrance";
+            url = "/start/entrance"
+            stateChange(states,databaseObjects,customData,pageTitle,url);
+        }else{
+            if($("#error-message").length){
+                $("#error-message").text(attempt.error)
+            }else{
+                $("#login-form").append(`<p id='error-message'>${attempt.error}</p>`) 
+            }
+        }
+    })
+    $("#guest-login").on("click",async function(){
+        await login("Guest","guest");
+        states = ["start","entrance"]
+        databaseObjects = [false,false];
+        customData = [false,false];
+        pageTitle = "Entrance";
+        url = "/start/entrance"
+        stateChange(states,databaseObjects,customData,pageTitle,url);
+    })
+</script>
+<animation>up</animation>
