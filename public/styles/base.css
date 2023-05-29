@@ -2,7 +2,18 @@
     font-family: 'goodbyeDespair';
     src: URL('../fonts/goodbyeDespair.ttf') format('truetype');
 }
-
+@font-face {
+    font-family: 'candara';
+    src: URL('../fonts/Candara.TTF');
+}
+@font-face {
+    font-family: 'storyDespair';
+    src: URL('../fonts/storyDespair.ttf')
+}
+@font-face {
+    font-family: 'hobbyHorse';
+    src: URL('../fonts/Hobby-Horse-NF.woff')
+}
 *{
     margin: 0;
     padding: 0;

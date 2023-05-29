@@ -7,6 +7,9 @@ const schema = new mongoose.Schema(
     firstName: {type: String},
     lastName: {type: String},
     gamemaster: {type: Boolean},
+    despair: {
+      reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
+    },
     settings: {
       textSpeed: {type: Number, default: 50},
       pageSpeed: {type: Number, default: 1000},

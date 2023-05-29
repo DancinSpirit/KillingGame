@@ -1,0 +1,125 @@
+#report-card{
+    display:flex;
+    flex-direction: column;
+    height:100%;
+    width:100%;
+}
+#report-card-nav{
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    width: 100%;
+}
+#report-nav-top{
+    display:flex;
+    flex-direction:row;
+    height: 7vh;
+    width: 100%;
+    background-color: steelblue;
+    justify-content: space-between;
+}
+
+#report-nav-bottom{
+    display:flex;
+    flex-direction:row;
+    height: calc(100% - 7vh);
+    width: 100%;
+    padding-left: 20px;
+    background-color: rgb(52, 100, 141);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.report-nav-student{
+    border:solid white 1px;
+    aspect-ratio : 1 / 1;
+    height: 100%;
+    margin-right: 20px;
+}
+
+#report-nav-student-name{
+    align-self: center;
+    width: inherit;
+    text-align: center;
+    margin-right: 40px;
+    font-family: 'goodbyeDespair';
+    font-size: 30px;
+}
+
+#report-card-title{
+    padding-left: 20px;
+    font-family: 'candara';
+    font-size: 5.5vh;
+    align-self: center;
+    font-style: oblique;
+    margin-bottom: 5px;
+}
+
+#report-card-handbook-title{
+    padding-right: 20px;
+    font-size: 20px;
+    font-family: 'storyDespair';
+    padding-top: 10px;
+}
+
+
+#report-card-avatar{
+    height: 100%;
+    width: 40%;
+    border: solid 1px white;
+}
+#sub-report-card-container-container{
+    height: 80%;
+    flex-direction: row;
+}
+#report-card-info{
+    height: 100%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+#report-card-info-name{
+    height: 90px;
+    width: 100%;
+    font-family: 'hobbyHorse';
+    font-size: 70px;
+    padding-top: 5px;
+    padding-left: 20px;
+    border: solid 1px white;
+    background-color: slategray;
+
+}
+#report-card-info-pages{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height:10%;
+    border: solid 1px white;
+    border-right: 2px solid white;
+}
+.report-card-info-box{
+    border: solid 1px white;
+    width: 16.66%;
+    height: 100%;
+    background-color: #42576c;
+
+}
+#report-card-info-box-6{
+    border-right: none;
+}
+#sub-report-card-info-container-container{
+    height: calc(90% - 90px);
+    background-color: #344659;
+    border: solid white 1px;
+}
+
+.report-info-page{
+    background-color: black;
+    height: 100%;
+    width: 100%;
+}
+
+.report-card-img{
+    font-size: 5.5vh;
+    transform: translateY(5px);
+}

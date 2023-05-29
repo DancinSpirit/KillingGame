@@ -194,3 +194,101 @@ form {
     height: 100%;
     width: 100%;
 }
+
+
+/* CHOICES */
+#cutaway-image-container, #choice-container{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top:0;
+    left:0;
+    display: none;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #choice{
+    background-color:rgb(36, 35, 35);
+    color: white;
+    padding: 20px;
+    border: solid 3px white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .choice-title{
+    font-family: 'Philosopher';
+    text-align: center;
+    font-size: 40px;
+    padding-bottom: 10px;
+  }
+  
+  .choice-description{
+    padding-bottom: 10px;
+    font-size: 17px;
+    font-family: "Jura";
+    font-style: italic;
+  }
+  
+  .choice-option{
+    text-align: center;
+    border: solid 3px white;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: -webkit-fill-available;
+    font-family: "Arial";
+  }
+  .unchosen-option{
+    border-color: rgb(110, 110, 110);
+    color: rgb(110, 110, 110);
+  }
+  .chosen-option{
+    cursor: pointer;
+  }
+  .chosen-option:hover{
+    border-color: rgb(255, 252, 210);
+    color: rgb(255, 252, 210);
+  }
+  .continue-button{
+    cursor:pointer;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    border: solid 3px white;
+    margin-top: 10px;
+    font-family: "Arial";
+  }
+  .continue-button:hover{
+    border-color: rgb(255, 252, 210);
+    color: rgb(255, 252, 210);
+  }
+
+  /* CHARACTER */
+.character-boxtext{
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+.self-boxtext{
+    justify-content: right;
+}
+.character-box{
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+}
+.character-avatar{
+    background: white;
+    height: 70px;
+    width: 70px;
+    margin-bottom: 5px;
+}

@@ -105,3 +105,8 @@
     top: calc(25% - 12.5vh);
     display: none;
 }
+
+#report-card-title{
+    padding-left: 20px;
+    font-family: 'candara';
+}

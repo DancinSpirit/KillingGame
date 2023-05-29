@@ -91,7 +91,7 @@ const nextLine = async function(){
             let sentText = text[index].replace("[","").split(`${command}]`)[1];
             switch(command){
                 case "SCENE TRANSITION":
-                    await loadBackground("/images/" + sentText + ".jpg")
+                    await loadBackground("/visuals/" + sentText)
                     nextLine();
                     break;
                 case "PHILOSOPHER":
@@ -159,7 +159,7 @@ const nextLine = async function(){
                         },500)
                     })
                     break;
-                case "PLAYER ACTION":
+                case "OPTION":
                     //Description|Title|NUMofOPTIONS|{OPTIONS WITH CHOSEN OPTION HAVING <CHOSEN>}
                     $("#choice").empty();
                     $("#choice").css("color","white");
@@ -170,14 +170,13 @@ const nextLine = async function(){
                     $("#choice").append(`<p class='choice-title'>${sentText.split("|")[1]}</p>`)
                     $("#choice").append(`<p class='choice-description'>${sentText.split("|")[0]}</p>`)
                     for(let x=0; x<numberOfOptions; x++){
-                        console.log("HM<?")
                         if(sentText.split("|")[x+3].startsWith("<CHOSEN>")){
-                            console.log("HELLO?")
                             $("#choice").append(`<div class='choice-option chosen-option'>${sentText.split("|")[x+3].replace("<CHOSEN>","")}</div>`)
                             $(".chosen-option").on("click",function(){
                                 $("#choice-container").css("display","none");
                                 ctrlButton = true;
                                 enterButton = true;
+                                nextLine();
                             })
                         }
                         else
@@ -233,7 +232,19 @@ const nextLine = async function(){
                     break;
                 case "AUTO BREAK":
                     //this is to prevent an automatic next line   
-                    break; 
+                    break;
+                case "CHARACTER":
+                    //character.firstName|Text Name|Dialogue
+                    let characterName = sentText.split("|")[1];
+                    sentText = sentText.split("|")[2];
+                    //puts self text on other side, maybe make setting for it idk
+/*                     if(characterName=="You"){
+                        $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext self-boxtext"><span>"${sentText}"</span><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span></p>`); 
+                    }else{ */
+                        $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 
+/*                     } */
+                    //need to add typewriter functionality
+                    break;
                 default:
                     $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${text[index]}</p>`);
                     if(user.settings.pageScroll){

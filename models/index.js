@@ -21,5 +21,7 @@ mongoose.connection.on("error", function(err){
 
 module.exports = {
     User: require("./User"),
-    Day: require("./Day")
+    Day: require("./Day"),
+    Character: require("./Character"),
+    ReportCard: require("./ReportCard")
 }
