@@ -3,11 +3,14 @@
         Ishikawa Shiori
     </div>
     <div id="report-card-info-pages">
-        <%for(let x=1; x<7; x++){%>
+        <%for(let x=1; x<6; x++){%>
             <div class = "report-card-info-box" id="report-card-info-box-<%=x%>">
-
+                <%=x%>
             </div>
         <%}%>
+        <div class = "report-card-info-box" id="report-card-info-box-6">
+            Skills
+        </div>
         <!-- 6 is for skill info -->
     </div>
     <subcontainer></subcontainer>
@@ -16,7 +19,6 @@
             
 </div>
 <script>
-    $("#academy-logo").css("transition","1000ms");
-    $("#academy-logo").css("transform","translate(27vw,5vh)");
+
 </script>
-<animation>right</animation>
+<animation>reportCardInfo</animation>

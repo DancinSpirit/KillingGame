@@ -70,5 +70,22 @@
         })
     }
     buttons.reportCard();
+    buttons.presents = function(){
+        $("#presents-button").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#presents-button").on("click", function(){
+            playSound("Selected");
+        })
+        $("#presents-button").on("click", function(){
+            newStates = ["despair","e-handbook","presents"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/presents"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.presents();
 </script>
 <animation>handbookMenu</animation>

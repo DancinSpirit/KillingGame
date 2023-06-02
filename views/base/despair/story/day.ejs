@@ -2,24 +2,23 @@
     <%if(user.settings.pageScroll){%>
     <section id="page-1" class="page">
     <%}%>
-        <p class="boxtext big-boy big-boy-event"></p>
         <div id="title-box-event">
-            <p class="boxtext title">Day <%=day.number%></p>
-            <div id='click-signifier'><i class="fa-solid fa-yin-yang spin"></i></i></div>
+            <p class="boxtext title">Day <%=day.number%> - <%=time%></p>
+            <div id='click-signifier'><i class="fa-solid fa-yin-yang spin"></i></div>
         </div>
     <%if(user.settings.pageScroll){%>
     </section>
     <%}%>
 </div> 
-<div id = "event-<%=day.number%>-height-box" class = "height-box">
+<div id = "event-<%=day._id%>-height-box" class = "height-box">
 
 </div>
 <script>
-    $("#story-tab").text(`Day <%=day.number%>`)
+    $("#story-tab").text(`Day <%=day.number%> - <%=time%>`)
     index = -1;
     pageNum = 1;
     eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
-    text = JSON.parse(`<%-JSON.stringify(day.text)%>`); 
+    text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`); 
     loadEvent();
 </script>
 <animation>left</animation>

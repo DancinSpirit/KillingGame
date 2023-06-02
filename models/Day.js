@@ -4,7 +4,7 @@ const schema = new mongoose.Schema(
   {
     chapter: {type: Number},
     number: {type: Number},
-    text: [{type: String}],
+    morning: [{type: String}],
     startingBackground: {type: String},
     startingMusic: {type: String}
   },

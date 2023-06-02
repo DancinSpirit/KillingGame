@@ -6,7 +6,24 @@
         <subcontainer></subcontainer>
         <section class="handbook-bottom">
             <div id="handbook-nav">
-                Insert Quick Nav Buttons Here. This will slide in on every page but main
+                <div id="nav-report-card" class="handbook-nav-button">
+                    Report Cards
+                </div>
+                <div id="nav-presents" class="handbook-nav-button">
+                    Presents
+                </div>
+                <div id="nav-mononeko" class="handbook-nav-button">
+                    Mononeko Report
+                </div>
+                <div id="nav-truth"class="handbook-nav-button">
+                    Truth Bullets
+                </div>
+                <div id="nav-rules"class="handbook-nav-button">
+                    Rules
+                </div>
+                <div id="nav-menu" class="handbook-nav-button">
+                    Handbook Menu
+                </div>
             </div>
         </section>
         <div id="academy-logo">
@@ -15,6 +32,56 @@
     </div>
 </div>
 <script>
-
+    buttons.navReportCard = function(){
+        $("#nav-report-card").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#nav-report-card").on("click", function(){
+            playSound("Selected");
+        })
+        $("#nav-report-card").on("click", function(){
+            newStates = ["despair","e-handbook","report-card","report-card-info","page-one"]
+            newDatabaseObjects = [false,false,false,user.despair.reportCards[0],false]
+            newCustomData = [false,false,false,false,false]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/report-card/report-card-info/page-one"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navReportCard();
+    buttons.navMenu = function(){
+        $("#nav-menu").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#nav-menu").on("click", function(){
+            playSound("Selected");
+        })
+        $("#nav-menu").on("click", function(){
+            newStates = ["despair","e-handbook","main"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "E-Handbook"
+            url = "/despair/e-handbook/main"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navMenu();
+    buttons.navPresents = function(){
+        $("#nav-presents").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#nav-presents").on("click", function(){
+            playSound("Selected");
+        })
+        $("#nav-presents").on("click", function(){
+            newStates = ["despair","e-handbook","presents"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "E-Handbook"
+            url = "/despair/e-handbook/presents"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navPresents();
 </script>
 <animation>handbook</animation>

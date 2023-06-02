@@ -8,9 +8,28 @@
             <%for(let x=0; x<16; x++){%>
                 <div class="report-nav-student"id="student-<%=x+1%>"></div>
             <%}%>
-                <div id="report-nav-student-name">Mouseover Name</div>
+                <div id="report-nav-student-name"></div>
         </section>
     </div>
     <subcontainer></subcontainer>
 </div>
-<animation>down</animation>
+<script>
+    let loadReportCards = async function(){
+        for(let x=0; x<user.reportCards.length; x++){
+            let reportCard = await loadDatabaseObject("ReportCard",user.reportCards[x]);
+            console.log
+            $(`#student-${x+1}`).css("background-image",`url(/avatars/${reportCard.firstName}.png)`)
+            $(`#student-${x+1}`).hover(function(){
+                if(reportCard.japanese){
+                    $("#report-nav-student-name").text(reportCard.lastName + " " + reportCard.firstName)
+                }else{
+                    $("#report-nav-student-name").text(reportCard.firstName + " " + reportCard.lastName)
+                }
+            },function(){
+                $("#report-nav-student-name").text("");
+            })
+        }
+    }
+    loadReportCards();
+</script>
+<animation>reportCard</animation>

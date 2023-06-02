@@ -73,7 +73,7 @@ const applyClass = async function(sentText, eventId, index, clas, newPageBoolean
             if(newPageBoolean){
                 newPage(eventId);
             }else{
-                pageCheck(eventId, index, sentText);
+                pageCheck(eventId, index);
             }
             createText($(`#page-${pageNum}`),eventId,index,sentText);
         }else{
@@ -234,21 +234,31 @@ const nextLine = async function(){
                     //this is to prevent an automatic next line   
                     break;
                 case "CHARACTER":
+                    //functional typewriterless:  $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 
                     //character.firstName|Text Name|Dialogue
+                    let firstName = sentText.split("|")[0]
                     let characterName = sentText.split("|")[1];
                     sentText = sentText.split("|")[2];
                     //puts self text on other side, maybe make setting for it idk
 /*                     if(characterName=="You"){
                         $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext self-boxtext"><span>"${sentText}"</span><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span></p>`); 
                     }else{ */
-                        $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 
+                    $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`);
+                    if(user.settings.pageScroll){
+                        pageCheck(eventId, index);
+                        $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar" style="background-image:url('/avatars/${firstName}.png')"></span><span class="character-name">${characterName}</span></span><span id="special-text-box-${index}"></span></p>`); 
+                        createText($(`#special-text-box-${index}`),eventId,index,sentText);
+                    }else{
+                        createText($(`#event-${eventId}`),eventId,index,text[index]);
+                    }
+                    printLine(sentText); 
 /*                     } */
                     //need to add typewriter functionality
                     break;
                 default:
                     $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${text[index]}</p>`);
                     if(user.settings.pageScroll){
-                        pageCheck(eventId, index, text[index]);
+                        pageCheck(eventId, index);
                         createText($(`#page-${pageNum}`),eventId,index,text[index]);
                     }else{
                         createText($(`#event-${eventId}`),eventId,index,text[index]);
@@ -258,7 +268,7 @@ const nextLine = async function(){
         }else{
             $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${text[index]}</p>`);
             if(user.settings.pageScroll){
-                pageCheck(eventId, index, text[index]);
+                pageCheck(eventId, index);
                 createText($(`#page-${pageNum}`),eventId,index,text[index]);
             }else{
                 createText($(`#event-${eventId}`),eventId,index,text[index]);
@@ -287,14 +297,14 @@ const printLine = async function(sentText){
 const pageCheck = function(eventId){
     let pageHeight = 0;
     for(let x=0; x<$(`#page-${pageNum}`).children().length; x++){
-        if($($(`#page-${pageNum}`).children()[x]).hasClass("big-boy")){
-
-        }else{
+        if($($(`#page-${pageNum}`).children()[x]).hasClass("character-boxtext")){
             pageHeight = pageHeight+$($(`#page-${pageNum}`).children()[x]).height()+20;
+        }else{
+            pageHeight = pageHeight+$($(`#page-${pageNum}`).children()[x]).height()+20+32;
         }
     }
     pageHeight = pageHeight+$(`#height-check-${index}`).height()+20+36;
-    if(pageHeight>$("#sub-story").height()){
+    if(pageHeight>$("#sub-story").height()-20){
         newPage(eventId);
     }
 }
@@ -305,14 +315,19 @@ const newPage = function(eventId){
     $(`#page-${pageNum}`).css("height","auto");
     pageNum++;
     $(`#event-${eventId}`).append(`<section id="page-${pageNum}" class = 'page'></section>`)
+    $(`#page-${pageNum}`).height($("#sub-story").height())
 }
 
 const createText = function($appendBox, eventId,index,sentText){
-    $appendBox.append(`<p id="boxtext-${index}" style="height: ${$(`#height-check-${index}`).outerHeight(true)+36}px" class="boxtext"></p>`);
+    if($appendBox.attr("id")==`special-text-box-${index}`){
+        $appendBox.append(`<p id="boxtext-${index}" class="boxtext"></p>`);
+    }else{
+        $appendBox.append(`<p id="boxtext-${index}" style="height: ${$(`#height-check-${index}`).outerHeight(true)+36}px" class="boxtext"></p>`);
+    }
     if(!user.settings.pageScroll)
     $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight"));
     else
-    $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-20-$("#sub-story").height());
+    $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
 }
 
 const loadClickSignifier = function($appendBox){
@@ -324,7 +339,7 @@ const loadClickSignifier = function($appendBox){
             if(!user.settings.pageScroll)
             $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight"));
             else
-            $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-20-$("#sub-story").height());
+            $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
             $(".boxtext").css("height","auto")
     }
 }

@@ -32,7 +32,7 @@
         $("#story").on("click", function(){
             newStates = ["despair","story","day"]
             newDatabaseObjects = [false,false,[{name: "Day", id: "6456e446d1acbaced414a62f"}]]
-            newCustomData = [false,false,false]
+            newCustomData = [false,false,{time: "Morning"}]
             pageTitle = "Story"
             url = "/despair/story/day"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)

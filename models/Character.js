@@ -4,6 +4,7 @@ const schema = new mongoose.Schema(
   {
     firstName: {type: String},
     lastName: {type: String},
+    japanese: {type: Boolean, default: false},
     image: {type: String},
     avatar: {type: String},
     ultimate: {
@@ -21,7 +22,7 @@ const schema = new mongoose.Schema(
     learnedSkills: {},
     nekoCoins: {type: Number},
     likes: {type: String},
-    dislikes: {type: String}
+    dislikes: {type: String},
   },
   {timestamps: true}
 )

@@ -1,0 +1,66 @@
+#presents{
+    height: 95%;
+    width: 100%;
+    border:solid white 1px;
+    display: flex;
+    flex-direction: column;
+    background-color: #242424;
+}
+#present-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+}
+
+#presents-title{
+    height: 5%;
+    width: 100%;
+    background-color: black;
+    border-top: solid 1px white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-family: 'goodbyeDespair';
+}
+
+.presents-row{
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.present{
+    height: 80%;
+    aspect-ratio: 1 / 1;
+    border: solid 1px white;
+}
+
+#presents-description{
+    display: flex;
+    flex-direction: column;
+    height: 40%;
+    background-color: gray;
+    border-top: solid 1px white;
+}
+
+#present-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'goodbyeDespair';
+    font-size: 25px;
+    height: 20%;
+    width: 100%;
+    background-color: #9f9f9f;
+}
+
+#present-description{
+    height: 80%;
+    width: 100%;
+}
