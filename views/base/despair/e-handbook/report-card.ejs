@@ -7,14 +7,31 @@
         <section id="report-nav-bottom">
             <%for(let x=0; x<16; x++){%>
                 <div class="report-nav-student"id="student-<%=x+1%>"></div>
-            <%}%>
+                <script>
+                    buttons[`reportNavStudent<%=x%>`] = async function(){
+                        $(`#student-<%=x+1%>`).on("mouseover",function(){
+                            playSound("Selecting");
+                        })
+                        $(`#student-<%=x+1%>`).on("click", function(){
+                            playSound("Selected");
+                            newStates = ["despair","e-handbook","report-card","report-card-info","page-one"]
+                            newDatabaseObjects = [false,false,false,[{name:"ReportCard",id:user.reportCards[<%=x%>]}],[{name:"ReportCard",id:user.reportCards[<%=x%>]}]]
+                            newCustomData = [false,false,false,false,false]
+                            pageTitle = "Killing Game"
+                            url = "/despair/e-handbook/report-card/report-card-info/page-one"
+                            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+                        })
+                    }
+                    buttons.reportNavStudent<%=x%>();
+                </script>
+                <%}%>
                 <div id="report-nav-student-name"></div>
         </section>
     </div>
     <subcontainer></subcontainer>
 </div>
 <script>
-    let loadReportCards = async function(){
+    buttons.loadReportCards = async function(){
         for(let x=0; x<user.reportCards.length; x++){
             let reportCard = await loadDatabaseObject("ReportCard",user.reportCards[x]);
             console.log
@@ -30,6 +47,6 @@
             })
         }
     }
-    loadReportCards();
+    buttons.loadReportCards();
 </script>
 <animation>reportCard</animation>

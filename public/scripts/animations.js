@@ -20,6 +20,23 @@ animations.left = async function(state, component){
         },user.settings.pageSpeed)
     })
 }
+animations.day = async function(state, component){
+    return new Promise((resolve)=>{
+        $(`#sub-${state}`).attr("id",`old-sub-${state}`);
+        $(`#sub-${state}-container`).append(`<section id="sub-${state}" class="sub-base"></section>`)
+        $(`#sub-${state}`).html(component);
+        $(`#sub-${state}-container`).css("transition",`${user.settings.pageSpeed}ms`);
+        $(`#sub-${state}-container`).css("transform","translateX(-50%)")
+        setTimeout(function(){
+            $(".event-box").css("width","100%");
+            $(".height-box").css("display","block");
+            $(`#sub-${state}-container`).css("transition","0ms");
+            $(`#old-sub-${state}`).remove();
+            $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
+            resolve();
+        },user.settings.pageSpeed)
+    })
+}
 animations.right = async function(state, component){
     return new Promise((resolve)=>{
         $(`#sub-${state}`).attr("id",`old-sub-${state}`);

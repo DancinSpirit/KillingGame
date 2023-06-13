@@ -42,6 +42,7 @@
 }
 #sub-story, #old-sub-story{
     overflow-y: auto;
+    width: 100%;
 }
 .bottom {
     height: 100%;
@@ -49,6 +50,10 @@
     bottom: 0;
     width: 100%;
     transition: 500ms;
+}
+
+.page{
+    padding-top: 10px;
 }
 
 .boxtext {
@@ -192,15 +197,18 @@ form {
     text-align: center;
     font-family: "Rock Salt";
     font-size: 32px;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .event-box{
     height: 100%;
-    width: 100%;
+    width: 50%;
 }
 
 .height-box{
+    height: 100%;
+    width: 100%;
+    transform: translateX(100%);
     display: none;
 }
 

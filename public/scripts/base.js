@@ -220,15 +220,16 @@ const loadState = async function(x, animation){
 
 const stateChange = async function(newStates, newDatabaseObjects, newCustomData, pageTitle, url){
     let oldStates = states;
-    console.log(oldStates);
+    let oldDatabaseObjects = databaseObjects;
+    let oldCustomData = customData;
     states = newStates;
     databaseObjects = newDatabaseObjects;
     customData = newCustomData;
-    if(states[0]!=oldStates[0]){
+    if(states[0]!=oldStates[0]||JSON.stringify(databaseObjects[0])!=JSON.stringify(oldDatabaseObjects[0])||JSON.stringify(customData[0])!=JSON.stringify(oldCustomData[0])){
         loadStates();
     }else{
         for(let x=0; x<states.length; x++){
-            if(states[x]!=oldStates[x]){
+            if(states[x]!=oldStates[x]||JSON.stringify(databaseObjects[x])!=JSON.stringify(oldDatabaseObjects[x])||JSON.stringify(customData[x])!=JSON.stringify(oldCustomData[x])){
                 await loadState(x);
             }
         }

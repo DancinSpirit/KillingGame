@@ -1,6 +1,10 @@
 <div id="report-card-info">
     <div id="report-card-info-name">
-        Ishikawa Shiori
+        <%if(reportcard.japanese){%>
+            <%=reportcard.lastName%> <%=reportcard.firstName%>
+        <%}else{%>
+            <%=reportcard.firstName%> <%=reportcard.lastName%>
+        <%}%>
     </div>
     <div id="report-card-info-pages">
         <%for(let x=1; x<6; x++){%>
@@ -19,6 +23,41 @@
             
 </div>
 <script>
-
+    buttons.reportCardInfoPages = function(){
+        for(let x=1; x<6; x++){
+            $(`#report-card-info-box-${x}`).on("mouseover",function(){
+                playSound("Selecting");
+            })
+            $(`#report-card-info-box-${x}`).on("click", function(){
+                playSound("Selected");
+                let newPage;
+                if(x==1){
+                    newPage = "page-one";
+                }
+                if(x==2){
+                    newPage = "page-two";
+                }
+                if(x==3){
+                    newPage = "page-three";
+                }
+                if(x==4){
+                    newPage = "page-four";
+                }
+                if(x==5){
+                    newPage = "page-five";
+                }
+                if(x==6){
+                    newPage = "page-six";
+                }
+                newStates = ["despair","e-handbook","report-card","report-card-info",newPage]
+                newDatabaseObjects = [false,false,false,databaseObjects[3],databaseObjects[4]]
+                newCustomData = [false,false,false,false,false]
+                pageTitle = "Killing Game"
+                url = "/despair/e-handbook/report-card/report-card-info/" + newPage;
+                stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+            })
+        }
+    }
+    buttons.reportCardInfoPages();
 </script>
 <animation>reportCardInfo</animation>

@@ -244,6 +244,7 @@ const nextLine = async function(){
                         $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext self-boxtext"><span>"${sentText}"</span><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span></p>`); 
                     }else{ */
                     $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`);
+                    console.log($("#height-check-" + index).height())
                     if(user.settings.pageScroll){
                         pageCheck(eventId, index);
                         $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar" style="background-image:url('/avatars/${firstName}.png')"></span><span class="character-name">${characterName}</span></span><span id="special-text-box-${index}"></span></p>`); 
@@ -257,6 +258,7 @@ const nextLine = async function(){
                     break;
                 default:
                     $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${text[index]}</p>`);
+                    console.log($("#height-check-" + index).height())
                     if(user.settings.pageScroll){
                         pageCheck(eventId, index);
                         createText($(`#page-${pageNum}`),eventId,index,text[index]);
@@ -267,6 +269,7 @@ const nextLine = async function(){
             }
         }else{
             $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${text[index]}</p>`);
+            console.log($("#height-check-" + index).height())
             if(user.settings.pageScroll){
                 pageCheck(eventId, index);
                 createText($(`#page-${pageNum}`),eventId,index,text[index]);
@@ -295,16 +298,8 @@ const printLine = async function(sentText){
 }
 
 const pageCheck = function(eventId){
-    let pageHeight = 0;
-    for(let x=0; x<$(`#page-${pageNum}`).children().length; x++){
-        if($($(`#page-${pageNum}`).children()[x]).hasClass("character-boxtext")){
-            pageHeight = pageHeight+$($(`#page-${pageNum}`).children()[x]).height()+20;
-        }else{
-            pageHeight = pageHeight+$($(`#page-${pageNum}`).children()[x]).height()+20+32;
-        }
-    }
-    pageHeight = pageHeight+$(`#height-check-${index}`).height()+20+36;
-    if(pageHeight>$("#sub-story").height()-20){
+    console.log($(`#height-check-${index}`).height());
+    if($("#page-"+pageNum).outerHeight()+$(`#height-check-${index}`).outerHeight()+54>$("#sub-story").height()){
         newPage(eventId);
     }
 }
@@ -312,33 +307,28 @@ const pageCheck = function(eventId){
 const newPage = function(eventId){
     $(".big-boy").css("transition","0ms");
     $("#title-box-event").css("transition","0ms");
+    $(`#scroll-screen-${pageNum}`).css("height","auto");
     $(`#page-${pageNum}`).css("height","auto");
     pageNum++;
-    $(`#event-${eventId}`).append(`<section id="page-${pageNum}" class = 'page'></section>`)
-    $(`#page-${pageNum}`).height($("#sub-story").height())
+    $(`#event-${eventId}`).append(`<section id="scroll-screen-${pageNum}"><section id="page-${pageNum}" class = 'page'></section></section>`)
+    $(`#scroll-screen-${pageNum}`).height($("#sub-story").height())
 }
 
 const createText = function($appendBox, eventId,index,sentText){
     if($appendBox.attr("id")==`special-text-box-${index}`){
         $appendBox.append(`<p id="boxtext-${index}" class="boxtext"></p>`);
     }else{
-        $appendBox.append(`<p id="boxtext-${index}" style="height: ${$(`#height-check-${index}`).outerHeight(true)+36}px" class="boxtext"></p>`);
+        $appendBox.append(`<p id="boxtext-${index}" style="height: ${$(`#height-check-${index}`).outerHeight(true)+54}px" class="boxtext"></p>`);
     }
-    if(!user.settings.pageScroll)
-    $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight"));
-    else
     $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
 }
 
 const loadClickSignifier = function($appendBox){
     if(index<text.length-1){ 
-            $(`#boxtext-${index}`).css("height",`${$(`#height-check-${index}`).outerHeight(true)}px`)  
+            $(`#boxtext-${index}`).css("height",`${$(`#height-check-${index}`).outerHeight(true)+54}px`)  
             $appendBox.append("<div id='click-signifier'><i class='fa-solid fa-yin-yang spin'></i></div>")
             $("#click-signifier").css("justify-content","left")
             $("#click-signifier").css("padding-left","25px");
-            if(!user.settings.pageScroll)
-            $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight"));
-            else
             $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
             $(".boxtext").css("height","auto")
     }
