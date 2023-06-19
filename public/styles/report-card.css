@@ -73,6 +73,9 @@
     height: 100%;
     width: 40%;
     border: solid 1px white;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 #sub-report-card-container-container{
     height: 80%;

@@ -62,7 +62,7 @@
         })
         $("#report-card-button").on("click", function(){
             newStates = ["despair","e-handbook","report-card","report-card-info","page-one"]
-            newDatabaseObjects = [false,false,false,[{name:"ReportCard",id:user.reportCards[0]}],[{name:"ReportCard",id:user.reportCards[0]}]]
+            newDatabaseObjects = [false,false,false,[{name:"ReportCard",id:user.despair.reportCards[0]}],[{name:"ReportCard",id:user.despair.reportCards[0]}]]
             console.log(newDatabaseObjects);
             newCustomData = [false,false,false,false,false]
             pageTitle = "Killing Game"

@@ -23,5 +23,7 @@ module.exports = {
     User: require("./User"),
     Day: require("./Day"),
     Character: require("./Character"),
-    ReportCard: require("./ReportCard")
+    ReportCard: require("./ReportCard"),
+    RuleSet: require("./RuleSet"),
+    GameState: require("./GameState")
 }

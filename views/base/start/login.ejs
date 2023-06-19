@@ -12,6 +12,7 @@
         e.preventDefault();
         let attempt = await login($("#username-input").val(),$("#password-input").val())
         if(attempt.loggedIn){
+            user = attempt.user;
             states = ["start","entrance"]
             databaseObjects = [false,false];
             customData = [false,false];

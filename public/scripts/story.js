@@ -233,6 +233,9 @@ const nextLine = async function(){
                 case "AUTO BREAK":
                     //this is to prevent an automatic next line   
                     break;
+                case "ACT":
+                    nextLine();
+                    break;
                 case "CHARACTER":
                     //functional typewriterless:  $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 
                     //character.firstName|Text Name|Dialogue
@@ -328,7 +331,7 @@ const loadClickSignifier = function($appendBox){
             $(`#boxtext-${index}`).css("height",`${$(`#height-check-${index}`).outerHeight(true)+54}px`)  
             $appendBox.append("<div id='click-signifier'><i class='fa-solid fa-yin-yang spin'></i></div>")
             $("#click-signifier").css("justify-content","left")
-            $("#click-signifier").css("padding-left","25px");
+            $("#click-signifier").css("padding-left","21px");
             $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
             $(".boxtext").css("height","auto")
     }

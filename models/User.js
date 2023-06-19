@@ -9,6 +9,14 @@ const schema = new mongoose.Schema(
     gamemaster: {type: Boolean},
     despair: {
       reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
+      presents: [],
+      mononekoReports: [],
+      truthBullets: [],
+      days:[{type: mongoose.Schema.Types.ObjectId, ref: "Day"}],
+      //Story record in discord
+      currentDay: {type: Number},
+      currentPhase: {type: String},
+      currentLine: {type: Number},
     },
     settings: {
       textSpeed: {type: Number, default: 50},
@@ -16,6 +24,14 @@ const schema = new mongoose.Schema(
       musicVolume: {type: Number, default: 0.25},
       soundVolume: {type: Number, default: 0.25},
       pageScroll: {type: Boolean, default: true}
+    },
+    discord: {
+      id: {type: String},
+      channels: {
+        story: {type: String},
+        reAct: {type: String},
+        disccusion: {type: String}
+      }
     }
   },
   {timestamps: true}

@@ -72,8 +72,9 @@ app.post("/logout", async function(req,res){
 })
 
 /* Home Page Loading */
-app.get("/", function(req,res){
-    res.render('base',{states: ["start","entrance"], databaseObjects: [false], customData: [false]});
+app.get("/", async function(req,res){    
+    let gameState = await db.GameState.findOne({});
+    res.render('base',{states: ["start","entrance"], databaseObjects: [false], customData: [false], gameState: gameState});
 })
 
 /* Database Loading By Property */
@@ -95,7 +96,7 @@ app.get("/data/:databaseObject", async function(req,res){
 })
 
 /* Page Loading */
-app.get("/*", function(req, res){
+app.get("/*", async function(req, res){
     let states = [];
     for(let x=1; x<req.url.split("/").length; x++){
         states.push(req.url.split("/")[x]);
@@ -116,7 +117,8 @@ app.get("/*", function(req, res){
             customData[x] = false;
         }
     }
-    res.render('base',{states: states, databaseObjects: databaseObjects, customData: customData});
+    let gameState = await db.GameState.findOne({});
+    res.render('base',{states: states, databaseObjects: databaseObjects, customData: customData, gameState: gameState});
 })
 
 /* Database Updating */

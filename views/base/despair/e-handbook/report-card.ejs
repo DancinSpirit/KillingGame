@@ -15,7 +15,7 @@
                         $(`#student-<%=x+1%>`).on("click", function(){
                             playSound("Selected");
                             newStates = ["despair","e-handbook","report-card","report-card-info","page-one"]
-                            newDatabaseObjects = [false,false,false,[{name:"ReportCard",id:user.reportCards[<%=x%>]}],[{name:"ReportCard",id:user.reportCards[<%=x%>]}]]
+                            newDatabaseObjects = [false,false,false,[{name:"ReportCard",id:user.despair.reportCards[<%=x%>]}],[{name:"ReportCard",id:user.despair.reportCards[<%=x%>]}]]
                             newCustomData = [false,false,false,false,false]
                             pageTitle = "Killing Game"
                             url = "/despair/e-handbook/report-card/report-card-info/page-one"
@@ -32,8 +32,8 @@
 </div>
 <script>
     buttons.loadReportCards = async function(){
-        for(let x=0; x<user.reportCards.length; x++){
-            let reportCard = await loadDatabaseObject("ReportCard",user.reportCards[x]);
+        for(let x=0; x<user.despair.reportCards.length; x++){
+            let reportCard = await loadDatabaseObject("ReportCard",user.despair.reportCards[x]);
             console.log
             $(`#student-${x+1}`).css("background-image",`url(/avatars/${reportCard.firstName}.png)`)
             $(`#student-${x+1}`).hover(function(){

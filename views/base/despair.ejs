@@ -48,10 +48,10 @@
     }
     buttons.mainMenu();
     buttons.story = function(){
-        $("#Story").on("click", function(){
+        $("#Story").on("click", async function(){
             newStates = ["despair","story","day"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: "6456e446d1acbaced414a62f"}]]
-            newCustomData = [false,false,{time: "Morning"}]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[gameState.day-1]}]]
+            newCustomData = [false,false,{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
             pageTitle = "Story"
             url = "/despair/story/day"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)

@@ -149,7 +149,7 @@ const loadComponent = async function(path, databaseObjects, customData){
 }
 
 const loadState = async function(x, animation){
-    if(!user.username&&states[1]!="login"){
+    if(!user.username&&!(states[1]=="login"||states[1]=="register")){
         states = ["start","login"]
         databaseObjects = [false,false,false]
         customData = [false,false,false]
