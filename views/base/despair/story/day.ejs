@@ -14,11 +14,14 @@
 
 </div>
 <script>
+    $("#gamemaster-tab").addClass("unselected");
+    $("#story-tab").removeClass("unselected");
     $("#story-tab").text(`Day <%=day.number%> - <%=time%>`)
     index = -1;
     pageNum = 1;
     eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
-    text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`); 
+    text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`);
+    day =JSON.parse(`<%-JSON.stringify(day.number)%>`); 
     loadEvent();
 </script>
 <animation>day</animation>

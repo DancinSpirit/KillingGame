@@ -21,6 +21,11 @@
                     <button id="music">
                         <i class="fas fa-music"></i> 
                     </button>
+                    <%if(user.gamemaster){%>
+                    <button class = "nav-button" id = "current-user">
+                        Current User
+                    </button>
+                    <%}%>
                 </section>
             </section>
         </section> 
@@ -34,6 +39,37 @@
         </section>
     </div>
     <subcontainer></subcontainer>
+</div>
+<div id="users-container">
+    <div id="users">
+        <script>
+            buttons.getUsers = async function(){
+                let users = await loadAllDatabaseObjects("User");
+                for(let x=1; x<users.length; x++){
+                    $("#users").append(`<div id='${users[x].username}' class='user'>${users[x].username}</div>`)
+                    $(`#${users[x].username}`).on("click", function(){
+                        user.currentUser = users[x].username;
+                        user.despair.days = users[x].despair.days;
+                        user.despair.currentDay = users[x].despair.currentDay
+                        user.despair.currentPhase = users[x].despair.currentPhase
+                        user.despair.currentLine = users[x].despair.currentLine
+                        if(states[1]='story'){
+                            let dayId = user.despair.days[parseInt($('#story-tab').text().split(' ')[1])-1];
+                            console.log(dayId)
+                            databaseObjects[2][0] = {name: "Day", id: dayId} 
+                            loadState(2);
+                        }
+                        $("#users-container").css("display","none");
+                    })
+                }
+                $("#users").append(`<div id='users-exit' class='user'>Close</div>`)
+                $("#users-exit").on("click", function(){
+                    $("#users-container").css("display","none");
+                })
+            }
+            buttons.getUsers();
+        </script>
+    </div>
 </div>
 <script>
     buttons.mainMenu = function(){
@@ -80,5 +116,11 @@
         })
     }
     buttons.navExit();
+    buttons.currentUser = function(){
+        $("#current-user").on("click", function(){
+            $("#users-container").css("display","flex");
+        })
+    }
+    buttons.currentUser();
 </script>
 <animation>down</animation>

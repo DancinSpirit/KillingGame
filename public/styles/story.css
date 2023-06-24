@@ -310,6 +310,9 @@ form {
     justify-content: center;
     margin-left: 20px;
     font-family: 'goodbyeDespair';
+    font-size: 15px;
+    width: min-content;
+    text-align: center;
 }
 .character-avatar{
     height: 70px;

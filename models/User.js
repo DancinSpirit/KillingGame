@@ -7,6 +7,8 @@ const schema = new mongoose.Schema(
     firstName: {type: String},
     lastName: {type: String},
     gamemaster: {type: Boolean},
+    //gamemasteronly:
+    currentUser: {type: String},
     despair: {
       reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
       presents: [],

@@ -2,7 +2,6 @@
     <section id="top-section">
         <section id="tabs">
             <button class="tab" id="story-tab">Day 0</button>
-            <button class="tab unselected" id="discussion-tab">OoC Discussion</button> 
             <button class="tab unselected" id="contents-tab">Calendar</button> 
             <button class="tab unselected <%if(!user.gamemaster){%>invisible-2<%}%>" id="gamemaster-tab">Gamemaster View</button> 
         </section>
@@ -72,175 +71,24 @@
     })
     buttons.contentsTab = function(){
         $("#contents-tab").on("click", async function(){
-            setCookieStates();
-            states = ["story","contents","content-year"];
-            databaseObjects = [databaseObjects[0],false,databaseObjects[0]];
-            customData = [customData[0],customData[1],customData[1]];
-            window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, "Table of Contents", `/story/contents/content-year`);
-            await loadState(1, "down");
-            await loadState(2, "right");
-            if($("#left-arrow-box").hasClass("invisible")){
-                $("#left-arrow-box").removeClass("invisible");
-            }
-            $("#contents-tab").off("click");
-            $("#story-tab").off("click");
-            buttons.storyTab();
+
         })
     }
     buttons.storyTab = function(){
         $("#story-tab").on("click", async function(){
-            continueEvent = true;
-            $("#left-arrow-box").off("click");
-            $("#right-arrow-box").off("click");
-            onContents = false;
-            if(states[1]=="contents"){
-                getCookieStates();
-            }else{
-                if(states[1]=="gamemaster-event"){
-                    states[1]=`event`;
-                }
-            }
-            window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, "Story", `/story/${states[1]}`);
-            await loadState(1, "down");
-            $("#story-tab").off("click");
-            $("#contents-tab").off("click");
-            $("#gamemaster-tab").off("click");
-            buttons.contentsTab();
-            buttons.gamemasterTab();
-            $("body").on("keydown", function (e) {
-                if (e.keyCode == 17) {
-                    if(enterButton&&keyButtons)
-                        $("#player-box").click()
-                }
-            })
-            
-            $("body").on("keydown", function (e){
-                if(e.keyCode == 37){
-                    if(keyButtons)
-                    $("#left-arrow-box").click();
-                }
-                if(e.keyCode == 39){
-                    if(keyButtons)
-                    $("#right-arrow-box").click();
-                }
-            })
+            newStates = ["despair","story","day"]
+            pageTitle = "Killing Game"
+            url = "/despair/story/gamemaster-day"
+            stateChange(newStates,databaseObjects,customData,pageTitle,url)
         })
-    }
-    
-    buttons.gamemasterPageSetup = function(){
-        buttons.gamemasterInput = function(x){
-            $("#event-type").on("input",function(){
-                updateDatabaseObject("Event",eventId,{type: $("#event-type").text()})
-            })
-            $("#event-title").on("input",function(){
-                updateDatabaseObject("Event",eventId,{title: $("#event-title").text()})
-            })
-            $("#event-subtitle").on("input",function(){
-                updateDatabaseObject("Event",eventId,{subtitle: $("#event-subtitle").text()})
-            })
-            $("#event-writtenBy").on("input",function(){
-                updateDatabaseObject("Event",eventId,{writtenBy: $("#event-writtenBy").text()})
-            })
-            $("#event-background").on("input",function(){
-                updateDatabaseObject("Event",eventId,{background: $("#event-background").text()})
-            })
-            $("#event-starting-music").on("input",function(){
-                updateDatabaseObject("Event",eventId,{startingMusic: $("#event-starting-music").text()})
-            })
-            $("#gamemaster-text-"+x).on("input",function(){
-                text[x] = $("#gamemaster-text-"+x).text();
-                let amountOfQuotes = 0;
-                for(let y=0; y<text[x].length; y++){
-                    if(text[x][y] == "\"" || text[x][y] =="“" || text[x][y] =="”"){
-                        amountOfQuotes ++;
-                        if(amountOfQuotes%2 == 0){
-                            text[x] = text[x].replaceAt(y,"”")
-                        }else{
-                            text[x] = text[x].replaceAt(y,"“")
-                        }
-                    }
-                }
-                if(text[x] == ""){
-                    text.splice(x,1);
-                    $("#gamemaster-text-"+x).remove();
-                    for(let y=x+1; y<$(".gamemaster-text").length; y++){
-                        $("#gamemaster-text-"+y).attr("id","gamemaster-text-"+(y-1));
-                        $("#gamemaster-text-"+(y-1)).off("input");
-                        $("#gamemaster-text-"+(y-1)).off("keydown");
-                        $("#gamemaster-text-"+(y-1)).off("keyup");
-                        buttons.gamemasterInput((y-1));
-                    }
-                }
-                updateDatabaseObject("Event",eventId,{text:text});
-            })
-            $("#gamemaster-text-"+x).on("keydown",function(e){
-                if (e.keyCode == 13) {
-                    e.preventDefault();
-                    if(!enterKeyPressed){
-                        enterKeyPressed = true;
-                        text.splice(x+1,0,"");
-                        for(let y=$(".gamemaster-text").length-1; y>x; y--){
-                            $("#gamemaster-text-"+y).attr("id","gamemaster-text-"+(y+1));
-                            $("#gamemaster-text-"+(y+1)).off("input");
-                            $("#gamemaster-text-"+(y+1)).off("keydown");
-                            $("#gamemaster-text-"+(y+1)).off("keyup");
-                            buttons.gamemasterInput((y+1));
-                        }
-                        $("#gamemaster-text-"+x).after(`<p id="gamemaster-text-${x+1}" class="gamemaster-text boxtext" contenteditable="true">${text[x+1]}</p>`)
-                        buttons.gamemasterInput(x+1);
-                        $("#gamemaster-text-"+(x+1)).focus();
-                    }
-                }
-                if(e.keyCode == 38){
-                    if(x>0){
-                        $("#gamemaster-text-"+(x-1)).focus();
-                    }else{
-                        text.splice(0,0,"");
-                        for(let y=$(".gamemaster-text").length-1; y>-1; y--){
-                            $("#gamemaster-text-"+y).attr("id","gamemaster-text-"+(y+1));
-                            $("#gamemaster-text-"+(y+1)).off("input");
-                            $("#gamemaster-text-"+(y+1)).off("keydown");
-                            $("#gamemaster-text-"+(y+1)).off("keyup");
-                            buttons.gamemasterInput((y+1));
-                        }
-                        $("#gamemaster-text-1").before(`<p id="gamemaster-text-0" class="gamemaster-text boxtext" contenteditable="true">${text[0]}</p>`)
-                        buttons.gamemasterInput(0);
-                        $("#gamemaster-text-0").focus();
-                    }
-                }
-                if(e.keyCode == 40){
-                    if(x<text.length){
-                        $("#gamemaster-text-"+(x+1)).focus();
-                    }
-                }
-            })
-            $("#gamemaster-text-"+x).on("keyup",function(e){
-                if (e.keyCode == 13) {
-                    enterKeyPressed = false;
-                }
-            })
-        }
-        if(states[1] == "gamemaster-event"){
-            for(let x=0; x<text.length; x++){
-                $("#gamemaster-text-box").append(`<p id="gamemaster-text-${x}" class="gamemaster-text boxtext" contenteditable="true">${text[x]}</p>`)
-                buttons.gamemasterInput(x);
-            }
-        }
     }
     
     buttons.gamemasterTab = function(){
         $("#gamemaster-tab").on("click", async function(){
-            continueEvent = false;
-            $("#gamemaster-tab").removeClass("unselected");
-            $("#contents-tab").addClass("invisible");
-            $("#story-tab").addClass("unselected")
-            states[1]=`gamemaster-${states[1]}`;
-            await loadState(1, "up");
-            buttons.gamemasterPageSetup();
-            states[1] = states[1].replace("gamemaster-","");
-            $("#gamemaster-tab").off("click");
-            $("#story-tab").off("click");
-            buttons.storyTab();
+            newStates = ["despair","story","gamemaster-day"]
+            pageTitle = "Killing Game"
+            url = "/despair/story/gamemaster-day"
+            stateChange(newStates,databaseObjects,customData,pageTitle,url)
         })
     }
     buttons.contentsTab();
@@ -305,6 +153,5 @@
             }
         }
     }
-    storyHeight = $("#player-box").height
 </script>
 <animation>story</animation>

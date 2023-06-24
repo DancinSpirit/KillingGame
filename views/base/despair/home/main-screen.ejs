@@ -20,6 +20,18 @@
         $("#continue").on("click", function(){
             playSound("Selected");
         })
+        $("#continue").on("click", async function(){
+            newStates = ["despair","story","day"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[gameState.day-1]}]]
+            newCustomData = [false,false,{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
+            pageTitle = "Story"
+            url = "/despair/story/day"
+            await stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url);
+            $("#click-signifier").remove();
+            for(let x=0; x<user.despair.currentLine+1; x++){
+                await instantNextLine();
+            }
+        })
     }
     buttons.continue();
     buttons.story = function(){
@@ -30,11 +42,12 @@
             playSound("Selected");
         })
         $("#story").on("click", function(){
-            newStates = ["despair","story","day"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[gameState.day-1]}]]
-            newCustomData = [false,false,{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
+            //Load Calendar (Calendar should load whatever day is sent to it as the link click)
+            newStates = ["despair","story","calendar"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[0]}]]
+            newCustomData = [false,false,{time: "morning"}]
             pageTitle = "Story"
-            url = "/despair/story/day"
+            url = "/despair/story/calendar"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
         })
     }

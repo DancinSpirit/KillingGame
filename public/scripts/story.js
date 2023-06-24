@@ -83,6 +83,74 @@ const applyClass = async function(sentText, eventId, index, clas, newPageBoolean
     printLine(sentText);
 }
 
+const instantNextLine = async function(){
+    return new Promise(async function(resolve){
+        if(index<text.length-1){
+            index++;
+            if(text[index].includes("[")){
+                let command = text[index].replace("[","").split(`]`)[0];
+                let sentText = text[index].replace("[","").split(`${command}]`)[1];
+                switch(command){
+                    case "SCENE TRANSITION":
+                        await loadBackground("/visuals/" + sentText)
+                        break;
+                    case "PHILOSOPHER":
+                        applyClass(sentText, eventId, index, "philosopher", true);
+                        break;
+                    case "CORSIVA":
+                        applyClass(sentText, eventId, index, "corsiva");
+                        break;
+                    case "INDIE FLOWER":
+                        applyClass(sentText, eventId, index, "indie-flower");
+                        break;
+                    case "CAVEAT":
+                        applyClass(sentText, eventId, index, "caveat");
+                        break;
+                    case "SATISFY":
+                        applyClass(sentText, eventId, index, "satisfy");
+                        break;
+                    case "CENTERED":
+                        applyClass(sentText, eventId, index, "centered");
+                        break;
+                    case "OPTION":
+                        break;
+                    case "REWARD":
+                        break;
+                    case "MUSIC":
+                        await loadMusic(sentText);
+                        break;
+                    case "MUSIC STOP":
+                        stopAudio(song);
+                        break;
+                    case "SOUND EFFECT":
+                        break;
+                    case "ONOMATOPOEIA":
+                        $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${sentText}</p>`);
+                        break;
+                    case "AUTO BREAK":
+                        //this is to prevent an automatic next line   
+                        break;
+                    case "ACT":
+                        break;
+                    case "CHARACTER":
+                        let firstName = sentText.split("|")[0]
+                        let characterName = sentText.split("|")[1];
+                        sentText = sentText.split("|")[2];
+                        $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar" style="background-image:url('/avatars/${firstName}.png')"></span><span class="character-name">${characterName}</span></span><span class="boxtext">"${sentText}"</span></p>`); 
+                        break;
+                    default:
+                        $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${sentText}</p>`);
+                }
+            }else{
+                $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${text[index]}</p>`);
+            }
+        }
+        resolve();
+        $("#sub-story").scrollTop($("#sub-story").prop("scrollHeight")-$("#sub-story").height());
+    })
+}
+
+
 const nextLine = async function(){
     if(index<text.length-1){
         index++;

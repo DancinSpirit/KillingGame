@@ -2,8 +2,50 @@
     height:100%;
     width:100%;
 }
-
+#start-title-box{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.start-title{
+    width: 100%;
+    height: 25%;
+    text-align: center;
+    font-family: monospace;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+#start-options-box{
+    display: flex;
+    height: 75%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+.start-button{
+    text-align: center;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+.start-image{
+    height: 30%;
+    margin-bottom: 20px;
+}
+#start-bottom-box{
+    height:25%;
+}
 /* Entrance Style */
 #despair-button{
     font-family: "Rock Salt"
+}
+#house-of-cards-button{
+    font-family: "Syncopate"
 }

@@ -24,6 +24,7 @@ const loadMusic = async function(url){
             let oldSong = song;
             $(oldSong).animate({volume: 0}, 300);
             setTimeout(function(){
+                console.log(oldSong);
                 stopAudio(oldSong);
             },300)
         }

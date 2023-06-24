@@ -149,98 +149,105 @@ const loadComponent = async function(path, databaseObjects, customData){
 }
 
 const loadState = async function(x, animation){
-    if(!user.username&&!(states[1]=="login"||states[1]=="register")){
-        states = ["start","login"]
-        databaseObjects = [false,false,false]
-        customData = [false,false,false]
-        pageTitle = "Login"
-        url = "/start/login"
-        stateChange(states,databaseObjects,customData,pageTitle,url)
+    $("body").append("<div id='button-blocker'></div>")
+    keyButtons = false;
+    await deactivateButtons(x);
+    if(isMobile){
+        if(!$(`#${states[x]}-style`).length){
+            $("head").append(`<link id="${states[x]}-style" rel="stylesheet" href="/phone-styles/${states[x]}.css">`)
+        }
     }else{
-        $("#warp-style").remove();
-        $("body").append("<div id='button-blocker'></div>")
-        keyButtons = false;
-        await deactivateButtons(x);
-        if(isMobile){
-            if(!$(`#${states[x]}-style`).length){
-                $("head").append(`<link id="${states[x]}-style" rel="stylesheet" href="/phone-styles/${states[x]}.css">`)
-            }
-        }else{
-            if(!$(`#${states[x]}-style`).length){
-                $("head").append(`<link id="${states[x]}-style" rel="stylesheet" href="/styles/${states[x]}.css">`)
-            }
+        if(!$(`#${states[x]}-style`).length){
+            $("head").append(`<link id="${states[x]}-style" rel="stylesheet" href="/styles/${states[x]}.css">`)
         }
-        let path = "base";
-        for(let y=0; y<x+1; y++){
-            path += "|" + states[y]
-        }
-        let component = await loadComponent(path,databaseObjects[x],customData[x]);
-        if(component.includes("<background>")){
-            let background = component.split("<background>")[1].split("</background>")[0];
-            if(background.includes("[TOP]")){
-                $("body").css("background-position","top");
-            }else{
-                $("body").css("background-position","center");
-            }
-            $("body").css("background-image",`url("/visuals/${background.replace("[TOP]","")}"`);
-        }
-        if(component.includes("<bgm>")){
-            let bgm = component.split("<bgm>")[1].split("</bgm>")[0];
-            loadMusic(bgm);
-        }
-        let previousState;
-        if(x==0){
-            previousState = "base";
-        }else{
-            previousState = states[x-1];
-        }
-        if(component.includes("<subcontainer>")){
-            component = component.replace("<subcontainer></subcontainer>",
-            `<div id="sub-${states[x]}-container-container" class="sub-base-container-container">
-                <div id="sub-${states[x]}-container" class="sub-base-container">
-                    <section id="sub-${states[x]}" class="sub-base">
-        
-                    </section>
-                </div>
-            </div>`)
-        }
-        if(animation){
-            await animations[animation](previousState,component);
-        }else{
-            if(component.includes("<animation>")){
-                await animations[component.split("<animation>")[1].split("</animation>")[0]](previousState, component);
-            }else{
-                await animations.left(previousState, component);
-            }
-        }
-        $("#button-blocker").remove();
-        keyButtons = true;
     }
+    let path = "base";
+    for(let y=0; y<x+1; y++){
+        path += "|" + states[y]
+    }
+    let component = await loadComponent(path,databaseObjects[x],customData[x]);
+    if(component.includes("<background>")){
+        let background = component.split("<background>")[1].split("</background>")[0];
+        if(background.includes("[TOP]")){
+            $("body").css("background-position","top");
+        }else{
+            $("body").css("background-position","center");
+        }
+        $("body").css("background-image",`url("/visuals/${background.replace("[TOP]","")}"`);
+    }
+    if(component.includes("<bgm>")){
+        let bgm = component.split("<bgm>")[1].split("</bgm>")[0];
+        loadMusic(bgm);
+    }
+    let previousState;
+    if(x==0){
+        previousState = "base";
+    }else{
+        previousState = states[x-1];
+    }
+    if(component.includes("<subcontainer>")){
+        component = component.replace("<subcontainer></subcontainer>",
+        `<div id="sub-${states[x]}-container-container" class="sub-base-container-container">
+            <div id="sub-${states[x]}-container" class="sub-base-container">
+                <section id="sub-${states[x]}" class="sub-base">
+    
+                </section>
+            </div>
+        </div>`)
+    }
+    if(animation){
+        await animations[animation](previousState,component);
+    }else{
+        if(component.includes("<animation>")){
+            await animations[component.split("<animation>")[1].split("</animation>")[0]](previousState, component);
+        }else{
+            await animations.left(previousState, component);
+        }
+    }
+    $("#button-blocker").remove();
+    keyButtons = true;
 }
 
 const stateChange = async function(newStates, newDatabaseObjects, newCustomData, pageTitle, url){
-    let oldStates = states;
-    let oldDatabaseObjects = databaseObjects;
-    let oldCustomData = customData;
-    states = newStates;
-    databaseObjects = newDatabaseObjects;
-    customData = newCustomData;
-    if(states[0]!=oldStates[0]||JSON.stringify(databaseObjects[0])!=JSON.stringify(oldDatabaseObjects[0])||JSON.stringify(customData[0])!=JSON.stringify(oldCustomData[0])){
-        loadStates();
-    }else{
-        for(let x=0; x<states.length; x++){
-            if(states[x]!=oldStates[x]||JSON.stringify(databaseObjects[x])!=JSON.stringify(oldDatabaseObjects[x])||JSON.stringify(customData[x])!=JSON.stringify(oldCustomData[x])){
-                await loadState(x);
+    return new Promise(async function(resolve){
+        let oldStates = states;
+        let oldDatabaseObjects = databaseObjects;
+        let oldCustomData = customData;
+        states = newStates;
+        databaseObjects = newDatabaseObjects;
+        customData = newCustomData;
+        if(states[0]!=oldStates[0]||JSON.stringify(databaseObjects[0])!=JSON.stringify(oldDatabaseObjects[0])||JSON.stringify(customData[0])!=JSON.stringify(oldCustomData[0])){
+            await loadStates();
+        }else{
+            for(let x=0; x<states.length; x++){
+                if(states[x]!=oldStates[x]||JSON.stringify(databaseObjects[x])!=JSON.stringify(oldDatabaseObjects[x])||JSON.stringify(customData[x])!=JSON.stringify(oldCustomData[x])){
+                    await loadState(x);
+                }
             }
         }
-    }
-    window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, pageTitle, url);
+        window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, pageTitle, url);
+        resolve();
+    })
 }
 
 const loadStates = async function(){
-    for(let x=0; x<states.length; x++){
-        await loadState(x);
-    }
+    return new Promise(async function(resolve){
+        for(let x=0; x<states.length; x++){
+            if(!user.username&&!(states[1]=="login"||states[1]=="register")){
+                states = ["start","login"]
+                databaseObjects = [false,false]
+                customData = [false,false]
+                pageTitle = "Login"
+                url = "/start/login"
+                window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, pageTitle, url);
+                await loadStates();
+                break;
+            }else{
+                await loadState(x);
+            }
+            resolve();
+        }
+    })
 }
 
 window.addEventListener('popstate',async function(event){

@@ -1,0 +1,96 @@
+<div id = "event-<%=day._id%>" class="event-box">
+    <section id="gamemaster-page" class="page">
+        <div id="title-box-event">
+            <p class="boxtext title">Day <%=day.number%> - <%=time%></p>
+        </div>
+    </section>
+</div> 
+<div id = "event-<%=day._id%>-height-box" class = "height-box">
+
+</div>
+<script>
+    $("#player-box").off("click")
+    $("#gamemaster-tab").removeClass("unselected");
+    $("#story-tab").addClass("unselected");
+    $("#story-tab").text(`Day <%=day.number%> - <%=time%>`)
+    index = -1;
+    pageNum = 1;
+    eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
+    text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`); 
+    buttons.gamemasterInput = function(x){
+        $("#boxtext-"+ x).on("input",async function(){
+            text[x] = $("#boxtext-"+x).text();
+            if(text[x] == ""){
+                text.splice(x,1);
+                $("#boxtext-"+x).remove();
+                for(let y=x+1; y<$(".boxtext").length; y++){
+                    $("#boxtext-"+y).attr("id","boxtext-"+(y-1));
+                    $("#boxtext-"+(y-1)).off("input");
+                    $("#boxtext-"+(y-1)).off("keydown");
+                    $("#boxtext-"+(y-1)).off("keyup");
+                    buttons.gamemasterInput((y-1));
+                }
+            }
+            let sentObject = {}
+            sentObject[customData[2].time.toLowerCase()] = text;
+            console.log(sentObject);
+            let updatedObject = await updateDatabaseObject("Day",databaseObjects[2][0].id,sentObject);
+        })
+        $("#boxtext-"+x).on("keydown",function(e){
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                if(!enterKeyPressed){
+                    enterKeyPressed = true;
+                    text.splice(x+1,0,"");
+                    for(let y=$(".boxtext").length-1; y>x; y--){
+                        $("#boxtext-"+y).attr("id","boxtext-"+(y+1));
+                        $("#boxtext-"+(y+1)).off("input");
+                        $("#boxtext-"+(y+1)).off("keydown");
+                        $("#boxtext-"+(y+1)).off("keyup");
+                        buttons.gamemasterInput((y+1));
+                    }
+                    $("#boxtext-"+x).after(`<p class="boxtext" contenteditable id="boxtext-${x+1}">${text[x+1]}</p>`)
+                    buttons.gamemasterInput(x+1);
+                    $("#boxtext-"+(x+1)).focus();
+                }
+            }
+            if(e.keyCode == 38){
+                if(x>0){
+                    $("#boxtext-"+(x-1)).focus();
+                }else{
+                    text.splice(0,0,"");
+                    for(let y=$(".boxtext").length-1; y>-1; y--){
+                        $("#boxtext-"+y).attr("id","boxtext-"+(y+1));
+                        $("#boxtext-"+(y+1)).off("input");
+                        $("#boxtext-"+(y+1)).off("keydown");
+                        $("#boxtext-"+(y+1)).off("keyup");
+                        buttons.gamemasterInput((y+1));
+                    }
+                    $("#boxtext-1").before(`<p class="boxtext" contenteditable id="boxtext-${x}">${text[0]}</p>`)
+                    buttons.gamemasterInput(0);
+                    $("#boxtext-0").focus();
+                }
+            }
+            if(e.keyCode == 40){
+                if(x<text.length){
+                    $("#boxtext-"+(x+1)).focus();
+                }
+            }
+        })
+        $("#boxtext-"+x).on("keyup",function(e){
+            if (e.keyCode == 13) {
+                enterKeyPressed = false;
+            }
+        })
+    }
+    for(let x=0; x<text.length; x++){
+        setTimeout(function(){
+            $(`#gamemaster-page`).append(`<p class="boxtext" contenteditable id="boxtext-${x}">${text[x]}</p>`);
+            buttons.gamemasterInput(x);
+        },user.settings.pageSpeed+100)
+
+    }
+</script>
+<animation>day</animation>
+<background><%=day.startingBackground%></background>
+<bgm><%=day.startingMusic%></bgm>

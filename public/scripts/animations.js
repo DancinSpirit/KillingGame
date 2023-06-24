@@ -35,7 +35,9 @@ animations.day = async function(state, component){
             $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
             resolve();
         },user.settings.pageSpeed)
+        $("#bottomright-text").text("Day "+ day + " - " + customData[2].time)
     })
+    
 }
 animations.right = async function(state, component){
     return new Promise((resolve)=>{
@@ -171,6 +173,7 @@ animations.mainMenu = async function(state, component){
             },10);
         }
         $("#bottomright-text").text(bottomRightString)
+        $("#topright-text").text("Main Menu")
     })
 }
 
@@ -192,7 +195,7 @@ animations.handbook = async function(state, component){
             $("#academy-logo").fadeIn();
             resolve();
         },user.settings.pageSpeed)
-        $("#bottomright-text").text("E-Handbook")
+        $("#topright-text").text("E-Handbook")
     })
 }
 animations.handbookMenu = async function(state, component){
@@ -219,6 +222,7 @@ animations.handbookMenu = async function(state, component){
             $(".top").css("background-color","transparent");
             resolve();
         },user.settings.pageSpeed)
+        $("#bottomright-text").text("Main Menu")
     })
 }
 
@@ -239,7 +243,7 @@ animations.story = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
-        $("#bottomright-text").text("Story")
+        $("#topright-text").text("Story")
     }) 
 }
 
@@ -265,6 +269,7 @@ animations.reportCard = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
+        $("#bottomright-text").text("Report Cards")
     })
 }
 animations.presents = async function(state, component){
@@ -289,6 +294,7 @@ animations.presents = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
+        $("#bottomright-text").text("Presents")
     })
 }
 

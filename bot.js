@@ -12,7 +12,6 @@ bot.login(TOKEN);
 
 bot.once(Events.ClientReady, event=>{
     console.log("Logged in as " + event.user.tag);
-    updateServer(); 
 })
 
 bot.on("interactionCreate", async (interaction) =>{

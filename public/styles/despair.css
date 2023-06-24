@@ -248,3 +248,26 @@ button, a{
         transform:rotate(360deg);
     }
 }
+
+/* Users Contianer */
+#users-container{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top:0;
+    left:0;
+    display: none;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+#users{
+    background-color:rgb(36, 35, 35);
+    color: white;
+    padding: 20px;
+    border: solid 3px white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

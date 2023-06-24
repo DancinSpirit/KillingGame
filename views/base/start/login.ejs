@@ -18,7 +18,8 @@
             customData = [false,false];
             pageTitle = "Entrance";
             url = "/start/entrance"
-            stateChange(states,databaseObjects,customData,pageTitle,url);
+            window.history.pushState({states:states,databaseObjects: databaseObjects,customData:customData}, pageTitle, url);
+            loadStates();
         }else{
             if($("#error-message").length){
                 $("#error-message").text(attempt.error)
