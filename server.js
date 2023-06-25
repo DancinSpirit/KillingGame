@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const ejs = require('ejs');
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -168,6 +169,11 @@ app.post("/component/:path", async function(req,res){
             res.send(result);
     });
 })
+
+/* Socket.IO */
+io.on('connection', (socket) => {
+    console.log('User Connected!');
+});
 
 http.listen(PORT, function(){
     console.log(`Live at http://localhost:${PORT}/`);
