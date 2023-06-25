@@ -12,6 +12,7 @@ bot.login(TOKEN);
 
 bot.once(Events.ClientReady, event=>{
     console.log("Logged in as " + event.user.tag);
+    updateServer();
 })
 
 bot.on("interactionCreate", async (interaction) =>{
@@ -73,13 +74,30 @@ const updatePlayerStory = async function(player){
             await sendStoryText(storyChannel,player.despair.days[x][player.despair.currentPhase][y]);
         }
         player.despair.currentLine = 0;
-        //player.despair.currentPhase = getnextPhasefromLastLine;
+        //player.despair.currentPhase = getnextPhasefromPointervariable
         //if phase matches do it one more time other wise do again or whatever might ahve to make another function
     }
     player.despair.currentDay = gameState.day;
     player.despair.currentPhase = gameState.phase;
     player.despair.currentLine = player.despair.days[gameState.day-1][gameState.phase].length-1;
     player.save();
+    let gamemasterWaiting = false;
+    let guild = await bot.guilds.cache.get("659245797333925919")
+    let gamemaster = await guild.members.fetch("206648363729289216");
+    let user = await guild.members.fetch(player.discord.id)
+    if(player.despair.days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
+        user.roles.add("660664223625641994")
+    }else if(player.despair.days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
+        user.roles.remove("660664223625641994")
+        gamemasterWaiting = true;
+    }else{
+        user.roles.remove("660664223625641994")
+    }
+    if(gamemasterWaiting ==true){
+        gamemaster.roles.add("660664223625641994")
+    }else{
+        gamemaster.roles.remove("660664223625641994")
+    }
 }
 
 const sendStoryText = async function(storyChannel,sentText){

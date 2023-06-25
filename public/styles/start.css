@@ -35,6 +35,9 @@
     flex-direction: column;
     display: flex;
 }
+.start-button:hover{
+    cursor:pointer;
+}
 .start-image{
     height: 30%;
     margin-bottom: 20px;
