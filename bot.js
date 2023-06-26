@@ -21,7 +21,7 @@ bot.on("interactionCreate", async (interaction) =>{
             let user = interaction.user;
             let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.days[gameState.day-1])
+            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
             day[gameState.phase][day[gameState.phase].length-1] = "[ACT]Continue"
             day.save();
             interaction.message.delete();
@@ -46,7 +46,7 @@ bot.on("interactionCreate", async (interaction) =>{
         let user = interaction.user;
         let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id": user.id});
-        let day = await db.Day.findById(player.despair.days[gameState.day-1])
+        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
         day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + action;
         day.save(); 
         interaction.message.delete();
@@ -58,7 +58,7 @@ bot.on("interactionCreate", async (interaction) =>{
 })
 
 const updateServer = async function(){
-    let users = await db.User.find({}).populate("despair.days");
+    let users = await db.User.find({}).populate({path: "despair.chapters.days",strictPopulate: false});
     for(let x=0; x<users.length; x++){
         if(!users[x].gamemaster){
             updatePlayerStory(users[x])
@@ -70,8 +70,8 @@ const updatePlayerStory = async function(player){
     let gameState = await db.GameState.findOne({});
     let storyChannel = await bot.channels.cache.get(player.discord.channels.story);
     for(let x=player.despair.currentDay-1; x<gameState.day; x++){
-        for(let y=player.despair.currentLine+1; y<player.despair.days[x][player.despair.currentPhase].length; y++){
-            await sendStoryText(storyChannel,player.despair.days[x][player.despair.currentPhase][y]);
+        for(let y=player.despair.currentLine+1; y<player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase].length; y++){
+            await sendStoryText(storyChannel,player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase][y]);
         }
         player.despair.currentLine = 0;
         //player.despair.currentPhase = getnextPhasefromPointervariable
@@ -79,15 +79,15 @@ const updatePlayerStory = async function(player){
     }
     player.despair.currentDay = gameState.day;
     player.despair.currentPhase = gameState.phase;
-    player.despair.currentLine = player.despair.days[gameState.day-1][gameState.phase].length-1;
+    player.despair.currentLine = player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase].length-1;
     player.save();
     let gamemasterWaiting = false;
     let guild = await bot.guilds.cache.get("659245797333925919")
     let gamemaster = await guild.members.fetch("206648363729289216");
     let user = await guild.members.fetch(player.discord.id)
-    if(player.despair.days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
+    if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
         user.roles.add("660664223625641994")
-    }else if(player.despair.days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
+    }else if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
         user.roles.remove("660664223625641994")
         gamemasterWaiting = true;
     }else{

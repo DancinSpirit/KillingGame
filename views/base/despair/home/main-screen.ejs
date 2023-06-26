@@ -22,8 +22,8 @@
         })
         $("#continue").on("click", async function(){
             newStates = ["despair","story","day"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[gameState.day-1]}]]
-            newCustomData = [false,false,{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[gameState.chapter-1].days[gameState.day-1]}]]
+            newCustomData = [false,{chapterNumber: gameState.chapter},{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
             pageTitle = "Story"
             url = "/despair/story/day"
             await stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url);
@@ -43,11 +43,11 @@
         })
         $("#story").on("click", function(){
             //Load Calendar (Calendar should load whatever day is sent to it as the link click)
-            newStates = ["despair","story","calendar"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[0]}]]
-            newCustomData = [false,false,{time: "morning"}]
+            newStates = ["despair","story","calendar","chapter"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[0].days[0]}],false]
+            newCustomData = [false,{chapterNumber: 1},{time: "morning"},false]
             pageTitle = "Story"
-            url = "/despair/story/calendar"
+            url = "/despair/story/calendar/chapter"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
         })
     }

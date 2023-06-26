@@ -49,12 +49,12 @@
                     $("#users").append(`<div id='${users[x].username}' class='user'>${users[x].username}</div>`)
                     $(`#${users[x].username}`).on("click", function(){
                         user.currentUser = users[x].username;
-                        user.despair.days = users[x].despair.days;
+                        user.despair.chapters = users[x].despair.chapters;
                         user.despair.currentDay = users[x].despair.currentDay
                         user.despair.currentPhase = users[x].despair.currentPhase
                         user.despair.currentLine = users[x].despair.currentLine
                         if(states[1]='story'){
-                            let dayId = user.despair.days[parseInt($('#story-tab').text().split(' ')[1])-1];
+                            let dayId = user.despair.chapters[parseInt($("#topright-text").text().split(" ")[1])].days[parseInt($('#story-tab').text().split(' ')[1])-1];
                             console.log(dayId)
                             databaseObjects[2][0] = {name: "Day", id: dayId} 
                             loadState(2);
@@ -86,8 +86,8 @@
     buttons.story = function(){
         $("#Story").on("click", async function(){
             newStates = ["despair","story","day"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.days[gameState.day-1]}]]
-            newCustomData = [false,false,{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[gameState.chapter-1].days[gameState.day-1]}]]
+            newCustomData = [false,{chapterNumber: gameState.chapter},{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
             pageTitle = "Story"
             url = "/despair/story/day"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)

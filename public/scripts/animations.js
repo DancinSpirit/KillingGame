@@ -243,7 +243,7 @@ animations.story = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
-        $("#topright-text").text("Story")
+        $("#topright-text").text("Chapter " + chapterNumber)
     }) 
 }
 

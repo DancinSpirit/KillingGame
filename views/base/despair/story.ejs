@@ -45,6 +45,7 @@
 </div>
 <script src="/scripts/story.js"></script>
 <script>
+    let chapterNumber = JSON.parse(`<%-JSON.stringify(chapterNumber)%>`); 
     $("body").on("keydown", function (e) {
         if (e.keyCode == 17) {
             if(enterButton&&keyButtons)
@@ -78,7 +79,7 @@
         $("#story-tab").on("click", async function(){
             newStates = ["despair","story","day"]
             pageTitle = "Killing Game"
-            url = "/despair/story/gamemaster-day"
+            url = "/despair/story/day"
             stateChange(newStates,databaseObjects,customData,pageTitle,url)
         })
     }

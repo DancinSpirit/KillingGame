@@ -14,8 +14,9 @@ const schema = new mongoose.Schema(
       presents: [],
       mononekoReports: [],
       truthBullets: [],
-      days:[{type: mongoose.Schema.Types.ObjectId, ref: "Day"}],
+      chapters: [{days:[{type: mongoose.Schema.Types.ObjectId, ref: "Day"}]}],
       //Story record in discord
+      currentChapter: {type: Number},
       currentDay: {type: Number},
       currentPhase: {type: String},
       currentLine: {type: Number},
