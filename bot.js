@@ -112,6 +112,9 @@ const sendStoryText = async function(storyChannel,sentText){
                 case "MUSIC":
                     resolve();
                     break;
+                case "MUSIC STOP":
+                    resolve();
+                    break;
                 case "ACTIVE OPTION":
                     let titleR = text.split("|")[1]
                     let descriptionR = text.split("|")[0]

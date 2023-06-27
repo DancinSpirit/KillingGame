@@ -54,7 +54,7 @@
                         user.despair.currentPhase = users[x].despair.currentPhase
                         user.despair.currentLine = users[x].despair.currentLine
                         if(states[1]='story'){
-                            let dayId = user.despair.chapters[parseInt($("#topright-text").text().split(" ")[1])].days[parseInt($('#story-tab').text().split(' ')[1])-1];
+                            let dayId = user.despair.chapters[parseInt($("#topright-text").text().split(" ")[1])-1].days[parseInt($('#story-tab').text().split(' ')[1])-1];
                             console.log(dayId)
                             databaseObjects[2][0] = {name: "Day", id: dayId} 
                             loadState(2);

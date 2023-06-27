@@ -11,6 +11,7 @@
 <script>
     $("#player-box").off("click")
     $("#gamemaster-tab").removeClass("unselected");
+    $("#contents-tab").addClass("unselected");
     $("#story-tab").addClass("unselected");
     $("#story-tab").text(`Day <%=day.number%> - <%=time%>`)
     index = -1;
