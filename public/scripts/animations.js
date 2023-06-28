@@ -35,7 +35,7 @@ animations.day = async function(state, component){
             $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
             resolve();
         },user.settings.pageSpeed)
-        $("#bottomright-text").text("Day "+ day + " - " + customData[2].time)
+        $("#bottomright-text").text("Day "+ info.day + " - " + customData[2].time)
     })
     
 }
@@ -243,7 +243,7 @@ animations.story = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
-        $("#topright-text").text("Chapter " + chapterNumber)
+        $("#topright-text").text("Chapter " + info.chapter)
     }) 
 }
 

@@ -14,7 +14,7 @@
 
 </div>
 <script>
-    let phase = JSON.parse(`<%-JSON.stringify(time)%>`)
+    info.phase = JSON.parse(`<%-JSON.stringify(time)%>`)
     $("#gamemaster-tab").addClass("unselected");
     $("#story-tab").removeClass("unselected");
     $("#contents-tab").addClass("unselected");
@@ -23,7 +23,7 @@
     pageNum = 1;
     eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
     text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`);
-    day =JSON.parse(`<%-JSON.stringify(day.number)%>`); 
+    info.day =JSON.parse(`<%-JSON.stringify(day.number)%>`); 
     loadEvent();
 </script>
 <animation>day</animation>

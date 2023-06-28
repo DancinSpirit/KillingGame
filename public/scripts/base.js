@@ -1,4 +1,5 @@
 let buttons = {};
+let info = {};
 let continueEvent = true;
 
 const deactivateButtons = function(x){
