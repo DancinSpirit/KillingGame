@@ -32,6 +32,20 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
     isMobile = true;
 }
 
+const bot = async function(command){
+    return new Promise((resolve)=>{
+        $.ajax({
+            method: "POST",
+            url: `/bot`,
+            data: {command},
+            success: (res)=>{
+                user = res.user;
+                resolve(res);
+            }
+        }) 
+    })
+}
+
 const login = async function(username, password){
     return new Promise((resolve)=>{
         $.ajax({

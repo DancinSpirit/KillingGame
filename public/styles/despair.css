@@ -271,3 +271,36 @@ button, a{
     flex-direction: column;
     align-items: center;
 }
+
+.truth-bullet{
+    display: flex;
+    height: 10vh;
+    font-family: 'Hobby-Horse-NF';  
+    color: black;
+    font-size: 2.6vh;
+    -webkit-text-stroke: 1px black;
+}
+
+.bullet-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/visuals/Bullet2.png");
+    background-size: 2.92vh;
+    background-position: center;
+    font-family: 'goodbyeDespair';
+    color: white;
+}
+
+#truth-bullet-title{
+    color: white;
+    font-family: 'goodbyeDespair';
+    font-size: 2.7vh;
+}
+
+#truth-bullet-description{
+    font-size: 1.5vh;
+    font-family: 'storyDespair';
+    width: 80%;
+    padding: 5px;
+}

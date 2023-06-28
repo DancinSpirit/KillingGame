@@ -25,5 +25,6 @@ module.exports = {
     Character: require("./Character"),
     ReportCard: require("./ReportCard"),
     RuleSet: require("./RuleSet"),
-    GameState: require("./GameState")
+    GameState: require("./GameState"),
+    TruthBullet: require("./TruthBullet")
 }

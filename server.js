@@ -4,6 +4,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const ejs = require('ejs');
+const bot = require("./bot.js")
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended:true}));
@@ -69,6 +70,10 @@ app.post("/register", async function(req, res){
 app.post("/logout", async function(req,res){
     req.session.currentUser = {settings:{pageSpeed:1000}};
     return res.send(req.session.currentUser);
+})
+/* Discord Bot */
+app.post("/bot", async function(req, res){
+    eval(`bot.${req.body.command}`)
 })
 
 /* Home Page Loading */

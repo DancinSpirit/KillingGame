@@ -1,4 +1,4 @@
-const {Client, Events, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle} = require("discord.js");
+const {Client, Events, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuOptionBuilder, StringSelectMenuBuilder} = require("discord.js");
 const db = require("./models");
 
 const bot = new Client({
@@ -12,7 +12,6 @@ bot.login(TOKEN);
 
 bot.once(Events.ClientReady, event=>{
     console.log("Logged in as " + event.user.tag);
-    updateServer();
 })
 
 bot.on("interactionCreate", async (interaction) =>{
@@ -25,7 +24,7 @@ bot.on("interactionCreate", async (interaction) =>{
             day[gameState.phase][day[gameState.phase].length-1] = "[ACT]Continue"
             day.save();
             interaction.message.delete();
-            updateServer();
+            bot.updateServer();
         }
         if(interaction.customId=="reactReact"){
             let modal = new ModalBuilder()
@@ -52,12 +51,24 @@ bot.on("interactionCreate", async (interaction) =>{
         interaction.message.delete();
         await interaction.reply({content:"Successful submission!"})
         interaction.deleteReply();
-        updateServer();
+        bot.updateServer();
         }
+    }
+    if(interaction.customId=="investigationContinue"){
+        let user = interaction.user;
+        let gameState = await db.GameState.findOne({});
+        let player = await db.User.findOne({"discord.id":user.id})
+        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+        day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + interaction.values;
+        day.save();
+        interaction.message.delete();
+        await interaction.reply({content:"Successful submission!"})
+        interaction.deleteReply();
+        bot.updateServer();
     }
 })
 
-const updateServer = async function(){
+bot.updateServer = async function(){
     let users = await db.User.find({}).populate({path: "despair.chapters.days",strictPopulate: false});
     for(let x=0; x<users.length; x++){
         if(!users[x].gamemaster){
@@ -71,7 +82,7 @@ const updatePlayerStory = async function(player){
     let storyChannel = await bot.channels.cache.get(player.discord.channels.story);
     for(let x=player.despair.currentDay-1; x<gameState.day; x++){
         for(let y=player.despair.currentLine+1; y<player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase].length; y++){
-            await sendStoryText(storyChannel,player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase][y]);
+            await sendStoryText(storyChannel,player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase][y],player);
         }
         player.despair.currentLine = 0;
         //player.despair.currentPhase = getnextPhasefromPointervariable
@@ -100,8 +111,9 @@ const updatePlayerStory = async function(player){
     }
 }
 
-const sendStoryText = async function(storyChannel,sentText){
+const sendStoryText = async function(storyChannel,sentText,player){
     return new Promise(async (resolve)=>{
+        let gameState = await db.GameState.findOne({});
         if(sentText.includes("[")){
             let command = sentText.replace("[","").split(`]`)[0];
             let text = sentText.replace("[","").split(`${command}]`)[1];
@@ -115,11 +127,23 @@ const sendStoryText = async function(storyChannel,sentText){
                 case "MUSIC STOP":
                     resolve();
                     break;
-                case "ACTIVE OPTION":
-                    let titleR = text.split("|")[1]
-                    let descriptionR = text.split("|")[0]
-                    let optionsNumberR = text.split("|")[2]
-
+                case "TRUTH BULLET DISCOVERY":
+                    let truthBullet = await db.TruthBullet.findById(text);
+                    let truthBulletEmbed = new EmbedBuilder()
+                        .setTitle(truthBullet.name)
+                        .setDescription(truthBullet.description)
+                        .setAuthor({name:"Obtained Truth Bullet!"})
+                    await storyChannel.send({embeds: [truthBulletEmbed]})
+                    let bulletExists = false;
+                    for(let x=0; x<player.despair.truthBullets.length; x++){
+                        if(player.despair.truthBullets[x].toString() == truthBullet._id.toString()){
+                            bulletExists = true;
+                        }
+                    }
+                    if(!bulletExists){
+                        player.despair.truthBullets.push(truthBullet._id);
+                        player.save();
+                    }
                     resolve();
                     break;
                 case "OPTION":
@@ -171,7 +195,36 @@ const sendStoryText = async function(storyChannel,sentText){
                     resolve();
                     break;
                 case "RE:ACT":
-                    let reactEmbed = new EmbedBuilder()
+                    if(text.includes("[INVESTIGATION CONCLUSION]")){
+                        let reactEmbed = new EmbedBuilder()
+                            .setTitle("RE:ACT")
+                            .setDescription("Investigation Conclusion! Select which Truth Bullets you'd like to share with the group!")
+                        let truthBullet;
+                        let truthBulletButton;
+                        let truthBullets = [];
+                        for(let x=0; x<player.despair.truthBullets.length; x++){
+                            truthBullet = await db.TruthBullet.findById(player.despair.truthBullets[x])
+                            if(truthBullet.chapter==gameState.chapter&&truthBullet.day==gameState.day&&truthBullet.phase==gameState.phase){
+                                truthBulletButton = new StringSelectMenuOptionBuilder()
+                                    .setLabel(truthBullet.name)
+                                    .setValue(truthBullet.name)
+                                truthBullets.push(truthBulletButton);
+                            }
+                        }
+                        let truthBulletMenu = new StringSelectMenuBuilder()
+                            .setCustomId("investigationContinue")
+                            .setPlaceholder("Truth Bullets")
+                            .addOptions(...truthBullets)
+                            .setMinValues(0)
+                            .setMaxValues(truthBullets.length)
+                        let reactRow = new ActionRowBuilder()
+                            .addComponents(truthBulletMenu)
+                        await storyChannel.send({
+                            embeds: [reactEmbed],
+                            components: [reactRow]
+                        })
+                    }else{
+                        let reactEmbed = new EmbedBuilder()
                         .setTitle("RE:ACT")
                         .setDescription("RE:ACT Opportunity! Either RE:ACT or continue.")
                     let reactContinue = new ButtonBuilder()
@@ -188,6 +241,7 @@ const sendStoryText = async function(storyChannel,sentText){
                         embeds: [reactEmbed],
                         components: [reactRow]
                     })
+                    }
                     resolve();
                     break;
                 default:

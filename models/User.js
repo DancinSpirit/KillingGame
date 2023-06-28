@@ -13,7 +13,7 @@ const schema = new mongoose.Schema(
       reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
       presents: [],
       mononekoReports: [],
-      truthBullets: [],
+      truthBullets: [{type: mongoose.Schema.Types.ObjectId, ref: "TruthBullet"}],
       chapters: [{days:[{type: mongoose.Schema.Types.ObjectId, ref: "Day"}]}],
       //Story record in discord
       currentChapter: {type: Number},

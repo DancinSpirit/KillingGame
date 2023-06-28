@@ -274,6 +274,42 @@ const nextLine = async function(){
                     })
                     $("#choice-container").css("display","flex");
                     break;
+                case "TRUTH BULLET DISCOVERY":
+                    let alreadyExists = false;
+                    for(let x=0; x<user.despair.truthBullets.length; x++){
+                        if(user.despair.truthBullets[x]==sentText){
+                            alreadyExists = true;
+                        }
+                    }
+                    if(!alreadyExists){
+                        user.despair.truthBullets.push(sentText);
+                        updateDatabaseObject("User",user._id,user)
+                    }
+                    let truthBullet = await loadDatabaseObject("TruthBullet",sentText);
+                    $("#choice").empty();
+                    $("#choice").append(`
+                    <section id="truth-bullet-title">
+                        Obtained Truth Bullet!
+                    </section`);
+                    $("#choice").append(`
+                    <section class = "truth-bullet">
+                        <img class = "Bullet1"src="/visuals/Bullet1.png">
+                        <div class = "bullet-text"><p>${truthBullet.name}</p></div>
+                        <img class = "Bullet3"src="/visuals/Bullet3.png">
+                    </section>`)
+                    $("#choice").append(`
+                    <section id="truth-bullet-description">
+                        ${truthBullet.description}
+                    </section`);
+                    $("#choice").append(`<p id="continue-button" class='choice-option chosen-option'>Continue</p>`);
+                    $("#continue-button").on("click",function(){
+                        $("#choice-container").css("display","none");
+                        ctrlButton = true;
+                        enterButton = true;
+                    })
+                    $("#choice-container").css("display","flex");
+                    playSound("TruthBullet");
+                    break;
                 case "MUSIC":
                     await loadMusic(sentText);
                     nextLine();
@@ -300,6 +336,9 @@ const nextLine = async function(){
                     break;
                 case "AUTO BREAK":
                     //this is to prevent an automatic next line   
+                    break;
+                case "RE:ACT":
+                    printLine("RE:ACT! (I haven't impleneted RE:ACT-ability on the site yet Please use discord for now. :P)")
                     break;
                 case "ACT":
                     nextLine();
@@ -352,6 +391,13 @@ const nextLine = async function(){
     }else{
         $("#right-arrow-box").click();
     }
+}
+
+const loadCurrentBullets = async function(){
+    $("#story").css("transform","translateY(-10vh)")
+    $("#player-box").css("height","60vh");
+    $("#bullet-box").css("transform","translateY(0%)")
+
 }
 
 const printLine = async function(sentText){

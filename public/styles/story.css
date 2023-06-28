@@ -227,13 +227,15 @@ form {
   }
   
   #choice{
-    background-color:rgb(36, 35, 35);
+    background-image: url(/visuals/Window.png);
     color: white;
-    padding: 20px;
-    border: solid 3px white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    padding: 50px;
   }
   
   .choice-title{
@@ -257,6 +259,7 @@ form {
     padding: 10px;
     width: -webkit-fill-available;
     font-family: "storyDespair";
+    background-color:black;
   }
   .unchosen-option{
     border-color: rgb(110, 110, 110);
@@ -266,8 +269,12 @@ form {
     cursor: pointer;
   }
   .chosen-option:hover{
-    border-color: rgb(255, 252, 210);
-    color: rgb(255, 252, 210);
+    background-color: #ff9c02; 
+    color: black;
+    border-color: black;
+  }
+  #continue-button{
+    margin-top: 40px;
   }
   .continue-button{
     cursor:pointer;
