@@ -14,7 +14,8 @@ const schema = new mongoose.Schema(
     dislikes: {type: String, default: "???"},
     ultimate: {
       name: {type: String, default: "???"}, 
-      description:{type: String, default: "???"}
+      description:{type: String, default: "???"},
+      useText: {type: String, default: "Ultimate Ability Used!"}
     },
   },
   {timestamps: true}

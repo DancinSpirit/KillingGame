@@ -194,6 +194,16 @@ const sendStoryText = async function(storyChannel,sentText,player){
                 case "ACT":
                     resolve();
                     break;
+                case "ULTIMATE ABILITY USAGE":
+                    let abilityEmbed = new EmbedBuilder()
+                    let report = db.ReportCard.findById(player.despair.fullReport)
+                    .setTitle("Ultimate " + report.ultimate.name)
+                    .setDescription(report.ultimate.useText)
+                    await storyChannel.send({
+                        embeds: [abilityEmbed]
+                    })
+                    resolve();
+                    break;
                 case "RE:ACT":
                     if(text.includes("[INVESTIGATION CONCLUSION]")){
                         let reactEmbed = new EmbedBuilder()

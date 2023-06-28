@@ -10,6 +10,7 @@ const schema = new mongoose.Schema(
     //gamemasteronly:
     currentUser: {type: String},
     despair: {
+      fullReport: {type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"},
       reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
       presents: [],
       mononekoReports: [],
