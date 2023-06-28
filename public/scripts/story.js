@@ -135,7 +135,7 @@ const instantNextLine = async function(){
                     case "TRUTH BULLET DISCOVERY":
                         break;
                     case "RE:ACT":
-                        $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${"RE:ACT! (I haven't impleneted RE:ACT-ability on the site yet Please use discord for now. :P)"}</p>`);
+                        $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${"RE:ACT! (I haven't implemented RE:ACT-ability on the site yet Please use discord for now. :P)"}</p>`);
                         break;
                     case "CHARACTER":
                         let firstName = sentText.split("|")[0]
@@ -343,7 +343,7 @@ const nextLine = async function(){
                     //this is to prevent an automatic next line   
                     break;
                 case "RE:ACT":
-                    sentText = "RE:ACT! (I haven't impleneted RE:ACT-ability on the site yet Please use discord for now. :P)";
+                    sentText = "RE:ACT! (I haven't implemented RE:ACT-ability on the site yet Please use discord for now. :P)";
                     $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${sentText}</p>`);
                     if(user.settings.pageScroll){
                         pageCheck(eventId, index, sentText);
