@@ -10,8 +10,29 @@ const TOKEN = process.env.TOKEN;
 
 bot.login(TOKEN);
 
+const runAtSpecificTimeOfDay = function(hour, minutes, func)
+{
+  const twentyFourHours = 86400000;
+  const now = new Date();
+  let eta_ms = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minutes, 0, 0).getTime() - now;
+  if (eta_ms < 0)
+  {
+    eta_ms += twentyFourHours;
+  }
+  setTimeout(function() {
+    //run once
+    func();
+    // run every 24 hours from now on
+    setInterval(func, twentyFourHours);
+  }, eta_ms);
+}
+
 bot.once(Events.ClientReady, event=>{
     console.log("Logged in as " + event.user.tag);
+    runAtSpecificTimeOfDay(20,0,async ()=>{
+        let waitingChannel = await bot.channels.cache.get("799874873714802739");
+        waitingChannel.send("<@660664223625641994> This is an end of day reminder reminding you that it's your turn!")
+    })
 })
 
 bot.on("interactionCreate", async (interaction) =>{
