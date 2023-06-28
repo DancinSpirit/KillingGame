@@ -195,10 +195,10 @@ const sendStoryText = async function(storyChannel,sentText,player){
                     resolve();
                     break;
                 case "ULTIMATE ABILITY USAGE":
-                    let abilityEmbed = new EmbedBuilder()
                     let report = await db.ReportCard.findById(player.despair.fullReport)
-                    .setTitle("Ultimate " + report.ultimate.name)
-                    .setDescription(report.ultimate.useText)
+                    let abilityEmbed = new EmbedBuilder()
+                        .setTitle("Ultimate " + report.ultimate.name)
+                        .setDescription(report.ultimate.useText)
                     await storyChannel.send({
                         embeds: [abilityEmbed]
                     })
