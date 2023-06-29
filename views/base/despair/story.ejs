@@ -72,7 +72,12 @@
     })
     buttons.contentsTab = function(){
         $("#contents-tab").on("click", async function(){
-
+            newStates = ["despair","story","calendar","chapter"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[info.chapter-1].days[info.day-1]}],false]
+            newCustomData = [false,{chapterNumber: info.chapter},{time: info.phase},{chapter: {number: info.chapter,days: user.despair.chapters[info.chapter-1].days}}]
+            pageTitle = "Story"
+            url = "/despair/story/calendar/chapter"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
         })
     }
     buttons.storyTab = function(){
@@ -83,7 +88,6 @@
             stateChange(newStates,databaseObjects,customData,pageTitle,url)
         })
     }
-    
     buttons.gamemasterTab = function(){
         $("#gamemaster-tab").on("click", async function(){
             newStates = ["despair","story","gamemaster-day"]

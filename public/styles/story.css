@@ -326,3 +326,8 @@ form {
     width: 70px;
     margin-bottom: 5px;
 }
+#calendar{
+    width: 50%;
+    position: relative;
+    left: -25%;
+}

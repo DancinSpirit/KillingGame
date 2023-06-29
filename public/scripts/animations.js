@@ -35,7 +35,7 @@ animations.day = async function(state, component){
             $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
             resolve();
         },user.settings.pageSpeed)
-        $("#bottomright-text").text("Day "+ info.day + " - " + customData[2].time)
+        $("#bottomright-text").text("Day "+ info.day + " - " + info.phase.charAt(0).toUpperCase() + info.phase.substring(1))
     })
     
 }

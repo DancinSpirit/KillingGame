@@ -1,3 +1,31 @@
 <div id="chapter">
-    
+    <div id="chapter-title">
+        Chapter <%=chapter.number%>
+    </div>
+    <%for(let x=0; x<chapter.days.length; x=x+7){%>
+    <div id="week-<%=x/7%>">
+        <%for(let y=x*7; y<chapter.days.length; y++){%>
+            <div class="day" id="day-<%=x%>">
+                <section class="day-title">
+                    Day <%=x+1%>
+                </section>
+                <section id="day-<%=x%>-morning"class="day-phase">
+                    Morning
+                </section>
+            </div>
+        <%}%>
+    </div>
+    <%}%>
 </div>
+<script>
+    for(let x=0; x<user.despair.chapters[<%=chapter.number%>-1].days.length; x++){
+        $(`#day-${x}-morning`).on("click", function(){
+            newStates = ["despair","story","day"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[<%=chapter.number%>-1].days[x]}]]
+            newCustomData = [false,{chapterNumber: <%=chapter.number%>},{time: "Morning"}]
+            pageTitle = "Killing Game"
+            url = "/despair/story/day"
+            stateChange(newStates,databaseObjects,customData,pageTitle,url)
+        })
+    }
+</script>

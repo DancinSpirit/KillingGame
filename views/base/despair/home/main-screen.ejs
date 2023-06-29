@@ -45,7 +45,7 @@
             //Load Calendar (Calendar should load whatever day is sent to it as the link click)
             newStates = ["despair","story","calendar","chapter"]
             newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[0].days[0]}],false]
-            newCustomData = [false,{chapterNumber: 1},{time: "morning"},false]
+            newCustomData = [false,{chapterNumber: 1},{time: "morning"},{chapter: {number: 1,days: user.despair.chapters[0].days}}]
             pageTitle = "Story"
             url = "/despair/story/calendar/chapter"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
