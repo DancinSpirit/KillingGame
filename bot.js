@@ -29,9 +29,9 @@ const runAtSpecificTimeOfDay = function(hour, minutes, func)
 
 bot.once(Events.ClientReady, event=>{
     console.log("Logged in as " + event.user.tag);
-    runAtSpecificTimeOfDay(20,0,async ()=>{
+    runAtSpecificTimeOfDay(1,0,async ()=>{
         let waitingChannel = await bot.channels.cache.get("799874873714802739");
-        waitingChannel.send("<@660664223625641994> This is an end of day reminder reminding you that it's your turn!")
+        waitingChannel.send(`<@&${'660664223625641994'}> This is an end of day reminder reminding you that it's your turn!`)
     })
 })
 
