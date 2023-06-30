@@ -33,11 +33,11 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
     isMobile = true;
 }
 
-const bot = async function(command){
+const despairBot = async function(command){
     return new Promise((resolve)=>{
         $.ajax({
             method: "POST",
-            url: `/bot`,
+            url: `/despair-bot`,
             data: {command},
             success: (res)=>{
                 user = res.user;

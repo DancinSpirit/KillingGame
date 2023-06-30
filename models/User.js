@@ -32,9 +32,14 @@ const schema = new mongoose.Schema(
     discord: {
       id: {type: String},
       channels: {
-        story: {type: String},
-        reAct: {type: String},
-        disccusion: {type: String}
+        despair: {
+          story: {type: String},
+          disccusion: {type: String}
+        },
+        cards: {
+          story: {type: String},
+          disccusion: {type: String}
+        }
       }
     }
   },
