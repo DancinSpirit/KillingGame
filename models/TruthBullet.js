@@ -6,7 +6,9 @@ const schema = new mongoose.Schema(
     description: {type: String},
     chapter: {type: Number},
     phase: {type: String},
-    day: {type: Number}
+    day: {type: Number},
+    lie: {type: Boolean, default: false},
+    truthBullet: {type: mongoose.Schema.Types.ObjectId, ref: "TruthBullet"}
   },
   {timestamps: true}
 )
