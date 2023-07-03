@@ -322,6 +322,8 @@ const nextLine = async function(){
                 case "LIE CREATION":
                     let lieBullet = await loadDatabaseObject("TruthBullet",sentText);
                     let truthBullet2 = await loadDatabaseObject("TruthBullet",lieBullet.truthBullet);
+                    ctrlButton = false;
+                    enterButton = false;
                     $("#choice").empty();
                     $("#choice").append(`
                     <section id="truth-bullet-title">
