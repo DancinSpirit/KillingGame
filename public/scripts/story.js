@@ -282,6 +282,8 @@ const nextLine = async function(){
                     $("#choice-container").css("display","flex");
                     break;
                 case "TRUTH BULLET DISCOVERY":
+                    ctrlButton = false;
+                    enterButton = false;
                     let alreadyExists = false;
                     for(let x=0; x<user.despair.truthBullets.length; x++){
                         if(user.despair.truthBullets[x]==sentText){
