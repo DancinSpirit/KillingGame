@@ -134,6 +134,8 @@ const instantNextLine = async function(){
                         break;
                     case "TRUTH BULLET DISCOVERY":
                         break;
+                    case "LIE CREATION":
+                        break;
                     case "RE:ACT":
                         $(`#page-${pageNum}`).append(`<p class="boxtext" id="boxtext-${index}">${"RE:ACT! (I haven't implemented RE:ACT-ability on the site yet Please use discord for now. :P)"}</p>`);
                         break;
@@ -313,6 +315,43 @@ const nextLine = async function(){
                         enterButton = true;
                     })
                     $("#choice-container").css("display","flex");
+                    playSound("TruthBullet");
+                    break;
+                case "LIE CREATION":
+                    let lieBullet = await loadDatabaseObject("TruthBullet",sentText);
+                    truthBullet = await loadDatabaseOBject("TruthBullet",lieBullet.truthBullet);
+                    $("#choice").empty();
+                    $("#choice").append(`
+                    <section id="truth-bullet-title">
+                        Created a Lie!
+                    </section`);
+                    $("#choice").append(`
+                    <section id="lie-bullet" class = "truth-bullet">
+                        <img class = "Bullet1"src="/visuals/Bullet1.png">
+                        <div class = "bullet-text"><p>${truthBullet.name}</p></div>
+                        <img class = "Bullet3"src="/visuals/Bullet3.png">
+                    </section>`)
+                    $("#choice").append(`
+                    <section id="truth-bullet-description">
+                        ${truthBullet.description}
+                    </section`);
+                    $("#choice").append(`<p id="continue-button" class='choice-option chosen-option'>Continue</p>`);
+                    $("#continue-button").on("click",function(){
+                        $("#choice-container").css("display","none");
+                        ctrlButton = true;
+                        enterButton = true;
+                    })
+                    $("#choice-container").css("display","flex");
+                    setTimeout(function(){
+                        $("#lie-bullet").html(`
+                        <section id="lie-bullet" class = "truth-bullet">
+                            <img class = "Bullet1"src="/visuals/LieBullet1.png">
+                            <div class = "lie-bullet-text"><p>${truthBullet.name}</p></div>
+                            <img class = "Bullet3"src="/visuals/LieBullet3.png">
+                        </section>`)
+                        $("#truth-bullet-description").text(lieBullet.description)
+                        playSound("LieBullet");
+                    },1000)
                     playSound("TruthBullet");
                     break;
                 case "MUSIC":

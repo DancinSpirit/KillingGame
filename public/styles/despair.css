@@ -291,6 +291,16 @@ button, a{
     font-family: 'goodbyeDespair';
     color: white;
 }
+.lie-bullet-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/visuals/LieBullet2.png");
+    background-size: 2.92vh;
+    background-position: center;
+    font-family: 'goodbyeDespair';
+    color: black;
+}
 
 #truth-bullet-title{
     color: white;
