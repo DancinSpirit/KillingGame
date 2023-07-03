@@ -321,7 +321,7 @@ const nextLine = async function(){
                     break;
                 case "LIE CREATION":
                     let lieBullet = await loadDatabaseObject("TruthBullet",sentText);
-                    let truthBullet = await loadDatabaseObject("TruthBullet",lieBullet.truthBullet);
+                    let truthBullet2 = await loadDatabaseObject("TruthBullet",lieBullet.truthBullet);
                     $("#choice").empty();
                     $("#choice").append(`
                     <section id="truth-bullet-title">
@@ -330,12 +330,12 @@ const nextLine = async function(){
                     $("#choice").append(`
                     <section id="lie-bullet" class = "truth-bullet">
                         <img class = "Bullet1"src="/visuals/Bullet1.png">
-                        <div class = "bullet-text"><p>${truthBullet.name}</p></div>
+                        <div class = "bullet-text"><p>${truthBullet2.name}</p></div>
                         <img class = "Bullet3"src="/visuals/Bullet3.png">
                     </section>`)
                     $("#choice").append(`
                     <section id="truth-bullet-description">
-                        ${truthBullet.description}
+                        ${truthBullet2.description}
                     </section`);
                     $("#choice").append(`<p id="continue-button" class='choice-option chosen-option'>Continue</p>`);
                     $("#continue-button").on("click",function(){
@@ -348,7 +348,7 @@ const nextLine = async function(){
                         $("#lie-bullet").html(`
                         <section id="lie-bullet" class = "truth-bullet">
                             <img class = "Bullet1"src="/visuals/LieBullet1.png">
-                            <div class = "lie-bullet-text"><p>${truthBullet.name}</p></div>
+                            <div class = "lie-bullet-text"><p>${lieBullet.name}</p></div>
                             <img class = "Bullet3"src="/visuals/LieBullet3.png">
                         </section>`)
                         $("#truth-bullet-description").text(lieBullet.description)
