@@ -1,5 +1,6 @@
 const {Client, Events, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuOptionBuilder, StringSelectMenuBuilder} = require("discord.js");
 const db = require("./models");
+const botFunctions = require("./botFunctions.js")
 
 const bot = new Client({
     intents: [GatewayIntentBits.Guilds]

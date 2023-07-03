@@ -1,3 +1,6 @@
+const db = require("./models");
+const {EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuOptionBuilder, StringSelectMenuBuilder} = require("discord.js");
+
 let functions = {};
 functions.sendStoryText = async function(storyChannel,sentText,player){
     return new Promise(async (resolve)=>{
@@ -30,6 +33,25 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                     }
                     if(!bulletExists){
                         player.despair.truthBullets.push(truthBullet._id);
+                        player.save();
+                    }
+                    resolve();
+                    break;
+                case "LIE CREATION":
+                    let lieBullet = await db.TruthBullet.findById(text);
+                    let lieBulletEmbed = new EmbedBuilder()
+                        .setTitle(lieBullet.name)
+                        .setDescription(lieBullet.description)
+                        .setAuthor({name:"Created a Lie!"})
+                    await storyChannel.send({embeds: [lieBulletEmbed]})
+                    let lieBulletExists = false;
+                    for(let x=0; x<player.despair.truthBullets.length; x++){
+                        if(player.despair.truthBullets[x].toString() == lieBullet._id.toString()){
+                            lieBulletExists = true;
+                        }
+                    }
+                    if(!lieBulletExists){
+                        player.despair.truthBullets.push(lieBullet._id);
                         player.save();
                     }
                     resolve();
