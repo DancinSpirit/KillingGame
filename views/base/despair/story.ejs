@@ -45,6 +45,16 @@
 </div>
 <script src="/scripts/story.js"></script>
 <script>
+    buttons.rightArrowBox = function(){
+        $("#right-arrow-box").on("click",function(){
+            if(text[text.length-1].includes("[PHASE SHIFT]")){
+                let newPhase = text[text.length-1].split("[PHASE SHIFT]")[1]
+                newCustomData[2] = {time: newPhase}
+                loadState(2);
+            }
+        })
+    }
+    buttons.rightArrowBox();
     info.chapter = JSON.parse(`<%-JSON.stringify(chapterNumber)%>`); 
     $("body").on("keydown", function (e) {
         if (e.keyCode == 17) {

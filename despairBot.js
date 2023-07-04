@@ -97,6 +97,31 @@ bot.updateServer = async function(){
             updatePlayerStory(users[x])
         }
     }
+    //Below is stuff written for updating phases, should do it all at once with a bot command instead of reading from the text.
+    /*  if(text == "Free Time"){
+                        text = "freeTime";
+                    }
+                    if(text == "Morning"){
+                        text = "morning";
+                    }
+                    gameState.phase = text;
+                    gameState.save();
+                    player.despair.currentLine = -1;
+                    player.despair.currentPhase = text;
+                    let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1]);
+                    day[text] = [""];
+                    console.log(day);
+                    player.save();
+                    day.save();
+                    if(text =="freeTime"){
+                        text = "Free Time!"
+                    }
+                    if(text == "morning"){
+                        text = "Morning Phase!"
+                    }
+                    let phaseShiftEmbed = new EmbedBuilder()
+                        .setTitle(text)
+                    await storyChannel.send({embeds: [phaseShiftEmbed]}) */
 }
 
 const updatePlayerStory = async function(player){
@@ -118,18 +143,20 @@ const updatePlayerStory = async function(player){
     let guild = await bot.guilds.cache.get("659245797333925919")
     let gamemaster = await guild.members.fetch("206648363729289216");
     let user = await guild.members.fetch(player.discord.id)
-    if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
-        user.roles.add("660664223625641994")
-    }else if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
-        user.roles.remove("660664223625641994")
-        gamemasterWaiting = true;
-    }else{
-        user.roles.remove("660664223625641994")
-    }
-    if(gamemasterWaiting ==true){
-        gamemaster.roles.add("660664223625641994")
-    }else{
-        gamemaster.roles.remove("660664223625641994")
+    if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine]>0){
+        if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
+            user.roles.add("660664223625641994")
+        }else if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
+            user.roles.remove("660664223625641994")
+            gamemasterWaiting = true;
+        }else{
+            user.roles.remove("660664223625641994")
+        }
+        if(gamemasterWaiting ==true){
+            gamemaster.roles.add("660664223625641994")
+        }else{
+            gamemaster.roles.remove("660664223625641994")
+        }
     }
 }
 

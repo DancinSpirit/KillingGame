@@ -169,8 +169,12 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                     resolve();
             }
         }else{
-            await storyChannel.send(sentText);
-            resolve();
+            if(sentText==""){
+                resolve();
+            }else{
+                await storyChannel.send(sentText);
+                resolve();
+            }
         }
     })
 }

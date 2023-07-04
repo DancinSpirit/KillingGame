@@ -94,6 +94,8 @@ const instantNextLine = async function(){
                     case "SCENE TRANSITION":
                         await loadBackground("/visuals/" + sentText)
                         break;
+                    case "PHASE SHIFT":
+                        break;
                     case "PHILOSOPHER":
                         applyClass(sentText, eventId, index, "philosopher", true);
                         break;
@@ -168,6 +170,9 @@ const nextLine = async function(){
                 case "SCENE TRANSITION":
                     await loadBackground("/visuals/" + sentText)
                     nextLine();
+                    break;
+                case "PHASE SHIFT":
+                    $("#right-arrow-box").click();
                     break;
                 case "PHILOSOPHER":
                     applyClass(sentText, eventId, index, "philosopher", true);
@@ -284,16 +289,6 @@ const nextLine = async function(){
                 case "TRUTH BULLET DISCOVERY":
                     ctrlButton = false;
                     enterButton = false;
-                    let alreadyExists = false;
-                    for(let x=0; x<user.despair.truthBullets.length; x++){
-                        if(user.despair.truthBullets[x]==sentText){
-                            alreadyExists = true;
-                        }
-                    }
-                    if(!alreadyExists){
-                        user.despair.truthBullets.push(sentText);
-                        updateDatabaseObject("User",user._id,user)
-                    }
                     let truthBullet = await loadDatabaseObject("TruthBullet",sentText);
                     $("#choice").empty();
                     $("#choice").append(`
