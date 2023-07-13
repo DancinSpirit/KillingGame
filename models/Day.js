@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
     chapter: {type: Number},
     number: {type: Number},
     morning: [{type: String}],
-    freetime: [{type: String}],
+    freeTime: [{type: String}],
     startingBackground: {type: String},
     startingMusic: {type: String}
   },

@@ -394,6 +394,17 @@ const nextLine = async function(){
                 case "ACT":
                     nextLine();
                     break;
+                case "FREE TIME START":
+                    sentText = "FREE TIME START! (I haven't implemented FREE TIME functionality on the site yet Please use discord for now. :P)";
+                    $(`#event-${eventId}-height-box`).append(`<p id="height-check-${index}" class="boxtext">${sentText}</p>`);
+                    if(user.settings.pageScroll){
+                        pageCheck(eventId, index, sentText);
+                        createText($(`#page-${pageNum}`),eventId,index,sentText);
+                    }else{
+                        createText($(`#event-${eventId}`),eventId,index,sentText);
+                    }
+                    printLine(sentText); 
+                    break;
                 case "CHARACTER":
                     //functional typewriterless:  $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 
                     //character.firstName|Text Name|Dialogue

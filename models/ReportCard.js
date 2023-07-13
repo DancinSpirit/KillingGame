@@ -5,6 +5,7 @@ const schema = new mongoose.Schema(
     firstName: {type: String, default: "???"},
     lastName: {type: String, default: "???"},
     japanese: {type: Boolean, default: false},
+    dead: {type: Boolean, default: false},
     friendshipFragments: {type: Number, default: 0},
     height: {type: String, default: "???"},
     weight: {type: String, default: "???"},

@@ -114,8 +114,32 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                     })
                     resolve();
                     break;
+                case "FREE TIME START":
+                    resolve();
+                    break;
                 case "RE:ACT":
-                    if(text.includes("[INVESTIGATION CONCLUSION]")){
+                    if(text.includes("[FREE TIME START]")){
+                        let actionButton = new ButtonBuilder()
+                        .setCustomId("actionButton")
+                        .setLabel("2 Actions")
+                        .setStyle(ButtonStyle.Primary)
+                        let socialButton = new ButtonBuilder()
+                            .setCustomId("socialButton")
+                            .setLabel("3 Socializations")
+                            .setStyle(ButtonStyle.Primary)
+                        let mixedButton = new ButtonBuilder()
+                            .setCustomId("mixedButton")
+                            .setLabel("1 Action, 2 Socializations")
+                            .setStyle(ButtonStyle.Primary)
+                        let freeTimeEmbed = new EmbedBuilder()
+                            .setTitle("Free Time!")
+                            .setDescription("What would you like to do?")
+                        let freeTimeRow = new ActionRowBuilder()
+                            .addComponents(actionButton,mixedButton,socialButton)
+                        await storyChannel.send({embeds: [freeTimeEmbed], components: [freeTimeRow]})
+                        bot.updateServer();
+                    }
+                    else if(text.includes("[INVESTIGATION CONCLUSION]")){
                         let reactEmbed = new EmbedBuilder()
                             .setTitle("RE:ACT")
                             .setDescription("Investigation Conclusion! Select which Truth Bullets you'd like to share with the group!")
