@@ -49,7 +49,12 @@
         $("#right-arrow-box").on("click",function(){
             if(text[text.length-1].includes("[PHASE SHIFT]")){
                 let newPhase = text[text.length-1].split("[PHASE SHIFT]")[1]
+                let newDatabaseObjects = databaseObjects;
+                let newCustomData = customData;
+                let newStates = states;
                 newCustomData[2] = {time: newPhase}
+                pageTitle = "Story"
+                url = "/despair/story/day"
                 loadState(2);
             }
         })
@@ -82,9 +87,12 @@
     })
     buttons.contentsTab = function(){
         $("#contents-tab").on("click", async function(){
-            newStates = ["despair","story","calendar","chapter"]
-            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[info.chapter-1].days[info.day-1]}],false]
-            newCustomData = [false,{chapterNumber: info.chapter},{time: info.phase},{chapter: {number: info.chapter,days: user.despair.chapters[info.chapter-1].days}}]
+            let newStates = ["despair","story","calendar","chapter"]
+            let newDatabaseObjects = databaseObjects;
+            newDatabaseObjects[2] = [{name: "Day", id: user.despair.chapters[info.chapter-1].days[info.day-1]}]
+            let newCustomData = customData;
+            newCustomData[2] ={time: info.phase}
+            newCustomData[3] = {chapter: {number: info.chapter,days: user.despair.chapters[info.chapter-1].days}}
             pageTitle = "Story"
             url = "/despair/story/calendar/chapter"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)

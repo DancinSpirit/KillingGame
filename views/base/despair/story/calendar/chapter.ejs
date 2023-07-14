@@ -12,6 +12,9 @@
                 <section id="day-<%=x%>-morning"class="day-phase">
                     Morning
                 </section>
+                <section id="day-<%=x%>-freeTime"class="day-phase">
+                    Free Time
+                </section>
             </div>
         <%}%>
     </div>
@@ -23,6 +26,14 @@
             newStates = ["despair","story","day"]
             newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[<%=chapter.number%>-1].days[x]}]]
             newCustomData = [false,{chapterNumber: <%=chapter.number%>},{time: "Morning"}]
+            pageTitle = "Killing Game"
+            url = "/despair/story/day"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+        $(`#day-${x}-freeTime`).on("click", function(){
+            newStates = ["despair","story","day"]
+            newDatabaseObjects = [false,false,[{name: "Day", id: user.despair.chapters[<%=chapter.number%>-1].days[x]}]]
+            newCustomData = [false,{chapterNumber: <%=chapter.number%>},{time: "FreeTime"}]
             pageTitle = "Killing Game"
             url = "/despair/story/day"
             stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
