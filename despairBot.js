@@ -37,6 +37,7 @@ bot.once(Events.ClientReady, event=>{
 })
 
 bot.on("interactionCreate", async (interaction) =>{
+    bot.updateServer();
     if(interaction.customId.includes("submitSocial")){
         let user = interaction.user;
         let gameState = await db.GameState.findOne({});
@@ -193,7 +194,6 @@ bot.on("interactionCreate", async (interaction) =>{
             let submitRow = new ActionRowBuilder().addComponents(submitButton)
             interaction.message.delete();
             await interaction.reply({embeds:[socialEmbed],components:[socialInputRow,socialInputRow2,socialInputRow3,submitRow]})
-
         }
         if(interaction.customId=="mixedButton"){
             let mixedModal = new ModalBuilder()

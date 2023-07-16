@@ -137,7 +137,6 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                         let freeTimeRow = new ActionRowBuilder()
                             .addComponents(actionButton,mixedButton,socialButton)
                         await storyChannel.send({embeds: [freeTimeEmbed], components: [freeTimeRow]})
-                        bot.updateServer();
                     }
                     else if(text.includes("[INVESTIGATION CONCLUSION]")){
                         let reactEmbed = new EmbedBuilder()
