@@ -38,6 +38,49 @@ animations.day = async function(state, component){
         $("#bottomright-text").text("Day "+ info.day + " - " + info.phase.charAt(0).toUpperCase() + info.phase.substring(1))
     })  
 }
+animations.freeTime = async function(state, component){
+    return new Promise((resolve)=>{
+        console.log("TESTSETST")
+        $(`#sub-${state}`).attr("id",`old-sub-${state}`);
+        $(`#sub-${state}-container`).append(`<section id="sub-${state}" class="sub-base"></section>`)
+        $(`#sub-${state}`).html(component);
+        $(`.textbox`).css("transition",`100ms`);
+        $(`.textbox`).css("height","0")
+        $("#top-section").fadeOut();
+        $("#phase-container").css("visbility","hidden");
+        $("#phase-container").css("display","flex");
+        $("#phase-box").text("F r e e \xa0\xa0T i m e");
+        $(`#sub-${state}-container`).css("transform","translateX(-50%)")
+        $(".event-box").css("width","100%");
+        $(".height-box").css("display","block");
+        $(`#old-sub-${state}`).remove();
+        $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
+        if(song){
+            stopAudio(song);
+        }
+        setTimeout(function(){
+            $("#phase-container").css("visibility","visible");
+            $("#phase-box").css("height","75px");
+            playSound("PhaseShift");
+        },100)
+        setTimeout(function(){
+            $("#phase-box").css("height","1000px");
+            $("#phase-container").fadeOut();
+            setTimeout(function(){
+                $("#top-section").fadeIn();
+                $(".textbox").css("transition",`${user.settings.pageSpeed}ms`)
+                $(".textbox").css("height","80vh");
+                $("#phase-box").css("height","0");
+                loadMusic("BeautifulDays");
+                setTimeout(function(){
+                    $(".textbox").css("transition","0ms");
+                    resolve();
+                },user.settings.pageSpeed)
+            },300)
+        },1600)
+        $("#bottomright-text").text("Day "+ info.day + " - " + info.phase.charAt(0).toUpperCase() + info.phase.substring(1))
+    })  
+}
 animations.calendar = async function(state, component){
     return new Promise((resolve)=>{
         $(`#sub-${state}`).attr("id",`old-sub-${state}`);

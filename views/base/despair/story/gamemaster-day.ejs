@@ -17,7 +17,7 @@
     index = -1;
     pageNum = 1;
     eventId = JSON.parse(`<%-JSON.stringify(day._id)%>`); 
-    text = JSON.parse(`<%-JSON.stringify(day[time.toLowerCase()])%>`); 
+    text = JSON.parse(`<%-JSON.stringify(day[time.charAt(0).toLowerCase() + time.slice(1)])%>`);
     buttons.gamemasterInput = function(x){
         $("#boxtext-"+ x).on("input",async function(){
             text[x] = $("#boxtext-"+x).text();

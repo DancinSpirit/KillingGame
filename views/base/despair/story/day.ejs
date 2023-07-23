@@ -2,10 +2,73 @@
     <%if(user.settings.pageScroll){%>
     <section id="page-1" class="page">
     <%}%>
-        <div id="title-box-event">
-            <p class="boxtext title">Day <%=day.number%> - <%=time%></p>
-            <div id='click-signifier'><i class="fa-solid fa-yin-yang spin"></i></div>
-        </div>
+        <%if(time.charAt(0).toLowerCase() + time.slice(1)!="freeTime"){%>
+            <div id="title-box-event">
+                <p class="boxtext title">Day <%=day.number%> - <%=time%></p>
+                <div id='click-signifier'><i class="fa-solid fa-yin-yang spin"></i></div>
+            </div>
+        <%}else{%>
+            <section id="free-time-students">
+                <div>Potential Socializations</div>
+                <div id="free-time-students-container">            
+                    <%for(let x=0; x<16; x++){%>
+                        <div class="free-time-student"id="student-<%=x+1%>"></div>
+                        <script>
+                            buttons[`reportNavStudent<%=x%>`] = async function(){
+                                $(`#student-<%=x+1%>`).on("mouseover",function(){
+                                    playSound("Selecting");
+                                })
+                                $(`#student-<%=x+1%>`).on("click", function(){
+                                    $(`#student-<%=x+1%>`).css("opacity","0.5");
+                                    $("#student-<%=x+1%>").on("click", function(){
+                                        $(`#student-<%=x+1%>`).css("opacity","1");
+                                        $("#student-<%=x+1%>").off("click");
+                                        buttons[`reportNavStudent<%=x%>`]();
+                                    })
+                                })
+                            }
+                            buttons.reportNavStudent<%=x%>();
+                        </script>
+                    <%}%>
+                    <script>
+                        buttons.loadReportCards = async function(){
+                            for(let x=0; x<user.despair.reportCards.length; x++){
+                                let reportCard = await loadDatabaseObject("ReportCard",user.despair.reportCards[x]);
+                                $(`#student-${x+1}`).css("background-image",`url(/avatars/${reportCard.firstName}.png)`)
+                            }
+                        }
+                        buttons.loadReportCards();
+                    </script>
+                </div>
+            </section>
+            <section id="free-time-choices">
+                <section id="free-time-actions" class="free-time-choice">
+                    <i class="fa-solid free-time-fa fa-person-walking"></i>
+                    2 Actions
+                </section>
+                <section id="free-time-mixed" class="free-time-choice">
+                    <i class="fa-solid free-time-fa fa-people-arrows"></i>
+                    1 Action, 2 Socializations
+                </section>
+                <section id="free-time-social" class="free-time-choice">
+                    <i class="fa-solid free-time-fa fa-users"></i>
+                    3 Socializations
+                </section>
+            </section>
+            <section id="free-time-submit-container">
+                <button id="free-time-submit-button">
+                    Submit
+                </button>
+            </section>
+            <script>
+                $(".free-time-choice").on("mouseover",function(){
+                    playSound("Selecting")
+                })
+                $("#free-time-submit-button").on("mouseover",function(){
+                    playSound("Selecting")
+                })
+            </script>
+        <%}%>
     <%if(user.settings.pageScroll){%>
     </section>
     <%}%>
@@ -27,6 +90,10 @@
     loadEvent();
     continueEvent = true;
 </script>
-<animation>day</animation>
+<%if(time.charAt(0).toLowerCase() + time.slice(1)=="freeTime"){%>
+    <animation>freeTime</animation>
+<%}else{%>
+    <animation>day</animation>
+    <bgm><%=day.startingMusic%></bgm>
+<%}%>
 <background><%=day.startingBackground%></background>
-<bgm><%=day.startingMusic%></bgm>

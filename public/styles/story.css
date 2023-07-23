@@ -214,6 +214,35 @@ form {
 
 
 /* CHOICES */
+#phase-container{
+    display: none;
+    height:100vh;
+    width:100vw;
+    top:0;
+    left:0;
+    z-index:1;
+    justify-content: center;
+    align-items:center;
+    transform: translateY(-5vh);
+    position: absolute;
+}
+#phase-box{
+    height:0;
+    border-top:solid 2px white;
+    transition: all 1500ms ease 0s;
+    border-bottom: solid 2px white;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: rgb(0,17,32);
+    background: linear-gradient(90deg, rgba(0,17,32,0) 0%, rgba(30,79,190,0.6839110644257703) 50%, rgba(62,82,116,0) 100%);
+    text-shadow: 0px 0px 10px blue;
+    box-shadow: 0px 0px 50px 10px white;
+    font-family: sans-serif;
+    font-size: 50px;
+    overflow:hidden;
+}
 #cutaway-image-container, #choice-container{
     position: absolute;
     height: 100vh;
@@ -325,4 +354,86 @@ form {
     height: 70px;
     width: 70px;
     margin-bottom: 5px;
+}
+
+#free-time-choices{
+    display:flex;
+    flex-direction:row;
+    height:62vh;
+    width: 90vw;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#free-time-students{
+    height: 7vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family:'goodbyeDespair';
+}
+
+#free-time-submit-container{
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-family: 'goodbyeDespair'
+}
+
+.free-time-choice{
+    width: 25%;
+    height: 80%;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    font-family:'goodbyeDespair';
+    border: solid 2px white;
+    background-color: black;
+    flex-direction:column;
+    font-size:30px;
+}
+.free-time-choice:hover{
+    background-color: #ff9c02; 
+    color: black;
+    border-color: black;
+    cursor:pointer;
+}
+
+#free-time-students-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.free-time-student{
+    border:solid white 1px;
+    height:60px;
+    aspect-ratio : 1 / 1;
+    background-position: center;
+    background-size: cover;
+}
+.free-time-student:hover{
+    cursor:pointer;
+    border:solid white 2px;
+}
+.free-time-fa{
+    font-size: 200px;
+    padding-bottom:20px;
+}
+
+#free-time-submit-button{
+    font-family: 'goodbyeDespair';
+    font-size: 20px;
+    border: solid 1px white;
+    padding: 20px;
+    transform: translateY(-6vh);
+    background-color: black;
+}#free-time-submit-button:hover{
+    background-color: #ff9c02; 
+    color: black;
+    border-color: black;
 }
