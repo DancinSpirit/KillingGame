@@ -11,6 +11,11 @@ let screen = true;
 let keyButtons = true;
 let enterKeyPressed = false;
 
+const updateStory = async function(){
+    
+}
+
+
 const loadBackground = async function(url){
     return new Promise((resolve) =>{
         if(url.includes("[TOP]")){
@@ -39,7 +44,8 @@ const loadEvent = function(){
     buttons.playerBox = function(){
         $("#player-box").off("click")
         $("#player-box").on("click", function(){
-            if(continueEvent){
+            if(continueEvent&&otherContinueEvent){
+                console.log(continueEvent);
                 $("#click-signifier").remove();
                 eventInterrupt = false;
                 $("#player-box").off("click");
@@ -392,7 +398,54 @@ const nextLine = async function(){
                     printLine(sentText); 
                     break;
                 case "ACT":
-                    nextLine();
+                    if(sentText.includes("[FREE TIME START]")){
+                        //[ACT][FREE TIME START]TYPE|Action/Socials|[NO SOCIAL]No social character numbers
+                        $(".free-time-student").addClass("noHover");
+                        $(".free-time-student").addClass("noHover");
+                        //remove reactability
+                        if(sentText.includes("[NO SOCIAL]")){
+                            let characterList = sentText.split("[NO SOCIAL]")[1].split("|");
+                            for(let x=0; characterList.length; x++){
+                                $("#student-" + characterList[x]).css("opacity","0.5");
+                            }
+                        }
+                        if(sentText.includes("SOCIAL")){
+                            $("#free-time-actions").addClass("free-time-unselected");
+                            $("#free-time-mixed").addClass("free-time-unselected");
+                            $(".free-time-choice").addClass("noHover");
+                            $("#free-time-social").addClass("free-time-selected")
+                            $(".free-time-unselected").off("mouseover");
+                            $("#free-time-submit-button").text("Continue")
+                        }
+                        $("#free-time-submit-button").on("click",function(){
+                            $("#free-time-submit-button").off("click");
+                            $("#free-time-choices").css("transition","1000ms");
+                            $("#free-time-choices").css("transform","translateX(-100%)");
+                            setTimeout(async function(){
+                                $("#free-time-choices").css("transition","0ms");
+                                $("#free-time-choices").css("transform","translateX(100%)")
+                                let socialChoices = sentText.split("SOCIAL|")[1].split("|");
+                                $("#free-time-choices").html("<section id='socialization-choices'>Socialization Choices:</section>");
+                                for(let x=0; x<socialChoices.length; x++){
+                                    $("#socialization-choices").append(`<section class='socialization-choice'><div class='free-time-student noHover' style='background-image: url("/avatars/${socialChoices[x].split(" ")[0]}.png");'></div><div class='socialization-choice-text'>${socialChoices[x]}</div></section>`)
+                                }
+
+                                setTimeout(function(){
+                                    $("#free-time-choices").css("transition","1000ms");
+                                    $("#free-time-choices").css("transform","translateX(0%)")
+                                    $("#free-time-submit-button").on("click", function(){
+                                        $("#free-time-students").css("display","none");
+                                        $("#free-time-choices").css("display","none");
+                                        $("#free-time-submit-container").css("display","none");
+                                        $(".hidden-text").removeClass("hidden-text")
+                                        otherContinueEvent = true;
+                                    })
+                                },100)
+                            },1000)
+                        })
+                    }else{
+                        nextLine();
+                    }
                     break;
                 case "FREE TIME START":
                     sentText = "FREE TIME START! (I haven't implemented FREE TIME functionality on the site yet Please use discord for now. :P)";
@@ -403,7 +456,7 @@ const nextLine = async function(){
                     }else{
                         createText($(`#event-${eventId}`),eventId,index,sentText);
                     }
-                    printLine(sentText); 
+                    printLine(sentText);
                     break;
                 case "CHARACTER":
                     //functional typewriterless:  $(`#page-${pageNum}`).append(`<p id="character-${index}" class="character-boxtext"><span class="character-box"><span class="character-avatar"></span><span class="character-name">${characterName}</span></span><span>"${sentText}"</span></p>`); 

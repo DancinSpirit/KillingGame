@@ -40,7 +40,6 @@ animations.day = async function(state, component){
 }
 animations.freeTime = async function(state, component){
     return new Promise((resolve)=>{
-        console.log("TESTSETST")
         $(`#sub-${state}`).attr("id",`old-sub-${state}`);
         $(`#sub-${state}-container`).append(`<section id="sub-${state}" class="sub-base"></section>`)
         $(`#sub-${state}`).html(component);

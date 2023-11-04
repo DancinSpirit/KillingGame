@@ -33,7 +33,7 @@
                 }
             }
             let sentObject = {}
-            sentObject[customData[2].time.toLowerCase()] = text;
+            sentObject[customData[2].time.charAt(0).toLowerCase() + customData[2].time.slice(1)] = text;
             console.log(sentObject);
             let updatedObject = await updateDatabaseObject("Day",databaseObjects[2][0].id,sentObject);
         })

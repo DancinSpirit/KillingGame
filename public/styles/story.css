@@ -113,7 +113,7 @@ form {
     width: 100%;
 }
 
-.unselected {
+.free-time-unselected {
     background-color: rgba(0, 0, 0, 0.9);
     color: gray;
 }
@@ -436,4 +436,40 @@ form {
     background-color: #ff9c02; 
     color: black;
     border-color: black;
+}
+
+.free-time-unselected:hover{
+    background-color: black;
+    color: gray;
+    border: white solid 2px;
+    cursor:default;
+}
+
+.free-time-selected{
+    border: #ff9c02 solid 5px;
+    color: #ff9c02;
+}
+
+.noHover{
+    pointer-events: none;
+}
+
+#socialization-choices{
+    font-family:'goodbyeDespair';
+    font-size:24px;
+    background-color: black;
+    border: solid 2px;
+    padding:10px;
+}
+
+.socialization-choice{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    padding-top:10px;
+    font-size:16px;
+}
+.socialization-choice-text{
+    align-items:center;
+    padding-left:10px;
 }

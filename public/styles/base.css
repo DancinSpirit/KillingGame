@@ -56,3 +56,35 @@ body{
 animation, component, background, bgm{
     display: none;
 }
+#loading-screen{
+    width: 100vw;
+    height: 92vh;
+    position: absolute;
+    background-color: black;
+    top: 8vh;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity:0;
+}
+.fadeIn{
+    animation: fadeIn .5s forwards;
+}
+.fadeOut{
+    animation: fadeOut .5s forwards;
+}
+@keyframes fadeIn{
+    from{
+    opacity:0%
+    }to{
+        opacity:100%;
+    }
+}
+@keyframes fadeOut{
+    from{
+    opacity:100%
+    }to{
+        opacity:0%;
+    }
+}

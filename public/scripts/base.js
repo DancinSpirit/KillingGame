@@ -1,6 +1,7 @@
 let buttons = {};
 let info = {};
 let continueEvent = true;
+let otherContinueEvent = true;
 
 const deactivateButtons = function(x){
     return new Promise(async function(resolve){

@@ -24,6 +24,7 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                         .setTitle(truthBullet.name)
                         .setDescription(truthBullet.description)
                         .setAuthor({name:"Obtained Truth Bullet!"})
+                        .setColor("#ff9c02")
                     await storyChannel.send({embeds: [truthBulletEmbed]})
                     let bulletExists = false;
                     for(let x=0; x<player.despair.truthBullets.length; x++){
@@ -102,6 +103,12 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                     resolve();
                     break;
                 case "ACT":
+                    if(text.includes("FREE TIME START")){
+                        let freeTimeEmbed = new EmbedBuilder()
+                            .setTitle("FREE TIME")
+                            .setDescription("Socialized with " + text.split("FREE TIME START]")[1].split("|")[1] + ", " + text.split("FREE TIME START]")[1].split("|")[2] + ", and " + text.split("FREE TIME START]")[1].split("|")[3])
+                        await storyChannel.send({embeds:[freeTimeEmbed]})
+                    }
                     resolve();
                     break;
                 case "ULTIMATE ABILITY USAGE":
@@ -167,7 +174,7 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                             components: [reactRow]
                         })
                     }else{
-                        let reactEmbed = new EmbedBuilder()
+                    let reactEmbed = new EmbedBuilder()
                         .setTitle("RE:ACT")
                         .setDescription("RE:ACT Opportunity! Either RE:ACT or continue.")
                     let reactContinue = new ButtonBuilder()
@@ -188,6 +195,9 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                     resolve();
                     break;
                 default:
+                    if(text==""){
+                        text="Something went wrong. I'm bugtesting you can ignore this Kristian."
+                    }
                     await storyChannel.send(text);
                     resolve();
             }

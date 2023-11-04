@@ -2,12 +2,11 @@
     <%if(user.settings.pageScroll){%>
     <section id="page-1" class="page">
     <%}%>
-        <%if(time.charAt(0).toLowerCase() + time.slice(1)!="freeTime"){%>
-            <div id="title-box-event">
+            <div id="title-box-event" <%if(time.charAt(0).toLowerCase() + time.slice(1)=="freeTime"){%>class="hidden-text"<%}%>>
                 <p class="boxtext title">Day <%=day.number%> - <%=time%></p>
                 <div id='click-signifier'><i class="fa-solid fa-yin-yang spin"></i></div>
             </div>
-        <%}else{%>
+        <%if(time.charAt(0).toLowerCase() + time.slice(1)=="freeTime"){%>
             <section id="free-time-students">
                 <div>Potential Socializations</div>
                 <div id="free-time-students-container">            
@@ -67,6 +66,7 @@
                 $("#free-time-submit-button").on("mouseover",function(){
                     playSound("Selecting")
                 })
+                otherContinueEvent = false;
             </script>
         <%}%>
     <%if(user.settings.pageScroll){%>
@@ -89,6 +89,11 @@
     info.day =JSON.parse(`<%-JSON.stringify(day.number)%>`); 
     loadEvent();
     continueEvent = true;
+    <%if(time.charAt(0).toLowerCase() + time.slice(1)=="freeTime"){%>
+    nextLine();
+    <%}else{%>
+        otherContinueEvent = true;
+    <%}%>
 </script>
 <%if(time.charAt(0).toLowerCase() + time.slice(1)=="freeTime"){%>
     <animation>freeTime</animation>
