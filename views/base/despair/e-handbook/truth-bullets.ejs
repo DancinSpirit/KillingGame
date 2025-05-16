@@ -1,0 +1,42 @@
+<div id="truth-bullets">
+    <div id="truth-title">Truth Bullets</div>
+    <div id="truth-section">
+        <div id="truth-bullet-list">
+    
+        </div>
+        <div id="truth-bullet-info">
+            <div id="truth-bullet-characters">
+
+            </div>
+            <div id="truth-bullet-description">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    buttons.loadTruthBullets = async function(){
+        for(let x=0; x<user.despair.truthBullets.length; x++){
+            let truthBullet = await loadDatabaseObject("TruthBullet",user.despair.truthBullets[x]);
+            $("#truth-bullet-list").append(`<div id="${truthBullet._id}">${truthBullet.name}</div>`)
+            $(`#${truthBullet._id}`).on("click",function(){
+                $("#truth-bullet-characters").html("");
+                for(let y=0; y<truthBullet.creators.length; y++){
+                    $("#truth-bullet-characters").append(`<div id="truth-bullet-character-${y}"></div>`)
+                    buttons.loadReportCard = async function(){
+                        let reportCard = await loadDatabaseObject("ReportCard",truthBullet.creators[y]);
+                        if(reportCard.japanese){
+                            $(`#truth-bullet-character-${y}`).text(reportCard.lastName + " " + reportCard.firstName)
+                        }else{
+                            $(`#truth-bullet-character-${y}`).text(reportCard.firstName + " " + reportCard.lastName)
+                        }
+                    }
+                    buttons.loadReportCard();
+                }
+
+                $("#truth-bullet-description").html(truthBullet.description)
+            })
+        }
+    }
+    buttons.loadTruthBullets();
+</script>

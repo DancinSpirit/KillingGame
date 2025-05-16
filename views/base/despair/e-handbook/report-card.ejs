@@ -34,7 +34,6 @@
     buttons.loadReportCards = async function(){
         for(let x=0; x<user.despair.reportCards.length; x++){
             let reportCard = await loadDatabaseObject("ReportCard",user.despair.reportCards[x]);
-            console.log
             $(`#student-${x+1}`).css("background-image",`url(/avatars/${reportCard.firstName}.png)`)
             $(`#student-${x+1}`).hover(function(){
                 if(reportCard.japanese){

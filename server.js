@@ -9,7 +9,6 @@ const cardBot = require("./cardBot.js")
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended:true}));
-despairBot.updateServer()
 
 /* Authorization Setup */
 const session = require('express-session');
@@ -75,6 +74,7 @@ app.post("/logout", async function(req,res){
 })
 /* Discord Bot */
 app.post("/despair-bot", async function(req, res){
+    console.log(req.body.command)
     eval(`despairBot.${req.body.command}`)
 })
 

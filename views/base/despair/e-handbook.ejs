@@ -100,5 +100,22 @@
         })
     }
     buttons.navRules();
+    buttons.navTruth = function(){
+        $("#nav-truth").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#nav-truth").on("click", function(){
+            playSound("Selected");
+        })
+        $("#nav-truth").on("click", function(){
+            newStates = ["despair","e-handbook","truth-bullets"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "E-Handbook"
+            url = "/despair/e-handbook/truth-bullets"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navTruth();
 </script>
 <animation>handbook</animation>
