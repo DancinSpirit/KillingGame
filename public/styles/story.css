@@ -43,6 +43,7 @@
 #sub-story, #old-sub-story{
     overflow-y: auto;
     width: 100%;
+    overflow-x:hidden;
 }
 .bottom {
     height: 100%;

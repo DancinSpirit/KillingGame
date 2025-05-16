@@ -438,6 +438,6 @@ animations.rules = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
-        $("#bottomright-text").text("Presents")
+        $("#bottomright-text").text("Rules")
     })
 }
