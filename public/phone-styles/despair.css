@@ -1,0 +1,316 @@
+#despair{
+    height: 100%;
+    width: 100%;
+}
+
+#sub-despair-container-container{
+    height: 92vh;
+}
+
+#sub-home-container-container{
+    overflow:visible;
+}
+/* Nav */
+#nav{
+    display: flex;
+    height: 8vh;
+    background-color: white;
+}
+
+#left{
+    width: 25%;
+    background-color: black;
+    z-index: 1;
+}
+
+#left::before{
+    content: "";
+    background-color: black;
+    padding-left: 10vw;
+    width: 25%;
+    height: 8vh;
+    z-index: -1;
+    position: absolute;
+    transform: skew(-40deg, 0deg);
+    border-right: solid #9A2323 1vh;
+}
+
+#left-text{
+    font-family: 'Source Sans Pro';
+    color:white;
+    font-size: min(5vw,3vh);
+    padding-left: 1vh;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+#topleft{
+    height: 50%;
+}
+
+#nav-buttons{
+    display: flex;
+    align-content: center;
+    transform: translateX(-88%);
+    transition: 1000ms;
+}
+
+#bottomleft{
+    height: 50%;
+    display: flex;
+    align-content: center;
+}
+
+button, a{
+    background: transparent;
+    outline:none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    padding-left: 1.2vh;
+    padding-right: 1vh;
+}
+
+#right{
+    width: 75%;
+}
+
+#topright{
+    height: 50%;
+    background-color: #403B3F;
+}
+
+#topright-text{
+    font-family: 'goodbyeDespair';
+    color: white;
+    font-size: 4vh;
+    text-align: right;
+    padding-right: 1vh;
+}
+
+#bottomright{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#bottomright-text{
+    font-family: 'Source Sans Pro';
+    font-size: 3vh;
+    color: black;
+    padding-right: 1.1vh;
+}
+
+/* MENUS */
+.menu{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #403B3F;
+    border-bottom: solid white;
+    transition-duration: 1000ms;
+    transform: translateY(1000%);
+}
+
+.player-menu{
+    transform:translate(-37vw,34vh);
+    width: 35%;
+}
+
+.option{
+    font-family: 'Source Sans Pro';
+    font-size: 2vmax;
+    color: white;
+    border: solid white;
+    border-bottom: 0;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.option:hover{
+    background-color: #f25764; 
+   /*  background-color: rgb(73, 186, 224); */
+}
+
+#start-menu{
+    text-align: center;
+    width: 50vw;
+    transform: translateY(0%);
+}
+
+.form{
+    border: solid white;
+    color: white;
+    padding: 10px;
+    font-family: 'Source Sans Pro';
+    display: flex;
+    justify-content: center;
+}
+
+.form-input{
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* OTHER */
+#home{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* SVGs */
+.svg-container{
+  transition-duration: 1000ms;
+  height: 65vh;
+  width: 55vw;
+}
+
+#gun-container{
+    position: absolute;
+    z-index: -2;  
+}
+
+#circle-container{
+    position: absolute;
+    z-index: -2;  
+    transform: translate(-3vw,-3.35vh);
+}
+
+#smallcircle-container{
+    position: absolute;
+    z-index: -2; 
+    transform: translate(-1.65vw,-1.75vh); 
+}
+
+.whitespace{
+    opacity: 0;
+}
+
+.dark{
+    fill: #f24957; 
+}
+
+.light{
+    fill: #f25764; 
+}
+
+.white{
+    stroke:white;
+}
+
+#gun{
+    opacity: .8;
+    animation: rotate 10s infinite;
+    animation-timing-function: linear;
+    height: 100%;
+    width: 100%;
+}
+@keyframes rotate{
+    from{
+    transform: rotate(0deg);
+    }to{
+        transform:rotate(-360deg);
+    }
+}
+
+#circle{
+    opacity: .8;
+    animation: rotate2 5s infinite;
+    animation-timing-function: linear;
+    height: 111%;
+    width: 111%;
+}
+@keyframes rotate2{
+    from{
+    transform: rotate(0deg);
+    }to{
+        transform:rotate(-360deg);
+    }
+}
+#smallcircle{
+    opacity: .8;
+    animation: rotate3 10s infinite;
+    animation-timing-function: linear;
+    height: 106%;
+    width: 106%;
+}
+@keyframes rotate3{
+    from{
+    transform: rotate(0deg);
+    }to{
+        transform:rotate(360deg);
+    }
+}
+
+/* Users Contianer */
+#users-container{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top:0;
+    left:0;
+    display: none;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+#users{
+    background-color:rgb(36, 35, 35);
+    color: white;
+    padding: 20px;
+    border: solid 3px white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.truth-bullet{
+    display: flex;
+    height: 10vh;
+    font-family: 'Hobby-Horse-NF';  
+    color: black;
+    font-size: 2.6vh;
+    -webkit-text-stroke: 1px black;
+}
+
+.bullet-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/visuals/Bullet2.png");
+    background-size: 2.92vh;
+    background-position: center;
+    font-family: 'goodbyeDespair';
+    color: white;
+}
+.lie-bullet-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/visuals/LieBullet2.png");
+    background-size: 2.92vh;
+    background-position: center;
+    font-family: 'goodbyeDespair';
+    color: black;
+}
+
+#truth-bullet-title{
+    color: white;
+    font-family: 'goodbyeDespair';
+    font-size: 2.7vh;
+}
+
+#truth-bullet-description{
+    font-size: 1.5vh;
+    font-family: 'storyDespair';
+    width: 80%;
+    padding: 5px;
+}

@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'goodbyeDespair';
+    src: URL('../fonts/goodbyeDespair.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'candara';
+    src: URL('../fonts/Candara.TTF');
+}
+@font-face {
+    font-family: 'storyDespair';
+    src: URL('../fonts/storyDespair.ttf')
+}
+@font-face {
+    font-family: 'hobbyHorse';
+    src: URL('../fonts/Hobby-Horse-NF.woff')
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+html{
+    height: 100%;
+    width: 100%;
+}
+body{
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    transition: background-image 0.2s ease-in-out;
+    background-color: black;
+    color:white;
+
+}
+.sub-base-container-container{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.sub-base-container{
+    height: 200%;
+    width: 200%;
+    display: flex;
+}
+.sub-base, .old-sub-base{
+    height: 50%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+animation, component, background, bgm{
+    display: none;
+}
+#loading-screen{
+    width: 100vw;
+    height: 92vh;
+    position: absolute;
+    background-color: black;
+    top: 8vh;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity:0;
+}
+.fadeIn{
+    animation: fadeIn .5s forwards;
+}
+.fadeOut{
+    animation: fadeOut .5s forwards;
+}
+@keyframes fadeIn{
+    from{
+    opacity:0%
+    }to{
+        opacity:100%;
+    }
+}
+@keyframes fadeOut{
+    from{
+    opacity:100%
+    }to{
+        opacity:0%;
+    }
+}

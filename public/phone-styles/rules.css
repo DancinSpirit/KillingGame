@@ -1,0 +1,126 @@
+#rules{
+    display:flex;
+    flex-direction: row;
+    height:100%;
+    width:100%;
+}
+#sub-rules-container-container{
+    height: 100%;
+    width:65%;
+    flex-direction: row;
+    border: solid white 1px;
+    border-top:none;
+}
+#sub-school-container-container{
+    height:100%;
+    width:100%;
+}
+#rules-nav{
+    height: 100%;
+    width:35%;
+    align-self:flex-end;
+    flex-direction: column;
+    background-color:#242424;
+    border:solid 1px white;
+    align-items:center;
+    justify-content: space-evenly;
+    display: flex;
+    border-top:none;
+}
+.clicked-rules-nav-button{
+    height:20%;
+    width:80%;
+    background-color: lightgrey;
+    color: black;
+    font-family: 'goodbyeDespair';
+    font-size:25px;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    border:solid white 1px;
+}
+.rules-nav-button{
+    height:20%;
+    width:80%;
+    background-color: black;
+    color: white;
+    font-family: 'goodbyeDespair';
+    font-size:25px;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    border:solid black 1px;
+}
+.rules-nav-button:hover{
+    background-color:white;
+    color:black;
+    cursor:pointer;
+}
+.rules-box{
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+#rules-space{
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+}
+.rule-arrow{
+    font-family: 'storyDespair';
+    text-align: center;
+    width: 5%;
+    font-size: 50px;
+    color:white;
+}
+.rule-arrow:hover{
+    cursor:pointer;
+    color:#999999
+}
+#rule-box{
+    height:90%;
+    width:100%;
+    background-color:rgba(20, 20, 20, 0.9);
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+.rule-title{
+    font-family:"hobbyHorse";
+    height:100px;
+    background-color:black;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    font-size: 60px;
+    border-bottom: solid white 1px;
+}
+#rule-number{
+    background-image: url(/visuals/Regulation.png);
+    height: 180px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:3vh;
+    margin-bottom:3vh;
+}
+#rule-number-text{
+    font-family:"goodbyeDespair";
+    font-size: 60px;
+    transform: translateY(24px);
+}
+#rule-text{
+    font-family:'storyDespair';
+    font-size:20px;
+    text-align:left;
+}
+.rule-p{
+    padding-bottom:25px;
+
+}
