@@ -1,0 +1,48 @@
+<div class="left-rule-arrow rule-arrow"><</div>
+<div id="rule-box">
+    <div id="rule-number"><p id="rule-number-text">2</p></div>
+    <div id="rule-text">
+        <p class="rule-p">#2.A: Any student that commits murder against a fellow student becomes “Blackened”.</p>
+        <p class="rule-p">#2.B: Blackened students may only kill a total of two people during any single “Killing Game.”</p>
+    </div>
+</div>
+<div class="right-rule-arrow rule-arrow">></div>
+<animation><%if(animation){%><%=animation%><%}else{%>left<%}%></animation>
+<script>
+    buttons.leftArrow = function(){
+        console.log("Hello?")
+        $(".left-rule-arrow").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $(".left-rule-arrow").on("click", function(){
+            playSound("Selected");
+        })
+        $(".left-rule-arrow").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-one"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"right"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    console.log("HM?")
+    buttons.leftArrow();
+    buttons.rightArrow = function(){
+        $(".right-rule-arrow").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            playSound("Selected");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-three"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"left"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.rightArrow();
+</script>

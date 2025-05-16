@@ -83,5 +83,22 @@
         })
     }
     buttons.navPresents();
+    buttons.navRules = function(){
+        $("#nav-rules").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#nav-rules").on("click", function(){
+            playSound("Selected");
+        })
+        $("#nav-rules").on("click", function(){
+            newStates = ["despair","e-handbook","rules"]
+            newDatabaseObjects = [false,false,false]
+            newCustomData = [false,false,false]
+            pageTitle = "E-Handbook"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.navRules();
 </script>
 <animation>handbook</animation>

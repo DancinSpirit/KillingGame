@@ -1,0 +1,32 @@
+<div class="left-rule-arrow rule-arrow"></div>
+<div id="rule-box">
+    <div id="rule-number"><p id="rule-number-text">1</p></div>
+    <div id="rule-text">
+        <p class="rule-p">#1.A: Students must live at the Ultimate Academy until the current Killing Game is over.</p>
+        <p class="rule-p">#1.B: The Killing Game is over once less than three students remain alive.</p>
+        <p class="rule-p">#1.C: Class Trials will still be held as normal before the Killing Game ends.</p>
+    </div>
+</div>
+<div class="right-rule-arrow rule-arrow">></div>
+<animation><%if(animation){%><%=animation%><%}else{%>left<%}%></animation>
+<script>
+    buttons.rightArrow = function(){
+        $(".right-rule-arrow").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            playSound("Selected");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-two"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"left"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.rightArrow();
+</script>
+
+<!-- this should really be just one file, with a databaseobject loading the required rules or somethn -->

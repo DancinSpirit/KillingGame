@@ -90,7 +90,23 @@
             newCustomData = [false,{chapterNumber: gameState.chapter},{time: gameState.phase.charAt(0).toUpperCase() + gameState.phase.substring(1)}]
             pageTitle = "Story"
             url = "/despair/story/day"
-            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+            $("body").append("<div id='loading-screen'><i class='fa-solid fa-spinner spin'></i></div>")
+            $("#loading-screen").addClass("fadeIn");
+            await stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url);
+            $("#click-signifier").remove();
+            $("#free-time-students").css("display","none");
+            $("#free-time-choices").css("display","none");
+            $("#free-time-submit-container").css("display","none");
+            $(".hidden-text").removeClass("hidden-text")
+            for(let x=0; x<user.despair.currentLine+1; x++){
+                await instantNextLine();
+            }
+            $("#loading-screen").removeClass("fadeIn");
+            $("#loading-screen").addClass("fadeOut");
+            setTimeout(function(){
+                $("#loading-screen").remove();
+                otherContinueEvent=true;
+            },500)
         })
     }
     buttons.story();

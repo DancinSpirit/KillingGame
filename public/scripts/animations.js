@@ -279,7 +279,9 @@ animations.handbookMenu = async function(state, component){
             $(`#sub-${state}-container`).css("display","flex");
             $("#top-row").css("transform","translateX(0%)");
             $("#bottom-row").css("transform","translateX(0%)");
+            $(".top").css("transition",`${user.settings.pageSpeed}ms`);
             $(".top").css("background-color","transparent");
+            $(".top").css("border-bottom","none");
             resolve();
         },user.settings.pageSpeed)
         $("#bottomright-text").text("Main Menu")
@@ -317,9 +319,13 @@ animations.reportCard = async function(state, component){
         setTimeout(function(){
             $(`#sub-${state}-container`).css("transition",`${user.settings.pageSpeed}ms`);
             $(`#sub-${state}-container`).css("transform","translateY(0%)")
+            $(".top").css("transition",`${user.settings.pageSpeed}ms`);
             $(".top").css("background-color","black");
+            $(".top").css("border-bottom","solid white 1px");
             $("#handbook-nav").css("transition",`${user.settings.pageSpeed}ms`);
             $("#handbook-nav").css("transform","translateX(0%)")
+            $("#academy-logo").css("transition",`${user.settings.pageSpeed}ms`);
+            $("#academy-logo").css("transform","translate(27vw,5vh)");
             setTimeout(function(){
                 $("#handbook-nav").css("transition",`0ms`);
                 $(`#sub-${state}-container`).css("transition","0ms");
@@ -342,7 +348,9 @@ animations.presents = async function(state, component){
         setTimeout(function(){
             $(`#sub-${state}-container`).css("transition",`${user.settings.pageSpeed}ms`);
             $(`#sub-${state}-container`).css("transform","translateY(0%)")
+            $(".top").css("transition",`${user.settings.pageSpeed}ms`);
             $(".top").css("background-color","black");
+            $(".top").css("border-bottom","solid white 1px");
             $("#handbook-nav").css("transition",`${user.settings.pageSpeed}ms`);
             $("#handbook-nav").css("transform","translateX(0%)")
             setTimeout(function(){
@@ -360,18 +368,69 @@ animations.presents = async function(state, component){
 
 animations.reportCardInfo = async function(state, component){
     return new Promise((resolve)=>{
+        $(`#sub-${state}-container`).css("display","none");
+        $(`#sub-${state}`).attr("id",`old-sub-${state}`);
+        $(`#old-sub-${state}`).remove();
+        $(`#sub-${state}-container`).prepend(`<section id="sub-${state}" class="sub-base"></section>`)
+        $(`#sub-${state}`).html(component);
+        $(`#sub-${state}-container`).css("transform","translateY(-50%)");
+        setTimeout(function(){
+            $(`#sub-${state}-container`).css("transition",`0ms`);
+            $(`#sub-${state}-container`).css("transform","translateY(0%)")
+            $(`#sub-${state}-container`).fadeIn();
+            setTimeout(function(){
+                $("#academy-logo").css("transition",`0ms`);
+                $(`#sub-${state}-container`).css("transition","0ms");
+                $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
+                $(`#sub-${state}-container`).css("display","flex");
+                resolve();
+            },user.settings.pageSpeed)
+        },10);
+    })
+}
+
+animations.reportPage = async function(state, component){
+    return new Promise((resolve)=>{
+        $(`#sub-${state}-container`).css("display","none");
+        $(`#sub-${state}`).attr("id",`old-sub-${state}`);
+        $(`#old-sub-${state}`).remove();
+        $(`#sub-${state}-container`).prepend(`<section id="sub-${state}" class="sub-base"></section>`)
+        $(`#sub-${state}`).html(component);
+        $(`#sub-${state}-container`).css("transform","translateY(-50%)");
+        setTimeout(function(){
+            $(`#sub-${state}-container`).css("transition",`0ms`);
+            $(`#sub-${state}-container`).css("transform","translateY(0%)")
+            $(`#sub-${state}-container`).fadeIn();
+            setTimeout(function(){
+                $(`#sub-${state}-container`).css("transition","0ms");
+                $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
+                $(`#sub-${state}-container`).css("display","flex");
+                resolve();
+            },user.settings.pageSpeed)
+        },10);
+    })
+}
+
+animations.rules = async function(state, component){
+    return new Promise((resolve)=>{
         $(`#sub-${state}-container`).css("display","block");
         $(`#sub-${state}`).attr("id",`old-sub-${state}`);
         $(`#sub-${state}-container`).prepend(`<section id="sub-${state}" class="sub-base"></section>`)
         $(`#sub-${state}`).html(component);
         $(`#sub-${state}-container`).css("transform","translateY(-50%)");
         setTimeout(function(){
-            $("#academy-logo").css("transition",`${user.settings.pageSpeed}ms`);
-            $("#academy-logo").css("transform","translate(27vw,5vh)");
             $(`#sub-${state}-container`).css("transition",`${user.settings.pageSpeed}ms`);
             $(`#sub-${state}-container`).css("transform","translateY(0%)")
+            $(".top").css("transition",`${user.settings.pageSpeed}ms`);
+            $(".top").css("background-color","black");
+            $(".top").css("border-bottom","solid white 1px");
+            $("#handbook-nav").css("transition",`${user.settings.pageSpeed}ms`);
+            $("#handbook-nav").css("transform","translateX(0%)")
+            $("#academy-logo").css("transition",`${user.settings.pageSpeed}ms`);
+            $("#academy-logo").css("transform","translate(-15.6vw,4vh)");
             setTimeout(function(){
                 $("#academy-logo").css("transition",`0ms`);
+                $("#handbook-nav").css("transition",`0ms`);
                 $(`#sub-${state}-container`).css("transition","0ms");
                 $(`#old-sub-${state}`).remove();
                 $(`#sub-${state}-container`).css("transform","translate(0%,0%)");
@@ -379,5 +438,6 @@ animations.reportCardInfo = async function(state, component){
                 resolve();
             },user.settings.pageSpeed)
         },10);
+        $("#bottomright-text").text("Presents")
     })
 }

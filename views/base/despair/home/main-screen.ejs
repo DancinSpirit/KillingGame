@@ -34,12 +34,16 @@
             $("#free-time-choices").css("display","none");
             $("#free-time-submit-container").css("display","none");
             $(".hidden-text").removeClass("hidden-text")
-            for(let x=0; x<user.despair.currentLine+1; x++){
+            for(let x=0; x<user.despair.currentLine; x++){
                 await instantNextLine();
             }
+            nextLine();
             $("#loading-screen").removeClass("fadeIn");
             $("#loading-screen").addClass("fadeOut");
-            setTimeout(function(){$("#loading-screen").remove();},500)
+            setTimeout(function(){
+                $("#loading-screen").remove();
+                otherContinueEvent=true;
+            },500)
         })
     }
     buttons.continue();

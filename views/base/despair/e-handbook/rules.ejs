@@ -1,0 +1,53 @@
+<div id="rules">
+    <subcontainer></subcontainer>
+    <div id="rules-nav">
+        <div id="school-rules-nav-button" class="rules-nav-button">
+            School Rules
+        </div>
+        <div id="daily-rules-nav-button" class="rules-nav-button">
+            Daily Mechanics
+        </div>
+        <div id="investigation-rules-nav-button" class="rules-nav-button">
+            Investigation Rules
+        </div>
+        <div id="trial-rules-nav-button" class="rules-nav-button">
+            Trial Rules
+        </div>
+    </div>
+</div>
+<animation>rules</animation>
+<script>
+    buttons.schoolRules = function(){
+        $("#school-rules-nav-button").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#school-rules-nav-button").on("click", function(){
+            playSound("Selected");
+        })
+        $("#school-rules-nav-button").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-one"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"left"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+            $("#school-rules-nav-button").addClass("clicked-rules-nav-button");
+            $("#school-rules-nav-button").removeClass("rules-nav-button");
+            $("#school-rules-nav-button").off("click")
+            $("#school-rules-nav-button").off("mouseover")
+        })
+    }
+    switch(states[3]){
+        case "school":
+            $("#school-rules-nav-button").css("background-color","lightgrey");
+            buttons.schoolRules = function(){};
+            break;
+        case "daily-mechanics":
+            break;
+        case "investigation":
+            break;
+        case "trial":
+            break;
+    }
+    buttons.schoolRules();
+</script>

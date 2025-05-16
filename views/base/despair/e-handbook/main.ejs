@@ -88,5 +88,22 @@
         })
     }
     buttons.presents();
+    buttons.schoolRules = function(){
+        $("#school-rules-button").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $("#school-rules-button").on("click", function(){
+            playSound("Selected");
+        })
+        $("#school-rules-button").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-one"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"left"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.schoolRules();
 </script>
 <animation>handbookMenu</animation>

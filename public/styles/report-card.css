@@ -9,6 +9,9 @@
     flex-direction: column;
     height: 20%;
     width: 100%;
+    border-left:solid white 1px;
+    border-right:solid white 1px;
+    border-bottom: solid white 1px;
 }
 #report-nav-top{
     display:flex;
@@ -17,7 +20,6 @@
     width: 100%;
     background-color: black;
     justify-content: space-between;
-    border-top: solid 1px white;
 }
 
 #report-nav-bottom{
