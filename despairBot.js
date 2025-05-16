@@ -300,6 +300,17 @@ bot.on("interactionCreate", async (interaction) =>{
         interaction.deleteReply();
         bot.updateServer();
     }
+    if(interaction.customId.includes("optionButton")){
+        let optionNumber = interaction.customId.split("optionButton")[1];
+        let user = interaction.user;
+        let gameState = await db.GameState.findOne({});
+        let player = await db.User.findOne({"discord.id": user.id});
+        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1]);
+        let line = day[gameState.phase][day[gameState.phase].length-1];
+        let option = line.split("|")[3+optionNumber]; 
+        day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + option;
+        day[gameState.phase].push(line.split(option)[0].split("[RE:ACT]")[1] + "<CHOSEN>" + option + line.split(option)[1]);
+    }
 })
 
 bot.sendEmbedWithDescrip = async function(embedTitle,embedDescription,channelId){

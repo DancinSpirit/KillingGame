@@ -145,6 +145,29 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                             .addComponents(actionButton,mixedButton,socialButton)
                         await storyChannel.send({embeds: [freeTimeEmbed], components: [freeTimeRow]})
                     }
+                    else if(text.includes("[OPTION]")){
+                        let title = text.split("|")[1]
+                        let description = text.split("|")[0].split("[OPTION]")[1];
+                        let optionEmbed = new EmbedBuilder()
+                            .setTitle(title)
+                            .setDescription(description)
+                        let optionsNumber = text.split("|")[2]
+                        let optionsNumberTwo = parseInt(optionsNumber)+3;
+                        let optionButtons = [];
+                        for(let x=3; x<optionsNumberTwo; x++){
+                            let option = text.split("|")[x];
+                                optionButtons.push(new ButtonBuilder()
+                                    .setCustomId("optionButton"+(x))
+                                    .setLabel(option)
+                                    .setStyle(ButtonStyle.Primary))
+                        }
+                        let optionsRow = new ActionRowBuilder()
+                            .addComponents(...optionButtons)
+                        await storyChannel.send({
+                            embeds: [optionEmbed], 
+                            components: [optionsRow]
+                        })
+                    }
                     else if(text.includes("[INVESTIGATION CONCLUSION]")){
                         let reactEmbed = new EmbedBuilder()
                             .setTitle("RE:ACT")
