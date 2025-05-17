@@ -307,9 +307,14 @@ bot.on("interactionCreate", async (interaction) =>{
         let player = await db.User.findOne({"discord.id": user.id});
         let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1]);
         let line = day[gameState.phase][day[gameState.phase].length-1];
-        let option = line.split("|")[3+optionNumber]; 
+        let option = line.split("|")[optionNumber];
         day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + option;
         day[gameState.phase].push(line.split(option)[0].split("[RE:ACT]")[1] + "<CHOSEN>" + option + line.split(option)[1]);
+        day.save();
+        interaction.message.delete();
+        await interaction.reply({content:"Successful submission!"})
+        interaction.deleteReply();
+        bot.updateServer();
     }
 })
 
