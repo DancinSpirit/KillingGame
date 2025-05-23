@@ -13,6 +13,11 @@ functions.saveGamemasterText = async function(day, phase, sentText, user){
                 case "EDIT":
                     resolve();
                     break;
+                case "RESET CURRENT LINE":
+                    user.despair.currentLine = day[phase].length-1;
+                    await db.User.findByIdAndUpdate(user._id, {despair: user.despair});
+                    resolve();
+                    break;
                 case "SET CURRENT LINE":
                     user.despair.currentLine = text;
                     await db.User.findByIdAndUpdate(user._id, {despair: user.despair});
@@ -132,6 +137,7 @@ functions.sendStoryText = async function(storyChannel, gamemasterChannel, sentTe
                         embeds: [optionEmbed], 
                         components: [optionsRow]
                     })
+                    await gamemasterChannel.send(sentText);
                     resolve();
                     break;
                 case "CHARACTER":
