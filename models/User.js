@@ -10,6 +10,8 @@ const schema = new mongoose.Schema(
     //gamemasteronly:
     currentUser: {type: String},
     despair: {
+      blackened: {type:Boolean, default:false},
+      advanced: {type: Boolean, default:false},
       fullReport: {type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"},
       reportCards: [{type: mongoose.Schema.Types.ObjectId, ref: "ReportCard"}],
       presents: [],
@@ -34,11 +36,13 @@ const schema = new mongoose.Schema(
       channels: {
         despair: {
           story: {type: String},
-          disccusion: {type: String}
+          disccusion: {type: String},
+          gamemaster: {type: String}
         },
         cards: {
           story: {type: String},
-          disccusion: {type: String}
+          disccusion: {type: String},
+          gamemaster: {type: String}
         }
       }
     }

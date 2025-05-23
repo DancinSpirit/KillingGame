@@ -1,8 +1,51 @@
 const db = require("./models");
+const dice = require("./dice.js");
+const Modifier = require("./modifier.js")
 const {EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuOptionBuilder, StringSelectMenuBuilder} = require("discord.js");
 
 let functions = {};
-functions.sendStoryText = async function(storyChannel,sentText,player){
+functions.saveGamemasterText = async function(day, phase, sentText, user){
+    return new Promise(async (resolve)=>{
+        if(sentText.includes("{")){
+            let command = sentText.replace("{","").split(`}`)[0];
+            let text = sentText.replace("{","").split(`${command}}`)[1];
+            switch(command){
+                case "EDIT":
+                    resolve();
+                    break;
+                case "SET CURRENT LINE":
+                    user.despair.currentLine = text;
+                    await db.User.findByIdAndUpdate(user._id, {despair: user.despair});
+                    resolve();
+                    break;
+                case "ROLL":
+                    let modifiers = text.split("|");
+                    for(let x=0; x<modifiers.length; x++){
+                        dice.addModifier(new Modifier(modifiers[x].split("=")[0], parseInt(modifiers[x].split("=")[1])))
+                    }
+                    dice.roll();
+                    day[phase].push("[ROLL]" + dice.latestRollString)
+                    day.save();
+                    resolve();
+                    break;
+                default:
+                    console.log("TEST")
+                    if(text==""){
+                        text="I'm feature testing you can ignore this Kristian."
+                    }
+                    day[phase].push(text);
+                    day.save();
+                    resolve();
+            }
+        }else{
+            console.log("TEST21")
+            day[phase].push(sentText);
+            day.save();
+            resolve();
+        }
+    })
+}
+functions.sendStoryText = async function(storyChannel, gamemasterChannel, sentText,player){
     return new Promise(async (resolve)=>{
         let gameState = await db.GameState.findOne({});
         if(sentText.includes("[")){
@@ -109,6 +152,7 @@ functions.sendStoryText = async function(storyChannel,sentText,player){
                             .setDescription("Socialized with " + text.split("FREE TIME START]")[1].split("|")[1] + ", " + text.split("FREE TIME START]")[1].split("|")[2] + ", and " + text.split("FREE TIME START]")[1].split("|")[3])
                         await storyChannel.send({embeds:[freeTimeEmbed]})
                     }
+                    await gamemasterChannel.send(sentText);
                     resolve();
                     break;
                 case "ULTIMATE ABILITY USAGE":

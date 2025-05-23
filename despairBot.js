@@ -1,9 +1,15 @@
+const camMasterChan = 1373690432546148442;
+const krisMasterChan = 1373690332474118155;
+const emiMasterChan = 1373690599332380772;
+const tinaMasterChan = 1373690599332380772;
+
+
 const {Client, Events, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuOptionBuilder, StringSelectMenuBuilder} = require("discord.js");
 const db = require("./models");
 const botFunctions = require("./botFunctions.js")
 
 const bot = new Client({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
 
 require('dotenv').config()
@@ -36,14 +42,29 @@ bot.once(Events.ClientReady, event=>{
     })
 })
 
+bot.on("messageCreate", async(message)=>{
+    if(message.author.id == 206648363729289216){
+        let users = await db.User.find().populate({path: "despair.chapters.days",strictPopulate: false});;
+        for(let x=0; x<users.length; x++){
+            if(!users[x].gamemaster){
+                if(message.channel.id == users[x].discord.channels.despair.gamemaster){
+                    let user = users[x];
+                    let day = await db.Day.findById(user.despair.chapters[user.despair.currentChapter-1].days[user.despair.currentDay-1])
+                    await botFunctions.saveGamemasterText(day,user.despair.currentPhase,message.content, user)
+                    bot.updateServer()
+                }
+            }
+        }
+    }
+})
+
 bot.on("interactionCreate", async (interaction) =>{
     bot.updateServer();
     if(interaction.customId.includes("submitSocial")){
         let user = interaction.user;
-        let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id": user.id});
-        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-        if(day[gameState.phase][day[gameState.phase].length-1].includes("Unselected")){
+        let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
+        if(day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].includes("Unselected")){
         
         }else{
             interaction.message.delete()
@@ -53,10 +74,9 @@ bot.on("interactionCreate", async (interaction) =>{
     }
     if(interaction.customId.includes("submitMixed")){
         let user = interaction.user;
-        let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id": user.id});
-        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-        if(day[gameState.phase][day[gameState.phase].length-1].includes("Unselected")){
+        let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
+        if(day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].includes("Unselected")){
             
         }else{
             interaction.message.delete()
@@ -66,16 +86,15 @@ bot.on("interactionCreate", async (interaction) =>{
     }
     if(interaction.customId.includes("socialMenu")){
         let user = interaction.user;
-        let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id": user.id});
-        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+        let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
         let fullString = "";
         if(interaction.customId.includes("Mixed")){
             let x = interaction.customId.split("Menu")[1].split("Mixed")[0];
             let stringPart1 = "[ACT][FREE TIME START]MIXED"
-            let stringPart2 = day[gameState.phase][day[gameState.phase].length-1].split("|")[1]
-            let stringPart3 = day[gameState.phase][day[gameState.phase].length-1].split("|")[2]
-            let stringPart4 = day[gameState.phase][day[gameState.phase].length-1].split("|")[3]
+            let stringPart2 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[1]
+            let stringPart3 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[2]
+            let stringPart4 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[3]
             if(x==1){
                 stringPart2 = interaction.values;
             }
@@ -86,9 +105,9 @@ bot.on("interactionCreate", async (interaction) =>{
         }else{
             let x = interaction.customId.split("Menu")[1];
             let stringPart1 = "[ACT][FREE TIME START]SOCIAL"
-            let stringPart2 = day[gameState.phase][day[gameState.phase].length-1].split("|")[1]
-            let stringPart3 = day[gameState.phase][day[gameState.phase].length-1].split("|")[2]
-            let stringPart4 = day[gameState.phase][day[gameState.phase].length-1].split("|")[3]
+            let stringPart2 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[1]
+            let stringPart3 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[2]
+            let stringPart4 = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1].split("|")[3]
             if(x==1){
                 stringPart2 = interaction.values;
             }
@@ -100,7 +119,7 @@ bot.on("interactionCreate", async (interaction) =>{
             }
             fullString = stringPart1 + "|" + stringPart2 + "|" + stringPart3 + "|" + stringPart4;
         }
-        day[gameState.phase][day[gameState.phase].length-1] = fullString;
+        day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = fullString;
         day.save();
         await interaction.reply({content:"Successful submission!"})
         interaction.deleteReply();
@@ -108,10 +127,9 @@ bot.on("interactionCreate", async (interaction) =>{
     if(interaction.isButton()){
         if(interaction.customId=="reactContinue"){
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT]Continue"
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]Continue"
             day.save();
             interaction.message.delete();
             bot.updateServer();
@@ -130,10 +148,9 @@ bot.on("interactionCreate", async (interaction) =>{
         }
         if(interaction.customId=="actionButton"){
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT][FREE TIME START]ACTION|Unselected|Unselected";
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]ACTION|Unselected|Unselected";
             day.save();
             let actionModal = new ModalBuilder()
                 .setCustomId("actionModal")
@@ -153,10 +170,9 @@ bot.on("interactionCreate", async (interaction) =>{
         }
         if(interaction.customId=="socialButton"){
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT][FREE TIME START]SOCIAL|Unselected|Unselected|Unselected";
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]SOCIAL|Unselected|Unselected|Unselected";
             day.save();
             let students = [];
             for(let x=0; x<player.despair.reportCards.length; x++){
@@ -204,10 +220,9 @@ bot.on("interactionCreate", async (interaction) =>{
                 .setLabel("Action 1:")
                 .setStyle(TextInputStyle.Paragraph)
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
             let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT][FREE TIME START]MIXED|Unselected|Unselected|Unselected";
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]MIXED|Unselected|Unselected|Unselected";
             day.save();
             let mixedInputRow = new ActionRowBuilder().addComponents(actionOneInput);
             mixedModal.addComponents(mixedInputRow);
@@ -219,10 +234,9 @@ bot.on("interactionCreate", async (interaction) =>{
             let action = interaction.fields.getTextInputValue("actionOneInput");
             let actionTwo = interaction.fields.getTextInputValue("actionTwoInput");
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
             let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT][FREE TIME START]ACTION|" + action + "|" + actionTwo;
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]ACTION|" + action + "|" + actionTwo;
             day.save();
             interaction.message.delete();
             await interaction.reply({content:"Successful submission!"})
@@ -232,10 +246,9 @@ bot.on("interactionCreate", async (interaction) =>{
         if(interaction.customId == "mixedModal"){
             let action = interaction.fields.getTextInputValue("actionOneInput");
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
             let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT][FREE TIME START]ACTION|Unselected|Unselected|" + action;
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]ACTION|Unselected|Unselected|" + action;
             day.save();
             let students = [];
             for(let x=0; x<player.despair.reportCards.length; x++){
@@ -277,10 +290,9 @@ bot.on("interactionCreate", async (interaction) =>{
         if(interaction.customId == "reactModal"){
             let action = interaction.fields.getTextInputValue("reactInput")
             let user = interaction.user;
-            let gameState = await db.GameState.findOne({});
             let player = await db.User.findOne({"discord.id": user.id});
             let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-            day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + action;
+            day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + action;
             day.save(); 
             interaction.message.delete();
             await interaction.reply({content:"Successful submission!"})
@@ -290,10 +302,9 @@ bot.on("interactionCreate", async (interaction) =>{
     }
     if(interaction.customId=="investigationContinue"){
         let user = interaction.user;
-        let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id":user.id})
         let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
-        day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + interaction.values;
+        day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + interaction.values;
         day.save();
         interaction.message.delete();
         await interaction.reply({content:"Successful submission!"})
@@ -303,13 +314,12 @@ bot.on("interactionCreate", async (interaction) =>{
     if(interaction.customId.includes("optionButton")){
         let optionNumber = interaction.customId.split("optionButton")[1];
         let user = interaction.user;
-        let gameState = await db.GameState.findOne({});
         let player = await db.User.findOne({"discord.id": user.id});
         let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1]);
         let line = day[gameState.phase][day[gameState.phase].length-1];
         let option = line.split("|")[optionNumber];
-        day[gameState.phase][day[gameState.phase].length-1] = "[ACT]" + option;
-        day[gameState.phase].push(line.split(option)[0].split("[RE:ACT]")[1] + "<CHOSEN>" + option + line.split(option)[1]);
+        day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + option;
+        day[player.despair.currentPhase].push(line.split(option)[0].split("[RE:ACT]")[1] + "<CHOSEN>" + option + line.split(option)[1]);
         day.save();
         interaction.message.delete();
         await interaction.reply({content:"Successful submission!"})
@@ -368,28 +378,25 @@ bot.updateServer = async function(){
 }
 
 const updatePlayerStory = async function(player){
-    let gameState = await db.GameState.findOne({});
+    let gameState = await db.GameState.findOne();
     let storyChannel = await bot.channels.cache.get(player.discord.channels.despair.story);
+    let gamemasterChannel = await bot.channels.cache.get(player.discord.channels.despair.gamemaster);
     for(let x=player.despair.currentDay-1; x<gameState.day; x++){
-        for(let y=player.despair.currentLine+1; y<player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase].length; y++){
-            await botFunctions.sendStoryText(storyChannel,player.despair.chapters[gameState.chapter-1].days[x][player.despair.currentPhase][y],player);
+        for(let y=player.despair.currentLine+1; y<player.despair.chapters[player.despair.currentChapter-1].days[x][player.despair.currentPhase].length; y++){
+            await botFunctions.sendStoryText(storyChannel,gamemasterChannel, player.despair.chapters[player.despair.currentChapter-1].days[x][player.despair.currentPhase][y],player);
         }
         player.despair.currentLine = 0;
-        //player.despair.currentPhase = getnextPhasefromPointervariable
-        //if phase matches do it one more time other wise do again or whatever might ahve to make another function
     }
-    player.despair.currentDay = gameState.day;
-    player.despair.currentPhase = gameState.phase;
-    player.despair.currentLine = player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase].length-1;
+    player.despair.currentLine = player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1][player.despair.currentPhase].length-1;
     player.save();
     let gamemasterWaiting = false;
     let guild = await bot.guilds.cache.get("659245797333925919")
     let gamemaster = await guild.members.fetch("206648363729289216");
     let user = await guild.members.fetch(player.discord.id)
-    if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine]){
-        if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("RE:ACT")){
+    if(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1][player.despair.currentPhase][player.despair.currentLine]){
+        if(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1][player.despair.currentPhase][player.despair.currentLine].includes("RE:ACT")){
             user.roles.add("660664223625641994")
-        }else if(player.despair.chapters[gameState.chapter-1].days[gameState.day-1][gameState.phase][player.despair.currentLine].includes("[ACT]")){
+        }else if(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1][player.despair.currentPhase][player.despair.currentLine].includes("[ACT]")){
             user.roles.remove("660664223625641994")
             gamemasterWaiting = true;
         }else{

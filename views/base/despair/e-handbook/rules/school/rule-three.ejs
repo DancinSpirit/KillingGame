@@ -1,9 +1,10 @@
 <div class="left-rule-arrow rule-arrow"><</div>
 <div id="rule-box">
-    <div id="rule-number"><p id="rule-number-text">2</p></div>
+    <div id="rule-number"><p id="rule-number-text">3</p></div>
     <div id="rule-text">
-        <p class="rule-p">#2.A: Any student that commits murder against a fellow student becomes “Blackened”.</p>
-        <p class="rule-p">#2.B: Blackened students may only kill a total of two people during any single “Killing Game.”</p>
+        <p class="rule-p">#3.A: Once a body is discovered, a “Body Discovery Announcement” will immediately play.</p>
+        <p class="rule-p">#3.B: A body is only considered “discovered” once 3 or more students have encountered it.</p>
+        <p class="rule-p">#3.C: Students may not commit another murder once a maximum of two bodies have been discovered.</p>
     </div>
 </div>
 <div class="right-rule-arrow rule-arrow">></div>
@@ -17,7 +18,7 @@
             playSound("Selected");
         })
         $(".left-rule-arrow").on("click", function(){
-            newStates = ["despair","e-handbook","rules","school","rule-one"]
+            newStates = ["despair","e-handbook","rules","school","rule-two"]
             newDatabaseObjects = [false,false,false,false,false]
             newCustomData = [false,false,false,false,{animation:"right"}]
             pageTitle = "Killing Game"
@@ -34,7 +35,7 @@
             playSound("Selected");
         })
         $(".right-rule-arrow").on("click", function(){
-            newStates = ["despair","e-handbook","rules","school","rule-three"]
+            newStates = ["despair","e-handbook","rules","school","rule-four"]
             newDatabaseObjects = [false,false,false,false,false]
             newCustomData = [false,false,false,false,{animation:"left"}]
             pageTitle = "Killing Game"

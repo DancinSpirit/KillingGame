@@ -1,0 +1,62 @@
+<div class="left-rule-arrow rule-arrow"><</div>
+<div id="rule-box">
+    <div id="rule-number"><p id="rule-number-text">7</p></div>
+    <div id="rule-text7" class="rule-text-box">
+        <p class="rule-p blackened" style>#7.A: Blackened Students cannot participate in certain school activities.</p>
+        <p class="rule-p blackened" style>#7.B: Blackened Students are prohibited from becoming part of school staff.</p>
+        <p class="rule-p blackened" style>#7.C: Blackened Students are granted special access to Black Rooms.</p>
+    </div>
+</div>
+<div class="blackened right-rule-arrow rule-arrow">></div>
+<animation><%if(animation){%><%=animation%><%}else{%>left<%}%></animation>
+<script>
+    setTimeout(function(){
+        if(user.despair.advanced){
+            $("#rule-text7").append(`<p class="rule-p advanced">#6.B: Advanced Students are granted special access to special Advanced Rules.</p>`)
+            $("#rule-text7").append(`<p class="rule-p advanced">#6.C: Advanced Rules and information from previous Killing Games are considered <i>Advanced Information</i>.</p>`)
+            $("#rule-text7").append(`<p class="rule-p advanced">#6.D: Sharing Advanced Information with non-advanced players is strictly prohibited.</p>`)
+        }
+        if(user.despair.advanced||user.despair.blackened){
+            $("#rule-text7").append(`<p class="rule-p blackened">#6.E: Blackened Rules are Advanced Rules.</p>`)
+        }
+        setTimeout(function(){
+            $(".advanced").addClass("fadeIn");
+        },500)
+        $(".blackened").addClass("fadeIn");
+    },500)
+
+    buttons.leftArrow = function(){
+        $(".left-rule-arrow").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $(".left-rule-arrow").on("click", function(){
+            playSound("Selected");
+        })
+        $(".left-rule-arrow").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-five"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"right"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.leftArrow();
+    buttons.rightArrow = function(){
+        $(".right-rule-arrow").on("mouseover",function(){
+            playSound("Selecting");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            playSound("Selected");
+        })
+        $(".right-rule-arrow").on("click", function(){
+            newStates = ["despair","e-handbook","rules","school","rule-seven"]
+            newDatabaseObjects = [false,false,false,false,false]
+            newCustomData = [false,false,false,false,{animation:"left"}]
+            pageTitle = "Killing Game"
+            url = "/despair/e-handbook/rules"
+            stateChange(newStates,newDatabaseObjects,newCustomData,pageTitle,url)
+        })
+    }
+    buttons.rightArrow();
+</script>

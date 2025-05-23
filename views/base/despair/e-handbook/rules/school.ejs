@@ -3,8 +3,46 @@
     <div id="rules-space">
         <subcontainer></subcontainer>
     </div>
-
-    
-
+    <div id="rules-page-nav">
+        <div id="page-one-nav">
+            1
+        </div>
+        <div id="page-two-nav">
+            2
+        </div>
+        <div id="page-three-nav">
+            3
+        </div>
+        <div id="page-four-nav">
+            4
+        </div>
+        <div id="page-one-nav">
+            5
+        </div>
+        <div id="page-one-nav">
+            6
+        </div>
+        <div id="page-one-nav" class="blackened">
+            7
+        </div>
+        <div id="page-one-nav" class="blackened">
+            8
+        </div>
+        <div id="page-one-nav" class="blackened">
+            9
+        </div>
+        <div id="page-ten-nav" class="advanced">
+            10
+        </div>
+    </div>
 </div>
+<script>
+    if(user.despair.blackened){
+        setTimeout($(".blackened").addClass("fadeIn"),1000)
+    }
+    if(user.despair.advanced){
+        setTimeout(function(){$(".blackened").addClass("fadeIn")},1000)
+        setTimeout(function(){$(".advanced").addClass("fadeIn")},2000)
+    }
+</script>
 <animation>down</animation>

@@ -1,14 +1,28 @@
 <div class="left-rule-arrow rule-arrow"><</div>
 <div id="rule-box">
-    <div id="rule-number"><p id="rule-number-text">2</p></div>
-    <div id="rule-text">
-        <p class="rule-p">#2.A: Any student that commits murder against a fellow student becomes “Blackened”.</p>
-        <p class="rule-p">#2.B: Blackened students may only kill a total of two people during any single “Killing Game.”</p>
+    <div id="rule-number"><p id="rule-number-text">6</p></div>
+    <div id="rule-text6" class="rule-text-box">
+        <p class="rule-p" style>#6.A: When the game has ended, all surviving students <i>Advance</i>.</p>
     </div>
 </div>
-<div class="right-rule-arrow rule-arrow">></div>
+<div class="blackened right-rule-arrow rule-arrow">></div>
 <animation><%if(animation){%><%=animation%><%}else{%>left<%}%></animation>
 <script>
+    setTimeout(function(){
+        if(user.despair.advanced){
+            $("#rule-text6").append(`<p class="rule-p advanced">#6.B: Advanced Students are granted special access to special Advanced Rules.</p>`)
+            $("#rule-text6").append(`<p class="rule-p advanced">#6.C: Advanced Rules and information from previous Killing Games are considered <i>Advanced Information</i>.</p>`)
+            $("#rule-text6").append(`<p class="rule-p advanced">#6.D: Sharing Advanced Information with non-advanced players is strictly prohibited.</p>`)
+        }
+        if(user.despair.advanced||user.despair.blackened){
+            $("#rule-text6").append(`<p class="rule-p blackened">#6.E: Blackened Rules are Advanced Rules.</p>`)
+        }
+        setTimeout(function(){
+            $(".advanced").addClass("fadeIn");
+        },500)
+        $(".blackened").addClass("fadeIn");
+    },500)
+
     buttons.leftArrow = function(){
         $(".left-rule-arrow").on("mouseover",function(){
             playSound("Selecting");
@@ -17,7 +31,7 @@
             playSound("Selected");
         })
         $(".left-rule-arrow").on("click", function(){
-            newStates = ["despair","e-handbook","rules","school","rule-one"]
+            newStates = ["despair","e-handbook","rules","school","rule-five"]
             newDatabaseObjects = [false,false,false,false,false]
             newCustomData = [false,false,false,false,{animation:"right"}]
             pageTitle = "Killing Game"
@@ -34,7 +48,7 @@
             playSound("Selected");
         })
         $(".right-rule-arrow").on("click", function(){
-            newStates = ["despair","e-handbook","rules","school","rule-three"]
+            newStates = ["despair","e-handbook","rules","school","rule-seven"]
             newDatabaseObjects = [false,false,false,false,false]
             newCustomData = [false,false,false,false,{animation:"left"}]
             pageTitle = "Killing Game"
