@@ -221,7 +221,7 @@ bot.on("interactionCreate", async (interaction) =>{
                 .setStyle(TextInputStyle.Paragraph)
             let user = interaction.user;
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
             day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]MIXED|Unselected|Unselected|Unselected";
             day.save();
             let mixedInputRow = new ActionRowBuilder().addComponents(actionOneInput);
@@ -235,7 +235,7 @@ bot.on("interactionCreate", async (interaction) =>{
             let actionTwo = interaction.fields.getTextInputValue("actionTwoInput");
             let user = interaction.user;
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
             day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]ACTION|" + action + "|" + actionTwo;
             day.save();
             interaction.message.delete();
@@ -247,7 +247,7 @@ bot.on("interactionCreate", async (interaction) =>{
             let action = interaction.fields.getTextInputValue("actionOneInput");
             let user = interaction.user;
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
             day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT][FREE TIME START]ACTION|Unselected|Unselected|" + action;
             day.save();
             let students = [];
@@ -291,7 +291,7 @@ bot.on("interactionCreate", async (interaction) =>{
             let action = interaction.fields.getTextInputValue("reactInput")
             let user = interaction.user;
             let player = await db.User.findOne({"discord.id": user.id});
-            let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+            let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
             day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + action;
             day.save(); 
             interaction.message.delete();
@@ -303,7 +303,7 @@ bot.on("interactionCreate", async (interaction) =>{
     if(interaction.customId=="investigationContinue"){
         let user = interaction.user;
         let player = await db.User.findOne({"discord.id":user.id})
-        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1])
+        let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1])
         day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + interaction.values;
         day.save();
         interaction.message.delete();
@@ -315,8 +315,8 @@ bot.on("interactionCreate", async (interaction) =>{
         let optionNumber = interaction.customId.split("optionButton")[1];
         let user = interaction.user;
         let player = await db.User.findOne({"discord.id": user.id});
-        let day = await db.Day.findById(player.despair.chapters[gameState.chapter-1].days[gameState.day-1]);
-        let line = day[gameState.phase][day[gameState.phase].length-1];
+        let day = await db.Day.findById(player.despair.chapters[player.despair.currentChapter-1].days[player.despair.currentDay-1]);
+        let line = day[player.despair.currentPhase][day[player.despair.currentPhase].length-1];
         let option = line.split("|")[optionNumber];
         day[player.despair.currentPhase][day[player.despair.currentPhase].length-1] = "[ACT]" + option;
         day[player.despair.currentPhase].push(line.split(option)[0].split("[RE:ACT]")[1] + "<CHOSEN>" + option + line.split(option)[1]);
